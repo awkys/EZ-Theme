@@ -42,17 +42,20 @@ export const config = {
       appendApiPath: true,
 
       // API路径
-      apiPath: "/api/v1",
+      //   apiPath: "/api/v1",
+      apiPath: "/bunsurf/subscribe",
     },
   },
 
   // 是否启用中间件代理API请求
   // 设置为true时，所有API请求将通过中间件转发
-  API_MIDDLEWARE_ENABLED: true,
+  //   API_MIDDLEWARE_ENABLED: true,
+  API_MIDDLEWARE_ENABLED: false,
 
   //=======================================================
   // 中间件服务器URL (不含路径) 开源地址 https://github.com/codeman857/EZ-Encrypt-Middleware
-  API_MIDDLEWARE_URL: "https://d2ijw202als7c.ezdemo.xyz",
+  //   API_MIDDLEWARE_URL: "https://d2ijw202als7c.ezdemo.xyz",
+  API_MIDDLEWARE_URL: "https://vb2.bunsurf.xyz",
 
   // 中间件加密KEY必须是16位的16进制字符串，必须和中间件key保持一致 在线生成地址 https://www.bejson.com/math/hex_gen/
   API_MIDDLEWARE_KEY: "4c6f8e5f9467dc71",
@@ -65,7 +68,7 @@ export const config = {
 
   // ====================  网站基础配置  ====================
   SITE_CONFIG: {
-    siteName: "EZ THEME",
+    siteName: "兔子冲浪",
     siteDescription: "EZ UI",
     // copyright会自动使用当前年份
     copyright: `© ${new Date().getFullYear()} EZ THEME. All Rights Reserved.`,
