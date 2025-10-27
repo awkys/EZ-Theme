@@ -3,8 +3,8 @@ node_modules/
 package-lock.json
 
 # 忽略打包输出目录
-dist/
-build/
+# dist/
+# build/
 
 # 忽略日志文件
 *.log
