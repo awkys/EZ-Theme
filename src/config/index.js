@@ -460,7 +460,7 @@ export const config = {
   // 浏览器访问限制配置
   BROWSER_RESTRICT_CONFIG: {
     // 是否启用浏览器限制功能
-    enabled: true,
+    enabled: false,
 
     // 各浏览器是否被限制访问（true=限制访问，false=允许访问）
     restrictBrowsers: {
