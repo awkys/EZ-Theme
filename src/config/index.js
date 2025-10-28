@@ -29,8 +29,8 @@ export const config = {
     // 支持字符串形式(单个API地址)或数组形式(多个备选API地址)
     // 多个地址时，会按顺序检测可用性，并使用第一个可用的地址
     staticBaseUrl: [
-      "https://vb2.bunsurf.xyz/api/v1",
-      //   "http://127.0.0.1/api/v1",
+      //   "https://vb2.bunsurf.xyz/api/v1",
+      "http://127.0.0.1/api/v1",
     ],
 
     // 自动获取模式配置 (urlMode = 'auto'时使用)
