@@ -1,17 +1,11 @@
 ﻿<template>
-
   <div class="docs-container">
-
     <!-- 域名授权验证提示 - 如果不需要域名授权功能，移除此组件即可 -->
 
-
-    
-
     <div class="docs-inner">
-
       <!-- 欢迎卡片 -->
 
-      <div class="dashboard-card welcome-card">
+      <!-- <div class="dashboard-card welcome-card">
 
         <div class="card-header">
 
@@ -25,21 +19,17 @@
 
         </div>
 
-      </div>
-
-      
+      </div> -->
 
       <!-- 标题栏 -->
 
-      <div class="docs-header">
+      <!-- <div class="docs-header">
 
-        <h1 class="docs-title">{{ $t('docs.title') }}</h1>
+        <h1 class="docs-title">{{ $t('docs.title') }}</h1> -->
 
-        
+      <!-- 搜索框 -->
 
-        <!-- 搜索框 -->
-
-        <div class="search-wrapper">
+      <!-- <div class="search-wrapper">
 
           <div class="search-input-wrapper">
 
@@ -69,401 +59,268 @@
 
         </div>
 
-      </div>
-
-
+      </div> -->
 
       <!-- 加载状态 -->
 
       <div v-if="loading" class="docs-loading">
-
         <LoadingSpinner />
 
-        <p>{{ $t('docs.loading') }}</p>
-
+        <p>{{ $t("docs.loading") }}</p>
       </div>
-
-
 
       <!-- 错误提示 -->
 
       <div v-else-if="error" class="docs-error">
-
         <IconAlertTriangle :size="48" class="error-icon" />
 
         <p>{{ error }}</p>
 
-        <button class="retry-button" @click="fetchKnowledge">{{ $t('docs.retry') }}</button>
-
+        <button class="retry-button" @click="fetchKnowledge">
+          {{ $t("docs.retry") }}
+        </button>
       </div>
-
-
 
       <!-- 文档列表 -->
 
-      <div v-else-if="hasDocuments && Object.keys(filteredDocs).length > 0" class="docs-content">
-
+      <div
+        v-else-if="hasDocuments && Object.keys(filteredDocs).length > 0"
+        class="docs-content"
+      >
         <!-- 遍历每个分类 -->
 
-        <div v-for="(items, category) in filteredDocs" :key="category" class="doc-category">
-
+        <div
+          v-for="(items, category) in filteredDocs"
+          :key="category"
+          class="doc-category"
+        >
           <h2 class="category-title">{{ category }}</h2>
 
-          
-
           <div class="doc-items">
-
-            <div v-for="item in items" :key="item.id" class="doc-item" @click="goToDocument(item.id)">
-
+            <div
+              v-for="item in items"
+              :key="item.id"
+              class="doc-item"
+              @click="goToDocument(item.id)"
+            >
               <div class="doc-info">
-
                 <h3 class="doc-title">{{ item.title }}</h3>
 
-                <p class="doc-date">{{ $t('docs.lastUpdated') }}: {{ formatDate(item.updated_at) }}</p>
-
+                <p class="doc-date">
+                  {{ $t("docs.lastUpdated") }}:
+                  {{ formatDate(item.updated_at) }}
+                </p>
               </div>
 
               <div class="doc-action">
-
                 <IconChevronRight :size="20" />
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
-
 
       <!-- 空状态 - 增强版 -->
 
       <div v-else class="docs-empty">
-
         <IconFileSearch :size="48" class="empty-icon" />
-
-        
 
         <!-- 根据搜索状态显示不同提示 -->
 
-        <p v-if="searchQuery">{{ $t('docs.noSearchResults') }}</p>
-
-        
+        <p v-if="searchQuery">{{ $t("docs.noSearchResults") }}</p>
 
         <!-- 无文档时的语言切换提示 -->
 
         <template v-else>
-
-          <p>{{ $t('docs.noDocuments') }}</p>
+          <p>{{ $t("docs.noDocuments") }}</p>
 
           <div class="language-hint">
-
             <IconLanguage :size="20" class="language-icon" />
 
-            <p class="hint-text">{{ $t('docs.languageHint', { currentLang: currentLanguage, alternateLang: alternateLanguage }) || `当前语言 ${currentLanguage} 暂无文档，请尝试切换到 ${alternateLanguage}` }}</p>
-
+            <p class="hint-text">
+              {{
+                $t("docs.languageHint", {
+                  currentLang: currentLanguage,
+                  alternateLang: alternateLanguage,
+                }) ||
+                `当前语言 ${currentLanguage} 暂无文档，请尝试切换到 ${alternateLanguage}`
+              }}
+            </p>
           </div>
-
         </template>
-
-        
 
         <!-- 搜索清除按钮 -->
 
-        <button v-if="searchQuery" @click="clearSearch" class="retry-button">{{ $t('docs.clearSearch') }}</button>
-
+        <button v-if="searchQuery" @click="clearSearch" class="retry-button">
+          {{ $t("docs.clearSearch") }}
+        </button>
       </div>
-
     </div>
-
   </div>
-
 </template>
 
-
-
 <script setup name="DocsPage">
+import { ref, computed, onMounted, inject, watch } from "vue";
 
-import { ref, computed, onMounted, inject, watch } from 'vue';
+import { useI18n } from "vue-i18n";
 
-import { useI18n } from 'vue-i18n';
+import { useRouter } from "vue-router";
 
-import { useRouter } from 'vue-router';
+import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
 
-import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
-
-import { 
-
-  IconSearch, 
-
+import {
+  IconSearch,
   IconX,
-
   IconChevronRight,
-
   IconAlertTriangle,
-
   IconFileSearch,
+  IconLanguage,
+} from "@tabler/icons-vue";
 
-  IconLanguage
-
-} from '@tabler/icons-vue';
-
-import { fetchKnowledgeList } from '@/api/docs';
-
-
-
+import { fetchKnowledgeList } from "@/api/docs";
 
 const { t, locale } = useI18n();
 
 const router = useRouter();
 
-const $toast = inject('$toast');
-
-
+const $toast = inject("$toast");
 
 const loading = ref(true);
 
-const error = ref('');
+const error = ref("");
 
 const documents = ref({});
 
-const searchQuery = ref('');
+const searchQuery = ref("");
 
+const currentLanguage = computed(() =>
+  locale.value === "zh-CN" ? "中文" : "English"
+);
 
-
-
-
-
-
-const currentLanguage = computed(() => locale.value === 'zh-CN' ? '中文' : 'English');
-
-const alternateLanguage = computed(() => locale.value === 'zh-CN' ? 'English' : '中文');
-
-
+const alternateLanguage = computed(() =>
+  locale.value === "zh-CN" ? "English" : "中文"
+);
 
 const hasDocuments = computed(() => {
-
-  return documents.value && 
-
-    typeof documents.value === 'object' && 
-
+  return (
+    documents.value &&
+    typeof documents.value === "object" &&
     Object.keys(documents.value).length > 0 &&
-
-    Object.values(documents.value).some(items => 
-
-      Array.isArray(items) && items.length > 0
-
-    );
-
+    Object.values(documents.value).some(
+      (items) => Array.isArray(items) && items.length > 0
+    )
+  );
 });
 
-
-
 const filteredDocs = computed(() => {
-
   if (!searchQuery.value.trim()) {
-
     return documents.value || {};
-
   }
-
-
 
   if (!hasDocuments.value) {
-
     return {};
-
   }
-
-
 
   const query = searchQuery.value.toLowerCase();
 
   const filtered = {};
 
-
-
   Object.entries(documents.value).forEach(([category, items]) => {
-
     if (!Array.isArray(items)) return;
 
-    
-
-    const matchedItems = items.filter(item => 
-
-      (item.title && item.title.toLowerCase().includes(query)) || 
-
-      (category && category.toLowerCase().includes(query))
-
+    const matchedItems = items.filter(
+      (item) =>
+        (item.title && item.title.toLowerCase().includes(query)) ||
+        (category && category.toLowerCase().includes(query))
     );
 
-
-
     if (matchedItems.length > 0) {
-
       filtered[category] = matchedItems;
-
     }
-
   });
-
-
 
   return filtered;
-
 });
-
-
 
 const formatDate = (timestamp) => {
-
   const date = new Date(timestamp * 1000);
 
-  return date.toLocaleDateString(locale.value === 'zh-CN' ? 'zh-CN' : 'en-US', {
+  return date.toLocaleDateString(locale.value === "zh-CN" ? "zh-CN" : "en-US", {
+    year: "numeric",
 
-    year: 'numeric',
+    month: "short",
 
-    month: 'short',
-
-    day: 'numeric'
-
+    day: "numeric",
   });
-
 };
 
-
-
-const handleSearch = () => {
-
-};
-
-
+const handleSearch = () => {};
 
 const clearSearch = () => {
-
-  searchQuery.value = '';
-
+  searchQuery.value = "";
 };
-
-
 
 const goToDocument = (id) => {
-
   router.push(`/docs/${id}`);
-
 };
-
-
 
 const fetchKnowledge = async () => {
-
   loading.value = true;
 
-  error.value = '';
-
-
+  error.value = "";
 
   try {
-
     const result = await fetchKnowledgeList(locale.value);
 
-    
-
     if (result && result.data) {
-
       documents.value = result.data;
-
     } else {
-
       documents.value = {};
-
     }
-
   } catch (err) {
+    console.error("Failed to fetch knowledge list:", err);
 
-    console.error('Failed to fetch knowledge list:', err);
-
-    error.value = err.response?.message || (err && err.message ? err.message : t('docs.unknownError'));
-
-    
+    error.value =
+      err.response?.message ||
+      (err && err.message ? err.message : t("docs.unknownError"));
 
     if ($toast) {
-
       $toast.error(error.value);
-
     }
-
   } finally {
-
     loading.value = false;
-
   }
-
 };
 
-
-
 watch(locale, () => {
-
   fetchKnowledge();
-
 });
-
-
 
 onMounted(() => {
-
-
-
-  
-
   fetchKnowledge();
-
 });
-
 </script>
 
-
-
 <style lang="scss" scoped>
-
 .docs-container {
-
   padding: 1.25rem;
 
-  padding-bottom: calc(1.25rem + 64px); 
-
-  
+  padding-bottom: calc(1.25rem + 64px);
 
   @media (min-width: 768px) {
-
     padding: 2rem;
 
-    padding-bottom: 3rem; 
-
+    padding-bottom: 3rem;
   }
-
 }
 
-
-
 .docs-inner {
-
   max-width: 1200px;
 
   margin: 0 auto;
-
 }
 
-
-
-
-
 .dashboard-card {
-
   background-color: var(--card-bg);
 
   border-radius: 12px;
@@ -480,20 +337,13 @@ onMounted(() => {
 
   position: relative;
 
-  
-
   &:hover {
-
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
-
   }
 
-  
-
   .card-header {
-
     display: flex;
 
     justify-content: space-between;
@@ -502,63 +352,45 @@ onMounted(() => {
 
     margin-bottom: 15px;
 
-    
-
     .card-title {
-
       font-size: 18px;
 
       font-weight: 600;
 
       margin: 0;
-
     }
-
   }
 
-  
-
   .card-body {
-
     p {
-
       color: var(--text-muted);
 
       margin: 0;
 
       line-height: 1.5;
-
     }
-
   }
-
 }
-
-
 
 .welcome-card {
-
   margin-bottom: 10px;
-
 }
 
-
-
 .docs-header {
-
   margin-bottom: 2rem;
 
-  
-
   .docs-title {
-
     font-size: 1.75rem;
 
     font-weight: 700;
 
     margin-bottom: 1.5rem;
 
-    background: linear-gradient(45deg, var(--theme-color), var(--secondary-color));
+    background: linear-gradient(
+      45deg,
+      var(--theme-color),
+      var(--secondary-color)
+    );
 
     -webkit-background-clip: text;
 
@@ -567,23 +399,14 @@ onMounted(() => {
     -webkit-text-fill-color: transparent;
 
     display: inline-block;
-
   }
-
 }
-
-
 
 .search-wrapper {
-
   margin-bottom: 1.5rem;
-
 }
 
-
-
 .search-input-wrapper {
-
   position: relative;
 
   display: flex;
@@ -592,10 +415,7 @@ onMounted(() => {
 
   width: 100%;
 
-  
-
   .search-icon {
-
     position: absolute;
 
     left: 1rem;
@@ -603,13 +423,9 @@ onMounted(() => {
     color: var(--text-muted);
 
     transition: color 0.3s ease;
-
   }
 
-  
-
   .search-input {
-
     width: 100%;
 
     padding: 0.85rem 2.5rem;
@@ -626,40 +442,24 @@ onMounted(() => {
 
     transition: all 0.3s ease;
 
-    
-
     &:focus {
-
       outline: none;
 
       border-color: var(--theme-color);
 
       box-shadow: 0 0 0 2px rgba(var(--theme-color-rgb), 0.2);
 
-      
-
       & + .search-icon {
-
         color: var(--theme-color);
-
       }
-
     }
-
-    
 
     &::placeholder {
-
       color: var(--text-muted);
-
     }
-
   }
 
-  
-
   .clear-button {
-
     position: absolute;
 
     right: 0.75rem;
@@ -684,24 +484,15 @@ onMounted(() => {
 
     transition: all 0.3s ease;
 
-    
-
     &:hover {
-
       background-color: rgba(var(--theme-color-rgb), 0.1);
 
       color: var(--theme-color);
-
     }
-
   }
-
 }
 
-
-
 .docs-content {
-
   display: flex;
 
   flex-direction: column;
@@ -713,15 +504,10 @@ onMounted(() => {
   width: 100%;
 
   margin: 0 auto;
-
 }
 
-
-
 .doc-category {
-
   .category-title {
-
     font-size: 1.3rem;
 
     font-weight: 600;
@@ -733,27 +519,18 @@ onMounted(() => {
     border-bottom: 1px solid rgba(var(--theme-color-rgb), 0.1);
 
     color: var(--text-color);
-
   }
-
 }
 
-
-
 .doc-items {
-
   display: flex;
 
   flex-direction: column;
 
   gap: 0.75rem;
-
 }
 
-
-
 .doc-item {
-
   display: flex;
 
   align-items: center;
@@ -772,30 +549,20 @@ onMounted(() => {
 
   border: 1px solid var(--border-color);
 
-  
-
   &:hover {
-
     transform: translateY(-2px);
 
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
 
     border-color: rgba(var(--theme-color-rgb), 0.3);
-
   }
 
-  
-
   .doc-info {
-
     flex: 1;
 
     overflow: hidden;
 
-    
-
     .doc-title {
-
       font-size: 1rem;
 
       font-weight: 600;
@@ -817,57 +584,35 @@ onMounted(() => {
       line-clamp: 2;
 
       -webkit-box-orient: vertical;
-
     }
 
-    
-
     .doc-date {
-
       font-size: 0.8rem;
 
       color: var(--text-muted);
-
     }
-
   }
 
-  
-
   .doc-action {
-
     color: var(--text-muted);
 
     margin-left: 1rem;
 
     transition: all 0.3s ease;
-
   }
 
-  
-
   &:hover {
-
     .doc-action {
-
       color: var(--theme-color);
 
       transform: translateX(3px);
-
     }
-
   }
-
 }
 
-
-
-.docs-loading, 
-
-.docs-error, 
-
+.docs-loading,
+.docs-error,
 .docs-empty {
-
   display: flex;
 
   flex-direction: column;
@@ -880,36 +625,23 @@ onMounted(() => {
 
   text-align: center;
 
-  
-
   p {
-
     margin-top: 1rem;
 
     color: var(--text-muted);
 
     font-size: 1.1rem;
-
   }
 
-  
-
-  .error-icon, 
-
+  .error-icon,
   .empty-icon {
-
     color: var(--text-muted);
 
     opacity: 0.7;
-
   }
-
 }
 
-
-
 .retry-button {
-
   margin-top: 1.5rem;
 
   height: 40px;
@@ -948,64 +680,38 @@ onMounted(() => {
 
   -webkit-backdrop-filter: blur(8px);
 
-  
-
   &:hover {
-
     transform: translateY(-2px);
 
     box-shadow: 0 10px 25px rgba(var(--theme-color-rgb), 0.35);
 
     background-color: rgba(var(--theme-color-rgb), 0.95);
-
   }
 
-  
-
   &:active {
-
     transform: translateY(0);
 
     box-shadow: 0 5px 15px rgba(var(--theme-color-rgb), 0.3);
-
   }
-
 }
 
-
-
-
-
 @media (min-width: 768px) {
-
   .doc-items {
-
     display: grid;
 
     grid-template-columns: repeat(2, 1fr);
 
     gap: 1rem;
-
   }
-
 }
-
-
 
 @media (min-width: 1024px) {
-
   .doc-items {
-
     grid-template-columns: repeat(3, 1fr);
-
   }
-
 }
 
-
-
 .language-hint {
-
   display: flex;
 
   align-items: center;
@@ -1020,22 +726,15 @@ onMounted(() => {
 
   border-left: 3px solid var(--theme-color);
 
-  
-
   .language-icon {
-
     color: var(--theme-color);
 
     margin-right: 0.5rem;
 
     flex-shrink: 0;
-
   }
 
-  
-
   .hint-text {
-
     font-size: 0.9rem;
 
     margin: 0;
@@ -1043,9 +742,6 @@ onMounted(() => {
     color: var(--text-color);
 
     line-height: 1.5;
-
   }
-
 }
-
-</style> 
+</style>

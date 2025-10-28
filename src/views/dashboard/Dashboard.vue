@@ -1,14 +1,32 @@
 ﻿<template>
   <div class="dashboard-container">
     <div class="dashboard-inner">
-      <div class="dashboard-card welcome-card" :class="{'card-animate': !loading.userInfo}">
+      <div
+        class="dashboard-card welcome-card"
+        :class="{ 'card-animate': !loading.userInfo }"
+      >
         <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.welcome') }}</h2>
+          <!-- <h2 class="card-title">{{ $t("dashboard.welcome") }}</h2> -->
+          <h2 class="card-title">邀请返利：支持支付宝提现</h2>
         </div>
         <div class="card-body">
-          <p class="">{{ $t('dashboard.welcomeDesc') }}</p>
-          <p v-if="userStats.userEmail && DASHBOARD_CONFIG.showUserEmail" class="user-email">
-            <IconMail :size="16"/>
+          <!-- <p class="">{{ $t("dashboard.welcomeDesc") }}</p> -->
+          <p class="notice">
+            兔子冲浪 — 官方备用地址（请收藏）：
+            <a
+              href="https://www.bnsrf.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="打开兔子冲浪备用地址"
+            >
+              https://www.bnsrf.com/
+            </a>
+          </p>
+          <p
+            v-if="userStats.userEmail && DASHBOARD_CONFIG.showUserEmail"
+            class="user-email"
+          >
+            <IconMail :size="16" />
             <span>{{ userStats.userEmail }}</span>
           </p>
         </div>
@@ -16,46 +34,75 @@
 
       <!-- 通知区域 -->
       <!-- 待处理事项提示 -->
-      <div v-if="hasPendingItems" class="dashboard-card pending-items-card"
-           :class="{'card-animate': !loading.userStats}" style="animation-delay: 0.1s">
+      <div
+        v-if="hasPendingItems"
+        class="dashboard-card pending-items-card"
+        :class="{ 'card-animate': !loading.userStats }"
+        style="animation-delay: 0.1s"
+      >
         <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.pendingItems') }}</h2>
+          <h2 class="card-title">{{ $t("dashboard.pendingItems") }}</h2>
         </div>
         <div class="card-body">
           <div class="pending-items-list">
-            <div v-if="userStats.pendingOrders > 0" class="pending-item" @click="router.push('/orders')">
+            <div
+              v-if="userStats.pendingOrders > 0"
+              class="pending-item"
+              @click="router.push('/orders')"
+            >
               <div class="pending-icon">
-                <IconShoppingCart :size="20"/>
+                <IconShoppingCart :size="20" />
               </div>
               <div class="pending-info">
-                <span class="">{{ $t('dashboard.pendingOrders') }} ({{ userStats.pendingOrders }})</span>
+                <span class=""
+                  >{{ $t("dashboard.pendingOrders") }} ({{
+                    userStats.pendingOrders
+                  }})</span
+                >
               </div>
               <div class="pending-action">
-                <IconChevronRight :size="16"/>
+                <IconChevronRight :size="16" />
               </div>
             </div>
 
-            <div v-if="userStats.pendingTickets > 0" class="pending-item" @click="goToSupport">
+            <div
+              v-if="userStats.pendingTickets > 0"
+              class="pending-item"
+              @click="goToSupport"
+            >
               <div class="pending-icon">
-                <IconMessage :size="20"/>
+                <IconMessage :size="20" />
               </div>
               <div class="pending-info">
-                <span class="">{{ $t('dashboard.pendingTickets') }} ({{ userStats.pendingTickets }})</span>
+                <span class=""
+                  >{{ $t("dashboard.pendingTickets") }} ({{
+                    userStats.pendingTickets
+                  }})</span
+                >
               </div>
               <div class="pending-action">
-                <IconChevronRight :size="16"/>
+                <IconChevronRight :size="16" />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="dashboard-card notice-card" :class="{'card-animate': !loading.notices}"
-           v-if="notices && notices.data && notices.data.length > 0" style="animation-delay: 0.2s">
+      <div
+        class="dashboard-card notice-card"
+        :class="{ 'card-animate': !loading.notices }"
+        v-if="notices && notices.data && notices.data.length > 0"
+        style="animation-delay: 0.2s"
+      >
         <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.siteAnnouncement') }}</h2>
+          <h2 class="card-title">{{ $t("dashboard.siteAnnouncement") }}</h2>
           <div class="notice-counter">
-            {{ $t('common.noticeCount', {current: currentNoticeIndex + 1, total: notices.data.length}) }}
+            {{
+              $t("common.noticeCount", {
+                current: currentNoticeIndex + 1,
+                total: notices.data.length,
+              })
+            }}
           </div>
         </div>
         <div v-if="loading.notices" class="card-body skeleton-loading">
@@ -65,30 +112,38 @@
         </div>
         <div v-else class="card-body">
           <transition name="fade-slide" mode="out-in">
-            <div class="notice-item" v-if="notices.data[currentNoticeIndex]" :key="currentNoticeIndex">
-              <div class="notice-title">{{ notices.data[currentNoticeIndex].title }}</div>
+            <div
+              class="notice-item"
+              v-if="notices.data[currentNoticeIndex]"
+              :key="currentNoticeIndex"
+            >
+              <div class="notice-title">
+                {{ notices.data[currentNoticeIndex].title }}
+              </div>
               <div class="notice-footer">
-                <div class="notice-date">{{ formatDate(notices.data[currentNoticeIndex].created_at) }}</div>
+                <div class="notice-date">
+                  {{ formatDate(notices.data[currentNoticeIndex].created_at) }}
+                </div>
                 <div class="notice-nav">
                   <button
-                      class="btn-notice"
-                      @click="prevNotice"
-                      :disabled="currentNoticeIndex <= 0">
-                    <IconChevronLeft :size="16"/>
-                    {{ $t('common.prevNotice') }}
+                    class="btn-notice"
+                    @click="prevNotice"
+                    :disabled="currentNoticeIndex <= 0"
+                  >
+                    <IconChevronLeft :size="16" />
+                    {{ $t("common.prevNotice") }}
+                  </button>
+                  <button class="btn-notice" @click="showNoticeModal">
+                    <IconEye :size="16" />
+                    {{ $t("common.viewDetails") }}
                   </button>
                   <button
-                      class="btn-notice"
-                      @click="showNoticeModal">
-                    <IconEye :size="16"/>
-                    {{ $t('common.viewDetails') }}
-                  </button>
-                  <button
-                      class="btn-notice"
-                      @click="nextNotice"
-                      :disabled="currentNoticeIndex >= notices.data.length - 1">
-                    {{ $t('common.nextNotice') }}
-                    <IconChevronRight :size="16"/>
+                    class="btn-notice"
+                    @click="nextNotice"
+                    :disabled="currentNoticeIndex >= notices.data.length - 1"
+                  >
+                    {{ $t("common.nextNotice") }}
+                    <IconChevronRight :size="16" />
                   </button>
                 </div>
               </div>
@@ -99,21 +154,38 @@
 
       <!-- 公告弹窗 -->
       <transition name="fade">
-        <div v-if="showNoticeDetails" class="notice-modal-overlay" @click="closeNoticeModal">
+        <div
+          v-if="showNoticeDetails"
+          class="notice-modal-overlay"
+          @click="closeNoticeModal"
+        >
           <transition name="popup-slide">
-            <div v-if="showNoticeDetails" class="notice-modal" :style="noticeModalStyle" @click.stop>
+            <div
+              v-if="showNoticeDetails"
+              class="notice-modal"
+              :style="noticeModalStyle"
+              @click.stop
+            >
               <div class="notice-modal-header">
-                <h2 class="popup-title">{{ notices.data[currentNoticeIndex].title }}</h2>
+                <h2 class="popup-title">
+                  {{ notices.data[currentNoticeIndex].title }}
+                </h2>
                 <button class="popup-close-btn" @click="closeNoticeModal">
-                  <IconX :size="20"/>
+                  <IconX :size="20" />
                 </button>
               </div>
               <div class="notice-modal-content">
-                <div v-html="processedNoticeContent" class="notice-content"></div>
+                <div
+                  v-html="processedNoticeContent"
+                  class="notice-content"
+                ></div>
               </div>
               <div class="notice-modal-footer">
-                <button class="popup-action-btn adaptive-btn" @click="closeNoticeModal">
-                  {{ $t('common.close') }}
+                <button
+                  class="popup-action-btn adaptive-btn"
+                  @click="closeNoticeModal"
+                >
+                  {{ $t("common.close") }}
                 </button>
               </div>
             </div>
@@ -122,8 +194,12 @@
       </transition>
 
       <!-- 套餐信息卡片 -->
-      <div v-if="hasPlan" class="dashboard-card subscription-card" :class="{'card-animate': !loading.userInfo}"
-           style="animation-delay: 0.3s">
+      <div
+        v-if="hasPlan"
+        class="dashboard-card subscription-card"
+        :class="{ 'card-animate': !loading.userInfo }"
+        style="animation-delay: 0.3s"
+      >
         <div v-if="loading.userInfo" class="skeleton-card">
           <div class="skeleton-header"></div>
           <div class="skeleton-body">
@@ -134,82 +210,107 @@
         </div>
         <template v-else>
           <div class="card-header">
-            <h2 class="card-title">{{ $t('dashboard.subscriptionInfo') }}</h2>
+            <h2 class="card-title">{{ $t("dashboard.subscriptionInfo") }}</h2>
           </div>
           <div class="card-body">
             <div class="subscription-info">
               <div class="info-item">
-                <span class="info-label">{{ $t('dashboard.planName') }}</span>
-                <span class="info-value">{{ userPlan.name || $t('dashboard.noSubscription') }}</span>
+                <span class="info-label">{{ $t("dashboard.planName") }}</span>
+                <span class="info-value">{{
+                  userPlan.name || $t("dashboard.noSubscription")
+                }}</span>
               </div>
               <div class="info-item">
-                <span class="info-label">{{ $t('dashboard.expiryDate') }}</span>
+                <span class="info-label">{{ $t("dashboard.expiryDate") }}</span>
                 <span class="info-value">
                   {{
-                    userPlan.isExpireDatePermanent ? $t('dashboard.permanent') : (userPlan.expireDate || $t('dashboard.none'))
+                    userPlan.isExpireDatePermanent
+                      ? $t("dashboard.permanent")
+                      : userPlan.expireDate || $t("dashboard.none")
                   }}
                 </span>
               </div>
               <div class="info-item">
-                <span class="info-label">{{ $t('dashboard.planTraffic') }}</span>
-                <span class="info-value">{{ userPlan.totalTraffic || '0 GB' }}</span>
+                <span class="info-label">{{
+                  $t("dashboard.planTraffic")
+                }}</span>
+                <span class="info-value">{{
+                  userPlan.totalTraffic || "0 GB"
+                }}</span>
               </div>
               <!-- 添加下次重置时间，只有当resetDay存在时才显示 -->
               <div class="info-item" v-if="userPlan.resetDay">
-                <span class="info-label">{{ $t('dashboard.nextResetTime') }}</span>
-                <span class="info-value">{{ userPlan.resetDay }} {{ $t('dashboard.days') }}</span>
+                <span class="info-label">{{
+                  $t("dashboard.nextResetTime")
+                }}</span>
+                <span class="info-value"
+                  >{{ userPlan.resetDay }} {{ $t("dashboard.days") }}</span
+                >
               </div>
               <!-- 添加在线设备信息，仅当面板类型为 Xiao-board 时显示 -->
               <div class="info-item" v-if="showDeviceLimit">
-                <span class="info-label">{{ $t('dashboard.deviceLimit') }}</span>
+                <span class="info-label">{{
+                  $t("dashboard.deviceLimit")
+                }}</span>
                 <span class="info-value">
                   {{
-                    userPlan.deviceLimit === null ? `${userPlan.aliveIp} / ${$t('dashboard.unlimited')}` : `${userPlan.aliveIp} / ${userPlan.deviceLimit}`
+                    userPlan.deviceLimit === null
+                      ? `${userPlan.aliveIp} / ${$t("dashboard.unlimited")}`
+                      : `${userPlan.aliveIp} / ${userPlan.deviceLimit}`
                   }}
                 </span>
               </div>
             </div>
             <div class="subscription-actions">
-              <button v-if="showImportSubscription" class="btn-outline" :class="{
-                'btn-active': showImportCard,
-                'btn-highlight-btnbgcolor': DASHBOARD_CONFIG.importButtonHighlightBtnbgcolor
-              }" @click="toggleImportCard">
-                <IconShare :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.importSubscription') }}</span>
+              <button
+                v-if="showImportSubscription"
+                class="btn-outline"
+                :class="{
+                  'btn-active': showImportCard,
+                  'btn-highlight-btnbgcolor':
+                    DASHBOARD_CONFIG.importButtonHighlightBtnbgcolor,
+                }"
+                @click="toggleImportCard"
+              >
+                <IconShare :size="16" class="btn-icon" />
+                <span class="">{{ $t("dashboard.importSubscription") }}</span>
               </button>
               <button
-                  v-if="showRenewPlanButton"
-                  class="btn-outline renew-plan-btn"
-                  :class="{
+                v-if="showRenewPlanButton"
+                class="btn-outline renew-plan-btn"
+                :class="{
                   'renew-warning': isExpiringSoon && !isExpired,
-                  'renew-danger': isExpired
+                  'renew-danger': isExpired,
                 }"
-                  @click="renewPlan"
+                @click="renewPlan"
               >
-                <IconShoppingCart :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.renewPlan') }}</span>
+                <IconShoppingCart :size="16" class="btn-icon" />
+                <span class="">{{ $t("dashboard.renewPlan") }}</span>
               </button>
               <!-- 重置流量按钮 - 根据配置和流量状态显示 -->
               <button
-                  v-if="showResetTrafficButton"
-                  class="btn-outline reset-traffic-btn"
-                  :class="{
+                v-if="showResetTrafficButton"
+                class="btn-outline reset-traffic-btn"
+                :class="{
                   'reset-warning': isLowTraffic && !isTrafficDepleted,
-                  'reset-danger': isTrafficDepleted
+                  'reset-danger': isTrafficDepleted,
                 }"
-                  @click="openResetTrafficModal"
+                @click="openResetTrafficModal"
               >
-                <IconRefresh :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.resetTraffic') }}</span>
-
+                <IconRefresh :size="16" class="btn-icon" />
+                <span class="">{{ $t("dashboard.resetTraffic") }}</span>
               </button>
-              <button class="btn-outline" v-if="allowNewPeriod==='1'&&showResetTrafficButton" @click="showPopup=true">
-                <IconCalendarPlus :size="16" class="btn-icon"/>
-                <span>{{ $t('dashboard.activateDataCycleInAdvance') }}</span>
+              <button
+                class="btn-outline"
+                v-if="allowNewPeriod === '1' && showResetTrafficButton"
+                @click="showPopup = true"
+              >
+                <IconCalendarPlus :size="16" class="btn-icon" />
+                <span>{{ $t("dashboard.activateDataCycleInAdvance") }}</span>
               </button>
               <button class="btn-outline" @click="goToSupport">
-                <IconMessage :size="16" class="btn-icon"/>
-                <span class="">{{ $t('dashboard.ticketSupport') }}</span>
+                <IconMessage :size="16" class="btn-icon" />
+                <span class="">{{ $t("dashboard.ticketSupport") }}</span>
               </button>
             </div>
           </div>
@@ -218,9 +319,12 @@
 
       <!-- 订阅导入卡片 -->
       <transition name="slide-fade">
-        <div v-if="showImportCard && userPlan.subscribeUrl" class="dashboard-card import-card">
+        <div
+          v-if="showImportCard && userPlan.subscribeUrl"
+          class="dashboard-card import-card"
+        >
           <div class="card-header">
-            <h2 class="card-title">{{ $t('dashboard.importSubscription') }}</h2>
+            <h2 class="card-title">{{ $t("dashboard.importSubscription") }}</h2>
             <button class="close-btn" @click="showImportCard = false">
               <span class="close-icon"></span>
             </button>
@@ -228,34 +332,40 @@
           <div class="card-body">
             <div class="import-action copy-action" @click="copySubscription">
               <div class="import-icon">
-                <IconCopy :size="24"/>
+                <IconCopy :size="24" />
               </div>
               <div class="import-content">
-                <div class="import-title">{{ $t('dashboard.copySubscription') }}</div>
-                <div class="import-desc">{{ $t('dashboard.copySubscriptionDesc') }}</div>
+                <div class="import-title">
+                  {{ $t("dashboard.copySubscription") }}
+                </div>
+                <div class="import-desc">
+                  {{ $t("dashboard.copySubscriptionDesc") }}
+                </div>
               </div>
             </div>
 
             <div class="import-action qrcode-action" @click="showQrCode = true">
               <div class="import-icon">
-                <IconQrcode :size="24"/>
+                <IconQrcode :size="24" />
               </div>
               <div class="import-content">
-                <div class="import-title">{{ $t('dashboard.scanQRCode') }}</div>
-                <div class="import-desc">{{ $t('dashboard.scanQRCodeDesc') }}</div>
+                <div class="import-title">{{ $t("dashboard.scanQRCode") }}</div>
+                <div class="import-desc">
+                  {{ $t("dashboard.scanQRCodeDesc") }}
+                </div>
               </div>
             </div>
 
             <!-- 平台选择器 -->
             <div class="platform-selector">
               <button
-                  v-for="platform in platforms"
-                  :key="platform.id"
-                  class="platform-button"
-                  :class="{ 'active': activePlatform === platform.id }"
-                  @click="activePlatform = platform.id"
+                v-for="platform in platforms"
+                :key="platform.id"
+                class="platform-button"
+                :class="{ active: activePlatform === platform.id }"
+                @click="activePlatform = platform.id"
               >
-                <component :is="platform.icon" :size="16"/>
+                <component :is="platform.icon" :size="16" />
                 <span>{{ $t(`platforms.${platform.id}`) }}</span>
               </button>
             </div>
@@ -264,38 +374,77 @@
             <div v-if="activePlatform === 'ios'" class="platform-section">
               <div class="platform-title">iOS</div>
               <div v-if="hasIOSClients" class="platform-options">
-                <div v-if="clientConfig.showShadowrocket" class="platform-option"
-                     @click="importToClient('shadowrocket')">
-                  <img :src="shadowrocketIcon" class="client-icon" alt="Shadowrocket"/>
+                <div
+                  v-if="clientConfig.showShadowrocket"
+                  class="platform-option"
+                  @click="importToClient('shadowrocket')"
+                >
+                  <img
+                    :src="shadowrocketIcon"
+                    class="client-icon"
+                    alt="Shadowrocket"
+                  />
                   <span>Shadowrocket</span>
                 </div>
-                <div v-if="clientConfig.showSurge" class="platform-option" @click="importToClient('surge')">
-                  <img :src="surgeIcon" class="client-icon" alt="Surge"/>
+                <div
+                  v-if="clientConfig.showSurge"
+                  class="platform-option"
+                  @click="importToClient('surge')"
+                >
+                  <img :src="surgeIcon" class="client-icon" alt="Surge" />
                   <span>Surge</span>
                 </div>
-                <div v-if="clientConfig.showStash" class="platform-option" @click="importToClient('stash')">
-                  <img :src="stashIcon" class="client-icon" alt="Stash"/>
+                <div
+                  v-if="clientConfig.showStash"
+                  class="platform-option"
+                  @click="importToClient('stash')"
+                >
+                  <img :src="stashIcon" class="client-icon" alt="Stash" />
                   <span>Stash</span>
                 </div>
-                <div v-if="clientConfig.showQuantumultX" class="platform-option" @click="importToClient('quantumultx')">
-                  <img :src="quantumultIcon" class="client-icon" alt="Quantumult X"/>
+                <div
+                  v-if="clientConfig.showQuantumultX"
+                  class="platform-option"
+                  @click="importToClient('quantumultx')"
+                >
+                  <img
+                    :src="quantumultIcon"
+                    class="client-icon"
+                    alt="Quantumult X"
+                  />
                   <span>Quantumult X</span>
                 </div>
-                <div v-if="clientConfig.showHiddifyIOS" class="platform-option" @click="importToClient('hiddify-ios')">
-                  <img :src="hiddifyMacIcon" class="client-icon" alt="Hiddify"/>
+                <div
+                  v-if="clientConfig.showHiddifyIOS"
+                  class="platform-option"
+                  @click="importToClient('hiddify-ios')"
+                >
+                  <img
+                    :src="hiddifyMacIcon"
+                    class="client-icon"
+                    alt="Hiddify"
+                  />
                   <span>Hiddify</span>
                 </div>
-                <div v-if="clientConfig.showSingboxIOS" class="platform-option" @click="importToClient('singbox-ios')">
-                  <img :src="singboxIcon" class="client-icon" alt="Singbox"/>
+                <div
+                  v-if="clientConfig.showSingboxIOS"
+                  class="platform-option"
+                  @click="importToClient('singbox-ios')"
+                >
+                  <img :src="singboxIcon" class="client-icon" alt="Singbox" />
                   <span>Singbox</span>
                 </div>
-                <div v-if="clientConfig.showLoon" class="platform-option" @click="importToClient('loon')">
-                  <img :src="loonIcon" class="client-icon" alt="Loon"/>
+                <div
+                  v-if="clientConfig.showLoon"
+                  class="platform-option"
+                  @click="importToClient('loon')"
+                >
+                  <img :src="loonIcon" class="client-icon" alt="Loon" />
                   <span>Loon</span>
                 </div>
               </div>
               <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
+                <p>{{ $t("dashboard.noClientsAvailable") }}</p>
               </div>
             </div>
 
@@ -303,45 +452,93 @@
             <div v-if="activePlatform === 'android'" class="platform-section">
               <div class="platform-title">Android</div>
               <div v-if="hasAndroidClients" class="platform-options">
-                <div v-if="clientConfig.showFlClashAndroid" class="platform-option" @click="importToClient('flclash')">
-                  <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
+                <div
+                  v-if="clientConfig.showFlClashAndroid"
+                  class="platform-option"
+                  @click="importToClient('flclash')"
+                >
+                  <img :src="flclashIcon" class="client-icon" alt="FlClash" />
                   <span>FlClash</span>
                 </div>
-                <div v-if="clientConfig.showV2rayNG" class="platform-option" @click="importToClient('v2rayng')">
-                  <img :src="v2rayNGIcon" class="client-icon" alt="V2rayNG"/>
+                <div
+                  v-if="clientConfig.showV2rayNG"
+                  class="platform-option"
+                  @click="importToClient('v2rayng')"
+                >
+                  <img :src="v2rayNGIcon" class="client-icon" alt="V2rayNG" />
                   <span>V2rayNG</span>
                 </div>
-                <div v-if="clientConfig.showClashAndroid" class="platform-option"
-                     @click="importToClient('clash-android')">
-                  <img :src="clashAndroidIcon" class="client-icon" alt="Clash"/>
+                <div
+                  v-if="clientConfig.showClashAndroid"
+                  class="platform-option"
+                  @click="importToClient('clash-android')"
+                >
+                  <img
+                    :src="clashAndroidIcon"
+                    class="client-icon"
+                    alt="Clash"
+                  />
                   <span>Clash</span>
                 </div>
-                <div v-if="clientConfig.showSurfboard" class="platform-option" @click="importToClient('surfboard')">
-                  <img :src="surfboardIcon" class="client-icon" alt="Surfboard"/>
+                <div
+                  v-if="clientConfig.showSurfboard"
+                  class="platform-option"
+                  @click="importToClient('surfboard')"
+                >
+                  <img
+                    :src="surfboardIcon"
+                    class="client-icon"
+                    alt="Surfboard"
+                  />
                   <span>Surfboard</span>
                 </div>
-                <div v-if="clientConfig.showClashMetaAndroid" class="platform-option"
-                     @click="importToClient('clash-meta-android')">
-                  <img :src="clashMetaAndroidIcon" class="client-icon" alt="Clash Meta"/>
+                <div
+                  v-if="clientConfig.showClashMetaAndroid"
+                  class="platform-option"
+                  @click="importToClient('clash-meta-android')"
+                >
+                  <img
+                    :src="clashMetaAndroidIcon"
+                    class="client-icon"
+                    alt="Clash Meta"
+                  />
                   <span>Clash Meta</span>
                 </div>
-                <div v-if="clientConfig.showNekobox" class="platform-option" @click="importToClient('nekobox')">
-                  <img :src="nekoboxIcon" class="client-icon" alt="Nekobox"/>
+                <div
+                  v-if="clientConfig.showNekobox"
+                  class="platform-option"
+                  @click="importToClient('nekobox')"
+                >
+                  <img :src="nekoboxIcon" class="client-icon" alt="Nekobox" />
                   <span>Nekobox</span>
                 </div>
-                <div v-if="clientConfig.showSingboxAndroid" class="platform-option"
-                     @click="importToClient('singbox-android')">
-                  <img :src="singboxAndroidIcon" class="client-icon" alt="Singbox"/>
+                <div
+                  v-if="clientConfig.showSingboxAndroid"
+                  class="platform-option"
+                  @click="importToClient('singbox-android')"
+                >
+                  <img
+                    :src="singboxAndroidIcon"
+                    class="client-icon"
+                    alt="Singbox"
+                  />
                   <span>Singbox</span>
                 </div>
-                <div v-if="clientConfig.showHiddifyAndroid" class="platform-option"
-                     @click="importToClient('hiddify-android')">
-                  <img :src="hiddifyAndroidIcon" class="client-icon" alt="Hiddify"/>
+                <div
+                  v-if="clientConfig.showHiddifyAndroid"
+                  class="platform-option"
+                  @click="importToClient('hiddify-android')"
+                >
+                  <img
+                    :src="hiddifyAndroidIcon"
+                    class="client-icon"
+                    alt="Hiddify"
+                  />
                   <span>Hiddify</span>
                 </div>
               </div>
               <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
+                <p>{{ $t("dashboard.noClientsAvailable") }}</p>
               </div>
             </div>
 
@@ -349,35 +546,73 @@
             <div v-if="activePlatform === 'windows'" class="platform-section">
               <div class="platform-title">Windows</div>
               <div v-if="hasWindowsClients" class="platform-options">
-                <div v-if="clientConfig.showFlClashWindows" class="platform-option" @click="importToClient('flclash')">
-                  <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
-                  <span>FlClash</span>
-                </div>
-                <div v-if="clientConfig.showClashVergeWindows" class="platform-option" @click="importToClient('clashverge')">
-                  <img :src="clashvergeIcon" class="client-icon" alt="ClashVerge"/>
+                <div
+                  v-if="clientConfig.showClashVergeWindows"
+                  class="platform-option"
+                  @click="importToClient('clashverge')"
+                >
+                  <img
+                    :src="clashvergeIcon"
+                    class="client-icon"
+                    alt="ClashVerge"
+                  />
                   <span>ClashVerge</span>
                 </div>
-                <div v-if="clientConfig.showClashWindows" class="platform-option" @click="importToClient('clash')">
-                  <img :src="clashWindowsIcon" class="client-icon" alt="Clash"/>
+                <div
+                  v-if="clientConfig.showFlClashWindows"
+                  class="platform-option"
+                  @click="importToClient('flclash')"
+                >
+                  <img :src="flclashIcon" class="client-icon" alt="FlClash" />
+                  <span>FlClash</span>
+                </div>
+                <div
+                  v-if="clientConfig.showClashWindows"
+                  class="platform-option"
+                  @click="importToClient('clash')"
+                >
+                  <img
+                    :src="clashWindowsIcon"
+                    class="client-icon"
+                    alt="Clash"
+                  />
                   <span>Clash</span>
                 </div>
-                <div v-if="clientConfig.showNekoray" class="platform-option" @click="importToClient('nekoray')">
-                  <img :src="nekorayIcon" class="client-icon" alt="Nekoray"/>
+                <div
+                  v-if="clientConfig.showNekoray"
+                  class="platform-option"
+                  @click="importToClient('nekoray')"
+                >
+                  <img :src="nekorayIcon" class="client-icon" alt="Nekoray" />
                   <span>Nekoray</span>
                 </div>
-                <div v-if="clientConfig.showSingboxWindows" class="platform-option"
-                     @click="importToClient('singbox-windows')">
-                  <img :src="singboxWindowsIcon" class="client-icon" alt="Singbox"/>
+                <div
+                  v-if="clientConfig.showSingboxWindows"
+                  class="platform-option"
+                  @click="importToClient('singbox-windows')"
+                >
+                  <img
+                    :src="singboxWindowsIcon"
+                    class="client-icon"
+                    alt="Singbox"
+                  />
                   <span>Singbox</span>
                 </div>
-                <div v-if="clientConfig.showHiddifyWindows" class="platform-option"
-                     @click="importToClient('hiddify-windows')">
-                  <img :src="hiddifyWindowsIcon" class="client-icon" alt="Hiddify"/>
+                <div
+                  v-if="clientConfig.showHiddifyWindows"
+                  class="platform-option"
+                  @click="importToClient('hiddify-windows')"
+                >
+                  <img
+                    :src="hiddifyWindowsIcon"
+                    class="client-icon"
+                    alt="Hiddify"
+                  />
                   <span>Hiddify</span>
                 </div>
               </div>
               <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
+                <p>{{ $t("dashboard.noClientsAvailable") }}</p>
               </div>
             </div>
 
@@ -385,48 +620,101 @@
             <div v-if="activePlatform === 'macos'" class="platform-section">
               <div class="platform-title">MacOS</div>
               <div v-if="hasMacOSClients" class="platform-options">
-                <div v-if="clientConfig.showFlClashMac" class="platform-option" @click="importToClient('flclash')">
-                  <img :src="flclashIcon" class="client-icon" alt="FlClash"/>
-                  <span>FlClash</span>
-                </div>
-                <div v-if="clientConfig.showClashVergeMac" class="platform-option" @click="importToClient('clashverge')">
-                  <img :src="clashvergeIcon" class="client-icon" alt="ClashVerge"/>
+                <div
+                  v-if="clientConfig.showClashVergeMac"
+                  class="platform-option"
+                  @click="importToClient('clashverge')"
+                >
+                  <img
+                    :src="clashvergeIcon"
+                    class="client-icon"
+                    alt="ClashVerge"
+                  />
                   <span>ClashVerge</span>
                 </div>
-                <div v-if="clientConfig.showClashX" class="platform-option" @click="importToClient('clashx')">
-                  <img :src="clashXIcon" class="client-icon" alt="ClashX"/>
+                <div
+                  v-if="clientConfig.showFlClashMac"
+                  class="platform-option"
+                  @click="importToClient('flclash')"
+                >
+                  <img :src="flclashIcon" class="client-icon" alt="FlClash" />
+                  <span>FlClash</span>
+                </div>
+                <div
+                  v-if="clientConfig.showClashX"
+                  class="platform-option"
+                  @click="importToClient('clashx')"
+                >
+                  <img :src="clashXIcon" class="client-icon" alt="ClashX" />
                   <span>ClashX</span>
                 </div>
-                <div v-if="clientConfig.showClashMetaX" class="platform-option" @click="importToClient('clashx-meta')">
-                  <img :src="clashMetaXIcon" class="client-icon" alt="ClashX Meta"/>
+                <div
+                  v-if="clientConfig.showClashMetaX"
+                  class="platform-option"
+                  @click="importToClient('clashx-meta')"
+                >
+                  <img
+                    :src="clashMetaXIcon"
+                    class="client-icon"
+                    alt="ClashX Meta"
+                  />
                   <span>ClashX Meta</span>
                 </div>
-                <div v-if="clientConfig.showSurgeMac" class="platform-option" @click="importToClient('surge-mac')">
-                  <img :src="surgeMacIcon" class="client-icon" alt="Surge"/>
+                <div
+                  v-if="clientConfig.showSurgeMac"
+                  class="platform-option"
+                  @click="importToClient('surge-mac')"
+                >
+                  <img :src="surgeMacIcon" class="client-icon" alt="Surge" />
                   <span>Surge</span>
                 </div>
-                <div v-if="clientConfig.showStashMac" class="platform-option" @click="importToClient('stash-mac')">
-                  <img :src="stashMacIcon" class="client-icon" alt="Stash"/>
+                <div
+                  v-if="clientConfig.showStashMac"
+                  class="platform-option"
+                  @click="importToClient('stash-mac')"
+                >
+                  <img :src="stashMacIcon" class="client-icon" alt="Stash" />
                   <span>Stash</span>
                 </div>
-                <div v-if="clientConfig.showQuantumultXMac" class="platform-option"
-                     @click="importToClient('quantumultx-mac')">
-                  <img :src="quantumultXMacIcon" class="client-icon" alt="Quantumult X"/>
+                <div
+                  v-if="clientConfig.showQuantumultXMac"
+                  class="platform-option"
+                  @click="importToClient('quantumultx-mac')"
+                >
+                  <img
+                    :src="quantumultXMacIcon"
+                    class="client-icon"
+                    alt="Quantumult X"
+                  />
                   <span>Quantumult X</span>
                 </div>
-                <div v-if="clientConfig.showSingboxMac" class="platform-option"
-                     @click="importToClient('singbox-macos')">
-                  <img :src="singboxMacIcon" class="client-icon" alt="Singbox"/>
+                <div
+                  v-if="clientConfig.showSingboxMac"
+                  class="platform-option"
+                  @click="importToClient('singbox-macos')"
+                >
+                  <img
+                    :src="singboxMacIcon"
+                    class="client-icon"
+                    alt="Singbox"
+                  />
                   <span>Singbox</span>
                 </div>
-                <div v-if="clientConfig.showHiddifyMac" class="platform-option"
-                     @click="importToClient('hiddify-macos')">
-                  <img :src="hiddifyMacIcon" class="client-icon" alt="Hiddify"/>
+                <!-- <div
+                  v-if="clientConfig.showHiddifyMac"
+                  class="platform-option"
+                  @click="importToClient('hiddify-macos')"
+                >
+                  <img
+                    :src="hiddifyMacIcon"
+                    class="client-icon"
+                    alt="Hiddify"
+                  />
                   <span>Hiddify</span>
-                </div>
+                </div> -->
               </div>
               <div v-else class="no-clients-message">
-                <p>{{ $t('dashboard.noClientsAvailable') }}</p>
+                <p>{{ $t("dashboard.noClientsAvailable") }}</p>
               </div>
             </div>
           </div>
@@ -435,10 +723,14 @@
 
       <!-- QR码模态窗口 -->
       <transition name="fade">
-        <div v-if="showQrCode" class="qrcode-modal-overlay" @click="showQrCode = false">
+        <div
+          v-if="showQrCode"
+          class="qrcode-modal-overlay"
+          @click="showQrCode = false"
+        >
           <div class="qrcode-modal" @click.stop>
             <div class="qrcode-header">
-              <h3>{{ $t('dashboard.scanQRCode') }}</h3>
+              <h3>{{ $t("dashboard.scanQRCode") }}</h3>
               <button class="close-btn" @click="showQrCode = false">
                 <span class="close-icon"></span>
               </button>
@@ -446,9 +738,9 @@
             <div class="qrcode-content">
               <div v-if="qrCodeLoading" class="qrcode-loading">
                 <div class="loading-spinner"></div>
-                <p>{{ $t('common.loadingQRCode') }}</p>
+                <p>{{ $t("common.loadingQRCode") }}</p>
               </div>
-              <img v-else :src="qrCodeUrl" alt="QR Code" @load="qrCodeLoaded"/>
+              <img v-else :src="qrCodeUrl" alt="QR Code" @load="qrCodeLoaded" />
             </div>
           </div>
         </div>
@@ -467,22 +759,33 @@
 
         <template v-else-if="!hasPlan">
           <!-- 没有套餐时显示的提示卡片 -->
-          <div class="dashboard-card stats-card no-plan-card" :class="{'card-animate': !loading.userStats}"
-               style="animation-delay: 0.5s; grid-column: span 4; margin: 0 auto; max-width: 1200px; width: 100%;">
+          <div
+            class="dashboard-card stats-card no-plan-card"
+            :class="{ 'card-animate': !loading.userStats }"
+            style="
+              animation-delay: 0.5s;
+              grid-column: span 4;
+              margin: 0 auto;
+              max-width: 1200px;
+              width: 100%;
+            "
+          >
             <div class="no-plan-content">
               <div class="no-plan-icon">
-                <IconShoppingCart :size="45" class="icon-cart"/>
+                <IconShoppingCart :size="45" class="icon-cart" />
               </div>
               <div class="no-plan-message">
-                <div class="no-plan-title">{{ $t('dashboard.noPlanPrompt') }}</div>
+                <div class="no-plan-title">
+                  {{ $t("dashboard.noPlanPrompt") }}
+                </div>
                 <div class="no-plan-actions">
                   <button class="action-button primary" @click="goToShop">
-                    <IconShoppingBag :size="18" class="btn-icon"/>
-                    <span>{{ $t('dashboard.purchasePlan') }}</span>
+                    <IconShoppingBag :size="18" class="btn-icon" />
+                    <span>{{ $t("dashboard.purchasePlan") }}</span>
                   </button>
                   <button class="action-button secondary" @click="goToSupport">
-                    <IconMessage :size="18" class="btn-icon"/>
-                    <span>{{ $t('dashboard.ticketSupport') }}</span>
+                    <IconMessage :size="18" class="btn-icon" />
+                    <span>{{ $t("dashboard.ticketSupport") }}</span>
                   </button>
                 </div>
               </div>
@@ -491,149 +794,199 @@
         </template>
 
         <template v-else>
-          <div class="stats-card"
-               :class="{
+          <div
+            class="stats-card doc-card"
+            :class="{ 'card-animate': !loading.userStats }"
+            @click="openDocumentation"
+            style="animation-delay: 0.8s"
+          >
+            <div class="stats-icon">
+              <IconFileText :size="32" />
+            </div>
+            <div class="stats-info">
+              <div class="stats-value">{{ $t("dashboard.documentation") }}</div>
+              <div class="stats-label">{{ $t("dashboard.viewHelp") }}</div>
+            </div>
+            <div class="chevron-icon">
+              <IconChevronRight :size="20" />
+            </div>
+          </div>
+
+          <div
+            class="stats-card"
+            :class="{
               'card-animate': !loading.userStats,
               'warning-card': isLowTraffic && !isTrafficDepleted,
-              'danger-card': isTrafficDepleted
+              'danger-card': isTrafficDepleted,
             }"
-               style="animation-delay: 0.5s">
+            style="animation-delay: 0.5s"
+          >
             <div class="stats-icon">
-              <IconTransferVertical :size="32"/>
+              <IconTransferVertical :size="32" />
             </div>
             <div class="stats-info">
               <div class="stats-value">{{ userStats.remainingTraffic }}</div>
-              <div class="stats-label">{{ $t('dashboard.remainingTraffic') }}</div>
+              <div class="stats-label">
+                {{ $t("dashboard.remainingTraffic") }}
+              </div>
             </div>
 
             <!-- 水流进度条效果 -->
             <div class="water-container">
-              <div class="water-progress"
-                   :class="{'animate-water': waterAnimationState.canAnimate}"
-                   :style="{ height: waterAnimationState.canAnimate ? `${trafficPercentage}%` : '0%' }">
-              </div>
+              <div
+                class="water-progress"
+                :class="{ 'animate-water': waterAnimationState.canAnimate }"
+                :style="{
+                  height: waterAnimationState.canAnimate
+                    ? `${trafficPercentage}%`
+                    : '0%',
+                }"
+              ></div>
             </div>
           </div>
 
-          <div class="stats-card"
-               :class="{
+          <div
+            class="stats-card"
+            :class="{
               'card-animate': !loading.userStats,
               'warning-card': isExpiringSoon && !isExpired,
-              'danger-card': isExpired
+              'danger-card': isExpired,
             }"
-               style="animation-delay: 0.6s">
+            style="animation-delay: 0.6s"
+          >
             <div class="stats-icon">
-              <IconCalendar :size="32"/>
+              <IconCalendar :size="32" />
             </div>
             <div class="stats-info">
               <div class="stats-value">
                 {{
-                  userStats.isRemainingDaysPermanent ? $t('dashboard.permanent') : userStats.remainingDays + $t('dashboard.days')
+                  userStats.isRemainingDaysPermanent
+                    ? $t("dashboard.permanent")
+                    : userStats.remainingDays + $t("dashboard.days")
                 }}
               </div>
-              <div class="stats-label">{{ $t('dashboard.remainingDays') }}</div>
+              <div class="stats-label">{{ $t("dashboard.remainingDays") }}</div>
             </div>
           </div>
 
-          <div class="stats-card"
-               :class="{'card-animate': !loading.userStats, 'balance-card': true, 'clickable': isXiaoPanel}"
-               style="animation-delay: 0.7s"
-               @click="isXiaoPanel ? navigateToDeposit() : null"
-               :style="isXiaoPanel ? { cursor: 'pointer' } : {}">
+          <div
+            class="stats-card"
+            :class="{
+              'card-animate': !loading.userStats,
+              'balance-card': true,
+              clickable: isXiaoPanel,
+            }"
+            style="animation-delay: 0.7s"
+            @click="isXiaoPanel ? navigateToDeposit() : null"
+            :style="isXiaoPanel ? { cursor: 'pointer' } : {}"
+          >
             <div class="stats-icon">
-              <IconWallet :size="32"/>
+              <IconWallet :size="32" />
             </div>
             <div class="stats-info">
               <div class="stats-value">{{ userStats.accountBalance }}</div>
-              <div class="stats-label">{{ $t('dashboard.accountBalance') }}</div>
+              <div class="stats-label">
+                {{ $t("dashboard.accountBalance") }}
+              </div>
             </div>
             <div v-if="isXiaoPanel" class="chevron-icon">
-              <IconChevronRight :size="20"/>
-            </div>
-          </div>
-
-          <div class="stats-card doc-card"
-               :class="{'card-animate': !loading.userStats}"
-               @click="openDocumentation"
-               style="animation-delay: 0.8s">
-            <div class="stats-icon">
-              <IconFileText :size="32"/>
-            </div>
-            <div class="stats-info">
-              <div class="stats-value">{{ $t('dashboard.viewHelp') }}</div>
-              <div class="stats-label">{{ $t('dashboard.documentation') }}</div>
-            </div>
-            <div class="chevron-icon">
-              <IconChevronRight :size="20"/>
+              <IconChevronRight :size="20" />
             </div>
           </div>
         </template>
       </div>
 
       <!-- 官方客户端下载区域 -->
-      <div class="dashboard-card download-card" :class="{'card-animate': !loading.userInfo}"
-           v-if="clientConfig.showDownloadCard" style="animation-delay: 0.9s">
+      <!-- <div
+        class="dashboard-card download-card"
+        :class="{ 'card-animate': !loading.userInfo }"
+        v-if="clientConfig.showDownloadCard"
+        style="animation-delay: 0.9s"
+      >
         <div class="card-header">
-          <h2 class="card-title">{{ $t('dashboard.officialClients') }}</h2>
+          <h2 class="card-title">{{ $t("dashboard.officialClients") }}</h2>
         </div>
         <div class="card-body">
           <div class="download-options">
-            <div class="download-option" v-if="clientConfig.showIOS" @click="downloadClient('ios')">
+            <div
+              class="download-option"
+              v-if="clientConfig.showIOS"
+              @click="downloadClient('ios')"
+            >
               <div class="option-icon ios">
-                <IconBrandApple :size="32"/>
+                <IconBrandApple :size="32" />
               </div>
               <div class="option-name">iOS</div>
             </div>
 
-            <div class="download-option" v-if="clientConfig.showAndroid" @click="downloadClient('android')">
+            <div
+              class="download-option"
+              v-if="clientConfig.showAndroid"
+              @click="downloadClient('android')"
+            >
               <div class="option-icon android">
-                <IconBrandAndroid :size="32"/>
+                <IconBrandAndroid :size="32" />
               </div>
               <div class="option-name">Android</div>
             </div>
 
-            <div class="download-option" v-if="clientConfig.showMacOS" @click="downloadClient('macos')">
+            <div
+              class="download-option"
+              v-if="clientConfig.showMacOS"
+              @click="downloadClient('macos')"
+            >
               <div class="option-icon macos">
-                <IconBrandFinder :size="32"/>
+                <IconBrandFinder :size="32" />
               </div>
               <div class="option-name">MacOS</div>
             </div>
 
-            <div class="download-option" v-if="clientConfig.showWindows" @click="downloadClient('windows')">
+            <div
+              class="download-option"
+              v-if="clientConfig.showWindows"
+              @click="downloadClient('windows')"
+            >
               <div class="option-icon windows">
-                <IconBrandWindows :size="32"/>
+                <IconBrandWindows :size="32" />
               </div>
               <div class="option-name">Windows</div>
-            </div>
+            </div> -->
 
-            <div class="download-option" v-if="clientConfig.showLinux" @click="downloadClient('linux')">
+      <!-- <div
+              class="download-option"
+              v-if="clientConfig.showLinux"
+              @click="downloadClient('linux')"
+            >
               <div class="option-icon linux">
-                <IconBrandDebian :size="32"/>
+                <IconBrandDebian :size="32" />
               </div>
               <div class="option-name">Linux</div>
-            </div>
+            </div> -->
 
-            <div class="download-option" v-if="clientConfig.showOpenWrt" @click="downloadClient('openwrt')">
+      <!-- <div
+              class="download-option"
+              v-if="clientConfig.showOpenWrt"
+              @click="downloadClient('openwrt')"
+            >
               <div class="option-icon openwrt">
-                <IconRouter :size="32"/>
+                <IconRouter :size="32" />
               </div>
               <div class="option-name">OpenWrt</div>
-            </div>
-          </div>
+            </div> -->
+      <!-- </div>
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- 弹窗组件 -->
     <CommonDialog
-        :show-dialog="showPopup"
-        :title="$t('invite.withdraw.tip')"
-        :content="$t('dashboard.resetDataCycleNotice')"
-        cancel-button-i18n-key="profile.cancel"
-        confirm-button-i18n-key="profile.iKnow"
-        @close="handlePopupClose"
-        @confirm="handlePopupConfirm"
+      :show-dialog="showPopup"
+      :title="$t('invite.withdraw.tip')"
+      :content="$t('dashboard.resetDataCycleNotice')"
+      cancel-button-i18n-key="profile.cancel"
+      confirm-button-i18n-key="profile.iKnow"
+      @close="handlePopupClose"
+      @confirm="handlePopupConfirm"
     />
-
   </div>
 
   <!-- 重置流量确认弹窗 -->
@@ -642,45 +995,46 @@
       <div class="modal-container">
         <div class="modal-card reset-traffic-modal">
           <div class="modal-header">
-            <h3>{{ $t('dashboard.resetTrafficConfirm') }}</h3>
-            <button class="close-button" @click="closeResetTrafficModal">×</button>
+            <h3>{{ $t("dashboard.resetTrafficConfirm") }}</h3>
+            <button class="close-button" @click="closeResetTrafficModal">
+              ×
+            </button>
           </div>
           <div class="modal-body">
             <div class="warning-icon">
-              <IconAlertTriangle :size="48"/>
+              <IconAlertTriangle :size="48" />
             </div>
-            <p class="warning-text">{{ $t('dashboard.resetTrafficDesc') }}</p>
-            <p class="note-text">{{ $t('dashboard.resetTrafficWarning') }}</p>
+            <p class="warning-text">{{ $t("dashboard.resetTrafficDesc") }}</p>
+            <p class="note-text">{{ $t("dashboard.resetTrafficWarning") }}</p>
           </div>
           <div class="modal-footer">
             <button class="cancel-btn" @click="closeResetTrafficModal">
-              {{ $t('common.cancel') }}
+              {{ $t("common.cancel") }}
             </button>
             <button
-                class="confirm-btn"
-                :disabled="resetConfirmCooldown > 0 || isCreatingResetOrder"
-                @click="createResetTrafficOrder"
+              class="confirm-btn"
+              :disabled="resetConfirmCooldown > 0 || isCreatingResetOrder"
+              @click="createResetTrafficOrder"
             >
               <template v-if="isCreatingResetOrder">
                 <span class="loading-container">
                   <div class="loader-small"></div>
-                  <span>{{ $t('common.loading') }}</span>
+                  <span>{{ $t("common.loading") }}</span>
                 </span>
               </template>
               <template v-else>
                 {{
-                  resetConfirmCooldown > 0 ? `${$t('common.confirm')} (${resetConfirmCooldown})` : $t('common.confirm')
+                  resetConfirmCooldown > 0
+                    ? `${$t("common.confirm")} (${resetConfirmCooldown})`
+                    : $t("common.confirm")
                 }}
               </template>
             </button>
           </div>
         </div>
       </div>
-
-
     </div>
   </transition>
-
 </template>
 
 <script>
@@ -695,11 +1049,16 @@ import {
   onUnmounted,
   reactive,
   ref,
-  watch
-} from 'vue';
-import {useRouter} from 'vue-router';
-import {useI18n} from 'vue-i18n';
-import {CLIENT_CONFIG, DASHBOARD_CONFIG, isXiaoV2board, SITE_CONFIG} from '@/utils/baseConfig';
+  watch,
+} from "vue";
+import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+import {
+  CLIENT_CONFIG,
+  DASHBOARD_CONFIG,
+  isXiaoV2board,
+  SITE_CONFIG,
+} from "@/utils/baseConfig";
 import {
   IconAlertTriangle,
   IconBox,
@@ -739,42 +1098,49 @@ import {
   IconWaveSawTool,
   IconWaveSine,
   IconX,
-  IconCalendarPlus
-} from '@tabler/icons-vue';
-import CommonDialog from '@/components/popup/CommonDialog.vue';
-import {getNotices, getSubscribe, getUserConfig, getUserInfo, getUserStats, setNextPeriod} from '@/api/dashboard';
-import {useToast} from '@/composables/useToast';
-import {submitOrder} from '@/api/shop';
-import MarkdownIt from 'markdown-it';
-import QRCode from 'qrcode';
-import shadowrocketIconImg from '@/assets/images/client-img-ios/shadowrocket.png';
-import surgeIconImg from '@/assets/images/client-img-ios/Surge.png';
-import stashIconImg from '@/assets/images/client-img-ios/stash.png';
-import quantumultIconImg from '@/assets/images/client-img-ios/quantumultx.png';
-import singboxIconImg from '@/assets/images/client-img-ios/singbox.png';
-import loonIconImg from '@/assets/images/client-img-ios/loon.png';
-import v2rayNGIconImg from '@/assets/images/client-img-android/v2rayng.png';
-import clashAndroidIconImg from '@/assets/images/client-img-android/clash.png';
-import surfboardIconImg from '@/assets/images/client-img-android/surfboard.png';
-import clashMetaAndroidIconImg from '@/assets/images/client-img-android/clashmeta.png';
-import nekoboxIconImg from '@/assets/images/client-img-android/nekobox.png';
-import singboxAndroidIconImg from '@/assets/images/client-img-android/singbox.png';
-import hiddifyAndroidIconImg from '@/assets/images/client-img-android/hiddify.png';
-import flclashIconImg from '@/assets/images/client-img-windows/flclash.png';
-import clashvergeIconImg from '@/assets/images/client-img-windows/clashverge.png';
-import clashWindowsIconImg from '@/assets/images/client-img-windows/clash.png';
-import nekorayIconImg from '@/assets/images/client-img-windows/nekoray.png';
-import singboxWindowsIconImg from '@/assets/images/client-img-windows/singbox.png';
-import hiddifyWindowsIconImg from '@/assets/images/client-img-windows/hiddify.png';
-import clashXIconImg from '@/assets/images/client-img-macos/clashx.png';
-import clashMetaXIconImg from '@/assets/images/client-img-macos/clashmetax.png';
-import surgeMacIconImg from '@/assets/images/client-img-macos/Surge.png';
-import stashMacIconImg from '@/assets/images/client-img-macos/stash.png';
-import quantumultXMacIconImg from '@/assets/images/client-img-macos/quantumultx.png';
-import singboxMacIconImg from '@/assets/images/client-img-macos/singbox.png';
-import hiddifyMacIconImg from '@/assets/images/client-img-macos/hiddify.png';
+  IconCalendarPlus,
+} from "@tabler/icons-vue";
+import CommonDialog from "@/components/popup/CommonDialog.vue";
+import {
+  getNotices,
+  getSubscribe,
+  getUserConfig,
+  getUserInfo,
+  getUserStats,
+  setNextPeriod,
+} from "@/api/dashboard";
+import { useToast } from "@/composables/useToast";
+import { submitOrder } from "@/api/shop";
+import MarkdownIt from "markdown-it";
+import QRCode from "qrcode";
+import shadowrocketIconImg from "@/assets/images/client-img-ios/shadowrocket.png";
+import surgeIconImg from "@/assets/images/client-img-ios/Surge.png";
+import stashIconImg from "@/assets/images/client-img-ios/stash.png";
+import quantumultIconImg from "@/assets/images/client-img-ios/quantumultx.png";
+import singboxIconImg from "@/assets/images/client-img-ios/singbox.png";
+import loonIconImg from "@/assets/images/client-img-ios/loon.png";
+import v2rayNGIconImg from "@/assets/images/client-img-android/v2rayng.png";
+import clashAndroidIconImg from "@/assets/images/client-img-android/clash.png";
+import surfboardIconImg from "@/assets/images/client-img-android/surfboard.png";
+import clashMetaAndroidIconImg from "@/assets/images/client-img-android/clashmeta.png";
+import nekoboxIconImg from "@/assets/images/client-img-android/nekobox.png";
+import singboxAndroidIconImg from "@/assets/images/client-img-android/singbox.png";
+import hiddifyAndroidIconImg from "@/assets/images/client-img-android/hiddify.png";
+import flclashIconImg from "@/assets/images/client-img-windows/flclash.png";
+import clashvergeIconImg from "@/assets/images/client-img-windows/clashverge.png";
+import clashWindowsIconImg from "@/assets/images/client-img-windows/clash.png";
+import nekorayIconImg from "@/assets/images/client-img-windows/nekoray.png";
+import singboxWindowsIconImg from "@/assets/images/client-img-windows/singbox.png";
+import hiddifyWindowsIconImg from "@/assets/images/client-img-windows/hiddify.png";
+import clashXIconImg from "@/assets/images/client-img-macos/clashx.png";
+import clashMetaXIconImg from "@/assets/images/client-img-macos/clashmetax.png";
+import surgeMacIconImg from "@/assets/images/client-img-macos/Surge.png";
+import stashMacIconImg from "@/assets/images/client-img-macos/stash.png";
+import quantumultXMacIconImg from "@/assets/images/client-img-macos/quantumultx.png";
+import singboxMacIconImg from "@/assets/images/client-img-macos/singbox.png";
+import hiddifyMacIconImg from "@/assets/images/client-img-macos/hiddify.png";
 
-import {cleanupResources, createTimer} from '@/utils/componentLifecycle';
+import { cleanupResources, createTimer } from "@/utils/componentLifecycle";
 
 const md = new MarkdownIt({
   html: true,
@@ -785,26 +1151,30 @@ const md = new MarkdownIt({
 
 md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   const token = tokens[idx];
-  const hrefIndex = token.attrIndex('href');
-  let href = '';
+  const hrefIndex = token.attrIndex("href");
+  let href = "";
 
   if (hrefIndex >= 0) {
     href = token.attrs[hrefIndex][1];
   }
 
-  if (href.includes('#eztheme-btn') || href.includes('class=eztheme-btn') || href.includes('?eztheme-btn')) {
+  if (
+    href.includes("#eztheme-btn") ||
+    href.includes("class=eztheme-btn") ||
+    href.includes("?eztheme-btn")
+  ) {
     token.attrs[hrefIndex][1] = href
-        .replace('#eztheme-btn', '')
-        .replace('class=eztheme-btn', '')
-        .replace('?eztheme-btn', '');
+      .replace("#eztheme-btn", "")
+      .replace("class=eztheme-btn", "")
+      .replace("?eztheme-btn", "");
 
-    const classIndex = token.attrIndex('class');
+    const classIndex = token.attrIndex("class");
     if (classIndex < 0) {
-      token.attrPush(['class', 'eztheme-btn']);
+      token.attrPush(["class", "eztheme-btn"]);
     } else {
       const classes = token.attrs[classIndex][1];
-      if (!classes.includes('eztheme-btn')) {
-        token.attrs[classIndex][1] = classes + ' eztheme-btn';
+      if (!classes.includes("eztheme-btn")) {
+        token.attrs[classIndex][1] = classes + " eztheme-btn";
       }
     }
   }
@@ -813,7 +1183,7 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
 };
 
 export default {
-  name: 'UserDashboard',
+  name: "UserDashboard",
   components: {
     IconBox,
     IconSend,
@@ -854,10 +1224,10 @@ export default {
     IconAlertTriangle,
     IconX,
     IconCalendarPlus,
-    CommonDialog
+    CommonDialog,
   },
   setup() {
-    const {t, locale} = useI18n();
+    const { t, locale } = useI18n();
     const router = useRouter();
     const clientConfig = reactive(CLIENT_CONFIG);
     const notices = ref([]);
@@ -865,12 +1235,12 @@ export default {
     const userPlan = ref({
       deviceLimit: null,
       aliveIp: 0,
-      resetDay: null
+      resetDay: null,
     });
     const qrCodeLoading = ref(true);
-    const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription)
+    const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription);
 
-    const languageChangedSignal = inject('languageChangedSignal', ref(0));
+    const languageChangedSignal = inject("languageChangedSignal", ref(0));
 
     const shadowrocketIcon = shadowrocketIconImg;
     const surgeIcon = surgeIconImg;
@@ -903,32 +1273,32 @@ export default {
     const hiddifyMacIcon = hiddifyMacIconImg;
 
     const userStats = reactive({
-      remainingTraffic: '',
-      remainingDays: '',
-      accountBalance: '0.00',
+      remainingTraffic: "",
+      remainingDays: "",
+      accountBalance: "0.00",
       pendingOrders: 0,
       pendingTickets: 0,
-      userEmail: '',
-      isRemainingDaysPermanent: false
+      userEmail: "",
+      isRemainingDaysPermanent: false,
     });
-    const userBalance = ref('0.00');
-    const currencySymbol = ref('$');
+    const userBalance = ref("0.00");
+    const currencySymbol = ref("$");
     const hasPlan = ref(true);
     const currentNoticeIndex = ref(0);
     const showNoticeDetails = ref(false);
     const showImportCard = ref(false);
     const showQrCode = ref(false);
-    const {showToast} = useToast();
-    const qrCodeUrl = ref('');
+    const { showToast } = useToast();
+    const qrCodeUrl = ref("");
 
     //提前开启下月
-    const allowNewPeriod = ref('')
+    const allowNewPeriod = ref("");
 
     const platforms = [
-      {id: 'ios', icon: 'IconBrandApple'},
-      {id: 'android', icon: 'IconBrandAndroid'},
-      {id: 'windows', icon: 'IconBrandWindows'},
-      {id: 'macos', icon: 'IconBrandFinder'}
+      { id: "ios", icon: "IconBrandApple" },
+      { id: "android", icon: "IconBrandAndroid" },
+      { id: "windows", icon: "IconBrandWindows" },
+      { id: "macos", icon: "IconBrandFinder" },
     ];
 
     const activePlatform = ref(detectUserPlatform());
@@ -937,18 +1307,18 @@ export default {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
       if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        return 'ios';
+        return "ios";
       }
 
       if (/android/i.test(userAgent)) {
-        return 'android';
+        return "android";
       }
 
       if (/Mac/.test(userAgent)) {
-        return 'macos';
+        return "macos";
       }
 
-      return 'windows';
+      return "windows";
     }
 
     const loading = reactive({
@@ -956,42 +1326,49 @@ export default {
       userStats: true,
       notices: true,
       userPlan: true,
-      subscribe: true
+      subscribe: true,
     });
 
     const waterAnimationState = reactive({
       canAnimate: false,
-      initialized: false
+      initialized: false,
     });
 
-    watch(() => [loading.userStats, loading.userInfo], ([userStatsLoading, userInfoLoading]) => {
-      if (!userStatsLoading && !userInfoLoading) {
-        setTimeout(() => {
-          waterAnimationState.canAnimate = true;
-          waterAnimationState.initialized = true;
-        }, 500);
-      }
-    }, {immediate: false, flush: 'post'});
+    watch(
+      () => [loading.userStats, loading.userInfo],
+      ([userStatsLoading, userInfoLoading]) => {
+        if (!userStatsLoading && !userInfoLoading) {
+          setTimeout(() => {
+            waterAnimationState.canAnimate = true;
+            waterAnimationState.initialized = true;
+          }, 500);
+        }
+      },
+      { immediate: false, flush: "post" }
+    );
 
-    watch(() => locale.value, () => {
-      if (userPlan.value.isExpireDatePermanent) {
-        userPlan.value.expireDate = t('dashboard.permanent');
+    watch(
+      () => locale.value,
+      () => {
+        if (userPlan.value.isExpireDatePermanent) {
+          userPlan.value.expireDate = t("dashboard.permanent");
+        }
       }
-    });
+    );
 
     const openDocumentation = () => {
-      router.push('/docs');
+      router.push("/docs");
     };
 
     const downloadClient = (platform) => {
       const downloadUrl = clientConfig.clientLinks[platform];
       if (downloadUrl) {
-        window.open(downloadUrl, '_blank');
+        window.open(downloadUrl, "_blank");
       }
     };
 
     const goToShop = () => {
-      router.push('/shop');
+      router.push("/shop");
     };
 
     const userPlanId = ref(null);
@@ -1014,38 +1391,33 @@ export default {
     };
     const showPopup = ref(false);
     const popupConfig = reactive({
+      title: t("invite.withdraw.tip"),
 
-      title: t('invite.withdraw.tip'),
-
-      content: t('dashboard.resetDataCycleNotice'),
+      content: t("dashboard.resetDataCycleNotice"),
 
       cooldownHours: 0,
 
-      closeWaitSeconds: 0
-
+      closeWaitSeconds: 0,
     });
     const handlePopupClose = () => {
-
       showPopup.value = false;
       // console.log(showPopup.value,'111111111')
       // nextPeriod()
-
     };
     const handlePopupConfirm = async () => {
       try {
-        const response = await setNextPeriod()
-        console.log(response)
+        const response = await setNextPeriod();
+        console.log(response);
         if (response.data) {
-          await fetchSubscribe()
-          showToast(t('dashboard.nextPeriodSuccess'), 'success');
+          await fetchSubscribe();
+          showToast(t("dashboard.nextPeriodSuccess"), "success");
           showPopup.value = false;
         }
       } catch (error) {
-        console.error('提前开启下月失败:', error);
-        showToast(t('dashboard.nextPeriodError'), 'error');
+        console.error("提前开启下月失败:", error);
+        showToast(t("dashboard.nextPeriodError"), "error");
       }
-
-    }
+    };
 
     const closeResetTrafficModal = () => {
       showResetTrafficModal.value = false;
@@ -1059,47 +1431,48 @@ export default {
         return;
       }
 
-      console.log('开始请求：设置 isCreatingResetOrder = true');
+      console.log("开始请求：设置 isCreatingResetOrder = true");
       isCreatingResetOrder.value = true;
 
       try {
         if (!userPlanId.value) {
-          showToast(t('common.error_occurred'), 'error');
-          console.log('无套餐ID：重置 isCreatingResetOrder = false');
+          showToast(t("common.error_occurred"), "error");
+          console.log("无套餐ID：重置 isCreatingResetOrder = false");
           isCreatingResetOrder.value = false;
           return;
         }
 
-        console.log('正在调用API，当前状态：', isCreatingResetOrder.value);
+        console.log("正在调用API，当前状态：", isCreatingResetOrder.value);
         const response = await submitOrder({
           plan_id: userPlanId.value,
-          period: 'reset_price'
+          period: "reset_price",
         });
 
         if (response && response.data) {
-          console.log('API请求成功');
-          showToast(t('dashboard.resetTrafficSuccess'), 'success');
+          console.log("API请求成功");
+          showToast(t("dashboard.resetTrafficSuccess"), "success");
 
           closeResetTrafficModal();
 
           router.push({
-            path: '/payment',
+            path: "/payment",
             query: {
-              trade_no: response.data
-            }
+              trade_no: response.data,
+            },
           });
         }
       } catch (error) {
-        console.error('创建重置流量订单失败:', error);
-        showToast(error.message || t('common.error_occurred'), 'error');
+        console.error("创建重置流量订单失败:", error);
+        showToast(error.message || t("common.error_occurred"), "error");
       } finally {
-        console.log('请求结束：重置 isCreatingResetOrder = false');
+        console.log("请求结束：重置 isCreatingResetOrder = false");
         isCreatingResetOrder.value = false;
       }
     };
 
     const fetchUserInfo = async () => {
-      if (loading.userInfo === false && Object.keys(userPlan.value).length > 0) return;
+      if (loading.userInfo === false && Object.keys(userPlan.value).length > 0)
+        return;
 
       loading.userInfo = true;
       try {
@@ -1127,7 +1500,7 @@ export default {
             const diffTime = expiredDate - now;
 
             if (diffTime <= 0) {
-              userStats.remainingDays = '0';
+              userStats.remainingDays = "0";
               userStats.isRemainingDaysPermanent = false;
             } else {
               const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -1142,7 +1515,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error('获取用户信息失败:', error);
+        console.error("获取用户信息失败:", error);
       } finally {
         loading.userInfo = false;
       }
@@ -1152,48 +1525,58 @@ export default {
       if (userStats.isRemainingDaysPermanent) return false;
 
       const days = parseInt(userStats.remainingDays, 10);
-      return !isNaN(days) && days > 0 && days <= DASHBOARD_CONFIG.expiringThreshold;
+      return (
+        !isNaN(days) && days > 0 && days <= DASHBOARD_CONFIG.expiringThreshold
+      );
     });
 
     const hasIOSClients = computed(() => {
-      return clientConfig.showShadowrocket ||
-          clientConfig.showSurge ||
-          clientConfig.showStash ||
-          clientConfig.showQuantumultX ||
-          clientConfig.showHiddifyIOS ||
-          clientConfig.showSingboxIOS ||
-          clientConfig.showLoon;
+      return (
+        clientConfig.showShadowrocket ||
+        clientConfig.showSurge ||
+        clientConfig.showStash ||
+        clientConfig.showQuantumultX ||
+        clientConfig.showHiddifyIOS ||
+        clientConfig.showSingboxIOS ||
+        clientConfig.showLoon
+      );
     });
 
     const hasAndroidClients = computed(() => {
-      return clientConfig.showV2rayNG ||
-          clientConfig.showClashAndroid ||
-          clientConfig.showSurfboard ||
-          clientConfig.showClashMetaAndroid ||
-          clientConfig.showNekobox ||
-          clientConfig.showSingboxAndroid ||
-          clientConfig.showHiddifyAndroid;
+      return (
+        clientConfig.showV2rayNG ||
+        clientConfig.showClashAndroid ||
+        clientConfig.showSurfboard ||
+        clientConfig.showClashMetaAndroid ||
+        clientConfig.showNekobox ||
+        clientConfig.showSingboxAndroid ||
+        clientConfig.showHiddifyAndroid
+      );
     });
 
     const hasWindowsClients = computed(() => {
-      return clientConfig.showClashWindows ||
-          clientConfig.showFlClashWindows ||
-          clientConfig.showClashVergeWindows ||
-          clientConfig.showNekoray ||
-          clientConfig.showSingboxWindows ||
-          clientConfig.showHiddifyWindows;
+      return (
+        clientConfig.showClashWindows ||
+        clientConfig.showFlClashWindows ||
+        clientConfig.showClashVergeWindows ||
+        clientConfig.showNekoray ||
+        clientConfig.showSingboxWindows ||
+        clientConfig.showHiddifyWindows
+      );
     });
 
     const hasMacOSClients = computed(() => {
-      return clientConfig.showClashX ||
-          clientConfig.showFlClashMac ||
-          clientConfig.showClashVergeMac ||
-          clientConfig.showClashMetaX ||
-          clientConfig.showSurgeMac ||
-          clientConfig.showStashMac ||
-          clientConfig.showQuantumultXMac ||
-          clientConfig.showSingboxMac ||
-          clientConfig.showHiddifyMac;
+      return (
+        clientConfig.showClashX ||
+        clientConfig.showFlClashMac ||
+        clientConfig.showClashVergeMac ||
+        clientConfig.showClashMetaX ||
+        clientConfig.showSurgeMac ||
+        clientConfig.showStashMac ||
+        clientConfig.showQuantumultXMac ||
+        clientConfig.showSingboxMac ||
+        clientConfig.showHiddifyMac
+      );
     });
 
     const isExpired = computed(() => {
@@ -1204,11 +1587,16 @@ export default {
     });
 
     const isLowTraffic = computed(() => {
-      const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
+      const remainingMatch = userStats.remainingTraffic.match(
+        /(\d+(\.\d+)?)\s*([KMGT]?B)/i
+      );
 
-      if (!userPlan.value || !userPlan.value.totalTraffic || !remainingMatch) return false;
+      if (!userPlan.value || !userPlan.value.totalTraffic || !remainingMatch)
+        return false;
 
-      const totalMatch = userPlan.value.totalTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
+      const totalMatch = userPlan.value.totalTraffic.match(
+        /(\d+(\.\d+)?)\s*([KMGT]?B)/i
+      );
       if (!totalMatch) return false;
 
       const remainingValue = parseFloat(remainingMatch[1]);
@@ -1218,11 +1606,11 @@ export default {
       const totalUnit = totalMatch[3].toUpperCase();
 
       const unitToBytes = {
-        'B': 1,
-        'KB': 1024,
-        'MB': 1024 * 1024,
-        'GB': 1024 * 1024 * 1024,
-        'TB': 1024 * 1024 * 1024 * 1024
+        B: 1,
+        KB: 1024,
+        MB: 1024 * 1024,
+        GB: 1024 * 1024 * 1024,
+        TB: 1024 * 1024 * 1024 * 1024,
       };
 
       const remainingBytes = remainingValue * unitToBytes[remainingUnit];
@@ -1234,11 +1622,15 @@ export default {
 
       const percentage = (remainingBytes / totalBytes) * 100;
 
-      return percentage > 0 && percentage <= DASHBOARD_CONFIG.lowTrafficThreshold;
+      return (
+        percentage > 0 && percentage <= DASHBOARD_CONFIG.lowTrafficThreshold
+      );
     });
 
     const isTrafficDepleted = computed(() => {
-      const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
+      const remainingMatch = userStats.remainingTraffic.match(
+        /(\d+(\.\d+)?)\s*([KMGT]?B)/i
+      );
 
       if (!remainingMatch) return false;
 
@@ -1246,8 +1638,8 @@ export default {
       const remainingUnit = remainingMatch[3].toUpperCase();
 
       if (remainingValue === 0) return true;
-      if (remainingUnit === 'B' && remainingValue < 10) return true;
-      if (remainingUnit === 'KB' && remainingValue < 0.01) return true;
+      if (remainingUnit === "B" && remainingValue < 10) return true;
+      if (remainingUnit === "KB" && remainingValue < 0.01) return true;
 
       return false;
     });
@@ -1256,11 +1648,11 @@ export default {
       if (!DASHBOARD_CONFIG.enableResetTraffic) return false;
 
       switch (DASHBOARD_CONFIG.resetTrafficDisplayMode) {
-        case 'always':
+        case "always":
           return true;
-        case 'low':
+        case "low":
           return isLowTraffic.value || isTrafficDepleted.value;
-        case 'depleted':
+        case "depleted":
           return isTrafficDepleted.value;
         default:
           return false;
@@ -1270,19 +1662,17 @@ export default {
     const showRenewPlanButton = computed(() => {
       if (!DASHBOARD_CONFIG.enableRenewPlan) return false;
 
-
       switch (DASHBOARD_CONFIG.renewPlanDisplayMode) {
-        case 'always':
+        case "always":
           return true;
-        case 'expiring':
+        case "expiring":
           return isExpiringSoon.value;
-        case 'expired':
+        case "expired":
           return isExpired.value;
         default:
           return false;
       }
     });
-
 
     const fetchSubscribe = async () => {
       // 如果showResetTrafficButton为true，强制执行（跳过缓存逻辑）
@@ -1315,7 +1705,7 @@ export default {
             const diffTime = expiredDate - now;
 
             if (diffTime <= 0) {
-              userStats.remainingDays = '0';
+              userStats.remainingDays = "0";
               userStats.isRemainingDaysPermanent = false;
             } else {
               const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -1329,11 +1719,20 @@ export default {
             userStats.isRemainingDaysPermanent = true;
           }
           if (subscribe.transfer_enable) {
-            userPlan.value.totalTraffic = formatTraffic(subscribe.transfer_enable);
+            userPlan.value.totalTraffic = formatTraffic(
+              subscribe.transfer_enable
+            );
           }
-          if (subscribe.transfer_enable && subscribe.u !== undefined && subscribe.d !== undefined) {
+          if (
+            subscribe.transfer_enable &&
+            subscribe.u !== undefined &&
+            subscribe.d !== undefined
+          ) {
             const usedTraffic = subscribe.u + subscribe.d;
-            const remainingTraffic = Math.max(0, subscribe.transfer_enable - usedTraffic);
+            const remainingTraffic = Math.max(
+              0,
+              subscribe.transfer_enable - usedTraffic
+            );
             userStats.remainingTraffic = formatTraffic(remainingTraffic);
           }
           if (subscribe.reset_day) {
@@ -1356,7 +1755,7 @@ export default {
             const diffTime = expiredDate - now;
 
             if (diffTime <= 0) {
-              userStats.remainingDays = '0';
+              userStats.remainingDays = "0";
               userStats.isRemainingDaysPermanent = false;
             } else {
               const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -1369,14 +1768,19 @@ export default {
           }
         }
       } catch (error) {
-        console.error('获取订阅信息失败:', error);
+        console.error("获取订阅信息失败:", error);
       } finally {
         loading.subscribe = false;
       }
     };
 
     const fetchNotices = async () => {
-      if (loading.notices === false && notices.value.data && notices.value.data.length > 0) return;
+      if (
+        loading.notices === false &&
+        notices.value.data &&
+        notices.value.data.length > 0
+      )
+        return;
 
       loading.notices = true;
       try {
@@ -1393,10 +1797,18 @@ export default {
     };
 
     const checkForPopupNotices = () => {
-      if (!notices.value || !notices.value.data || notices.value.data.length === 0) return;
+      if (
+        !notices.value ||
+        !notices.value.data ||
+        notices.value.data.length === 0
+      )
+        return;
 
-      const popupNoticeIndex = notices.value.data.findIndex(notice =>
-          notice.tags && Array.isArray(notice.tags) && notice.tags.includes('\u5f39\u7a97')
+      const popupNoticeIndex = notices.value.data.findIndex(
+        (notice) =>
+          notice.tags &&
+          Array.isArray(notice.tags) &&
+          notice.tags.includes("\u5f39\u7a97")
       );
 
       if (popupNoticeIndex !== -1) {
@@ -1406,7 +1818,7 @@ export default {
         if (!sessionStorage.getItem(popupShownKey)) {
           currentNoticeIndex.value = popupNoticeIndex;
           showNoticeDetails.value = true;
-          sessionStorage.setItem(popupShownKey, 'true');
+          sessionStorage.setItem(popupShownKey, "true");
           nextTick(() => {
             updateModalHeight();
           });
@@ -1415,29 +1827,34 @@ export default {
     };
 
     const fetchUserStats = async () => {
-      if (loading.userStats === false && userStats.remainingTraffic !== '0 GB') return;
+      if (loading.userStats === false && userStats.remainingTraffic !== "0 GB")
+        return;
 
       loading.userStats = true;
       try {
         const response = await getUserStats();
-        if (response.data && Array.isArray(response.data) && response.data.length >= 2) {
+        if (
+          response.data &&
+          Array.isArray(response.data) &&
+          response.data.length >= 2
+        ) {
           const stats = response.data;
           userStats.pendingOrders = stats[0];
           userStats.pendingTickets = stats[1];
         }
       } catch (error) {
-        console.error('获取统计数据失败:', error);
+        console.error("获取统计数据失败:", error);
       } finally {
         loading.userStats = false;
       }
     };
 
     const formatTraffic = (bytes) => {
-      if (bytes === 0) return '0 B';
+      if (bytes === 0) return "0 B";
       const k = 1024;
-      const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+      const sizes = ["B", "KB", "MB", "GB", "TB", "PB"];
       const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
     };
 
     const hasPendingItems = computed(() => {
@@ -1468,7 +1885,7 @@ export default {
     };
 
     const formatDate = (dateString) => {
-      if (!dateString) return '';
+      if (!dateString) return "";
       const date = new Date(dateString * 1000);
       return date.toLocaleDateString();
     };
@@ -1481,23 +1898,23 @@ export default {
             width: 200,
             margin: 2,
             color: {
-              dark: '#000000',
-              light: '#ffffff'
-            }
+              dark: "#000000",
+              light: "#ffffff",
+            },
           })
-              .then(url => {
-                qrCodeUrl.value = url;
-                qrCodeLoading.value = false;
-              })
-              .catch(err => {
-                console.error('二维码生成失败:', err);
-                qrCodeLoading.value = false;
-                showToast(t('dashboard.qrCodeGenerationFailed'), 'error', 3000);
-              });
+            .then((url) => {
+              qrCodeUrl.value = url;
+              qrCodeLoading.value = false;
+            })
+            .catch((err) => {
+              console.error("二维码生成失败:", err);
+              qrCodeLoading.value = false;
+              showToast(t("dashboard.qrCodeGenerationFailed"), "error", 3000);
+            });
         } catch (error) {
-          console.error('生成二维码失败:', error);
+          console.error("生成二维码失败:", error);
           qrCodeLoading.value = false;
-          showToast(t('dashboard.qrCodeGenerationFailed'), 'error', 3000);
+          showToast(t("dashboard.qrCodeGenerationFailed"), "error", 3000);
         }
       }
     };
@@ -1509,38 +1926,39 @@ export default {
     const copySubscription = () => {
       if (userPlan.value.subscribeUrl) {
         const copyWithAPI = () => {
-          navigator.clipboard.writeText(userPlan.value.subscribeUrl)
-              .then(() => {
-                showToast(t('dashboard.subscriptionCopied'), 'success', 3000);
-              })
-              .catch(() => {
-                showToast(t('dashboard.copyFailed'), 'error', 3000);
-              });
+          navigator.clipboard
+            .writeText(userPlan.value.subscribeUrl)
+            .then(() => {
+              showToast(t("dashboard.subscriptionCopied"), "success", 3000);
+            })
+            .catch(() => {
+              showToast(t("dashboard.copyFailed"), "error", 3000);
+            });
         };
 
         const copyWithFallback = () => {
           try {
-            const textarea = document.createElement('textarea');
+            const textarea = document.createElement("textarea");
             textarea.value = userPlan.value.subscribeUrl;
-            textarea.style.position = 'fixed';
-            textarea.style.left = '0';
-            textarea.style.top = '0';
-            textarea.style.opacity = '0';
+            textarea.style.position = "fixed";
+            textarea.style.left = "0";
+            textarea.style.top = "0";
+            textarea.style.opacity = "0";
             document.body.appendChild(textarea);
             textarea.focus();
             textarea.select();
 
-            const successful = document.execCommand('copy');
+            const successful = document.execCommand("copy");
             document.body.removeChild(textarea);
 
             if (successful) {
-              showToast(t('dashboard.subscriptionCopied'), 'success', 3000);
+              showToast(t("dashboard.subscriptionCopied"), "success", 3000);
             } else {
-              showToast(t('dashboard.copyFailed'), 'error', 3000);
+              showToast(t("dashboard.copyFailed"), "error", 3000);
             }
           } catch (err) {
-            console.error('使用后备方法复制失败:', err);
-            showToast(t('dashboard.copyFailed'), 'error', 3000);
+            console.error("使用后备方法复制失败:", err);
+            showToast(t("dashboard.copyFailed"), "error", 3000);
           }
         };
 
@@ -1554,72 +1972,99 @@ export default {
 
     const importToClient = (clientType) => {
       if (!userPlan.value.subscribeUrl) {
-        showToast(t('dashboard.noSubscription'), 'error', 3000);
+        showToast(t("dashboard.noSubscription"), "error", 3000);
         return;
       }
 
       const subscribeUrl = userPlan.value.subscribeUrl;
-      const siteName = SITE_CONFIG.siteName || '订阅';
+      const siteName = SITE_CONFIG.siteName || "订阅";
 
-      let url = '';
+      let url = "";
       let shouldUseCurrentWindow = true;
 
       try {
         switch (clientType) {
-          case 'shadowrocket':
-            url = `shadowrocket://add/sub://${window.btoa(subscribeUrl).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')}?remark=${encodeURIComponent(siteName)}`;
+          case "shadowrocket":
+            url = `shadowrocket://add/sub://${window
+              .btoa(subscribeUrl)
+              .replace(/\+/g, "-")
+              .replace(/\//g, "_")
+              .replace(/=+$/, "")}?remark=${encodeURIComponent(siteName)}`;
             break;
-          case 'surge':
-          case 'surge-mac':
-            url = `surge:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+          case "surge":
+          case "surge-mac":
+            url = `surge:///install-config?url=${encodeURIComponent(
+              subscribeUrl
+            )}&name=${encodeURIComponent(siteName)}`;
             break;
-          case 'stash':
-          case 'stash-mac':
-            url = `stash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+          case "stash":
+          case "stash-mac":
+            url = `stash://install-config?url=${encodeURIComponent(
+              subscribeUrl
+            )}&name=${encodeURIComponent(siteName)}`;
             break;
-          case 'quantumultx':
-          case 'quantumultx-mac':
-            url = `quantumult-x:///update-configuration?remote-resource=${encodeURI(JSON.stringify({server_remote: [`${subscribeUrl}, tag=${encodeURIComponent(siteName)}`,],}))}`;
+          case "quantumultx":
+          case "quantumultx-mac":
+            url = `quantumult-x:///update-configuration?remote-resource=${encodeURI(
+              JSON.stringify({
+                server_remote: [
+                  `${subscribeUrl}, tag=${encodeURIComponent(siteName)}`,
+                ],
+              })
+            )}`;
             break;
-          case 'loon':
-            url = `loon://import?nodelist=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+          case "loon":
+            url = `loon://import?nodelist=${encodeURIComponent(
+              subscribeUrl
+            )}&name=${encodeURIComponent(siteName)}`;
             break;
-          case 'v2rayng':
-            url = `v2rayng://install-sub?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
+          case "v2rayng":
+            url = `v2rayng://install-sub?url=${encodeURIComponent(
+              subscribeUrl
+            )}#${encodeURIComponent(siteName)}`;
             break;
-          case 'clash':
-          case 'clash-android':
-          case 'clash-meta-android':
-          case 'flclash':
-          case 'clashverge':
-          case 'nekobox':
-          case 'nekoray':
-          case 'clashx':
-          case 'clashx-meta':
-            url = `clash://install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+          case "clash":
+          case "clash-android":
+          case "clash-meta-android":
+          case "flclash":
+          case "clashverge":
+          case "nekobox":
+          case "nekoray":
+          case "clashx":
+          case "clashx-meta":
+            url = `clash://install-config?url=${encodeURIComponent(
+              subscribeUrl
+            )}&name=${encodeURIComponent(siteName)}`;
             break;
-          case 'surfboard':
-            url = `surfboard:///install-config?url=${encodeURIComponent(subscribeUrl)}&name=${encodeURIComponent(siteName)}`;
+          case "surfboard":
+            url = `surfboard:///install-config?url=${encodeURIComponent(
+              subscribeUrl
+            )}&name=${encodeURIComponent(siteName)}`;
             break;
-          case 'singbox-ios':
-          case 'singbox-android':
-          case 'singbox-windows':
-          case 'singbox-macos':
-            url = `sing-box://import-remote-profile?url=${encodeURIComponent(subscribeUrl)}#${encodeURIComponent(siteName)}`;
+          case "singbox-ios":
+          case "singbox-android":
+          case "singbox-windows":
+          case "singbox-macos":
+            url = `sing-box://import-remote-profile?url=${encodeURIComponent(
+              subscribeUrl
+            )}#${encodeURIComponent(siteName)}`;
             break;
-          case 'hiddify-android':
-          case 'hiddify-windows':
-          case 'hiddify-macos':
-          case 'hiddify-ios':
-            url = `hiddify://import/${subscribeUrl}#${encodeURIComponent(siteName)}`;
+          case "hiddify-android":
+          case "hiddify-windows":
+          case "hiddify-macos":
+          case "hiddify-ios":
+            url = `hiddify://import/${subscribeUrl}#${encodeURIComponent(
+              siteName
+            )}`;
             break;
           default:
-            navigator.clipboard.writeText(subscribeUrl)
+            navigator.clipboard
+              .writeText(subscribeUrl)
               .then(() => {
-                showToast(t('dashboard.subscriptionCopied'), 'success', 3000);
+                showToast(t("dashboard.subscriptionCopied"), "success", 3000);
               })
               .catch(() => {
-                showToast(t('dashboard.copyFailed'), 'error', 3000);
+                showToast(t("dashboard.copyFailed"), "error", 3000);
               });
             return;
         }
@@ -1628,19 +2073,19 @@ export default {
           if (shouldUseCurrentWindow) {
             window.location.href = url;
           } else {
-            window.open(url, '_blank');
+            window.open(url, "_blank");
           }
         }
       } catch (error) {
-        console.error('导入客户端失败:', error);
+        console.error("导入客户端失败:", error);
       }
     };
 
     const goToSupport = () => {
       if (window.innerWidth < 905) {
-        router.push('/mobile/tickets');
+        router.push("/mobile/tickets");
       } else {
-        router.push('/tickets');
+        router.push("/tickets");
       }
     };
 
@@ -1649,11 +2094,11 @@ export default {
       if (showImportCard.value) {
         nextTick(() => {
           setTimeout(() => {
-            const importCard = document.querySelector('.import-card');
+            const importCard = document.querySelector(".import-card");
             if (importCard) {
               importCard.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
+                behavior: "smooth",
+                block: "center",
               });
             }
           }, 100);
@@ -1673,13 +2118,15 @@ export default {
           }
         }
       } catch (error) {
-        console.error('获取用户配置失败:', error);
+        console.error("获取用户配置失败:", error);
       }
     };
 
     const updateAccountBalanceDisplay = () => {
       if (userBalance.value) {
-        userStats.accountBalance = `${currencySymbol.value}${(parseFloat(userBalance.value) / 100).toFixed(2)}`;
+        userStats.accountBalance = `${currencySymbol.value}${(
+          parseFloat(userBalance.value) / 100
+        ).toFixed(2)}`;
       }
     };
 
@@ -1697,13 +2144,16 @@ export default {
       updateQRCodeUrl();
     });
 
-    watch(() => userPlan.value.subscribeUrl, () => {
-      updateQRCodeUrl();
-    });
+    watch(
+      () => userPlan.value.subscribeUrl,
+      () => {
+        updateQRCodeUrl();
+      }
+    );
 
     const processedNoticeContent = computed(() => {
       if (!notices.value?.data?.[currentNoticeIndex.value]?.content) {
-        return '';
+        return "";
       }
 
       const content = notices.value.data[currentNoticeIndex.value].content;
@@ -1711,31 +2161,36 @@ export default {
       const hasHtml = /<[a-z][\s\S]*>/i.test(content);
 
       if (hasHtml) {
-        let processedContent = content.replace(/\n/g, '<br>');
+        let processedContent = content.replace(/\n/g, "<br>");
 
-        const tempDiv = document.createElement('div');
+        const tempDiv = document.createElement("div");
         tempDiv.innerHTML = processedContent;
 
-        const buttons = tempDiv.querySelectorAll('button, a');
-        buttons.forEach(button => {
-          if (button.className && button.className.includes('eztheme-btn')) {
-            button.classList.remove('markdown-link');
-            button.style.textDecoration = 'none';
-            button.style.borderBottom = 'none';
-            button.setAttribute('data-no-markdown-style', 'true');
+        const buttons = tempDiv.querySelectorAll("button, a");
+        buttons.forEach((button) => {
+          if (button.className && button.className.includes("eztheme-btn")) {
+            button.classList.remove("markdown-link");
+            button.style.textDecoration = "none";
+            button.style.borderBottom = "none";
+            button.setAttribute("data-no-markdown-style", "true");
           }
 
-          if (button.tagName.toLowerCase() === 'a') {
-            const href = button.getAttribute('href');
-            if (href && (href.includes('#eztheme-btn') || href.includes('?eztheme-btn') || href.includes('class=eztheme-btn'))) {
+          if (button.tagName.toLowerCase() === "a") {
+            const href = button.getAttribute("href");
+            if (
+              href &&
+              (href.includes("#eztheme-btn") ||
+                href.includes("?eztheme-btn") ||
+                href.includes("class=eztheme-btn"))
+            ) {
               button.href = href
-                  .replace('#eztheme-btn', '')
-                  .replace('?eztheme-btn', '')
-                  .replace('class=eztheme-btn', '');
-              button.classList.add('eztheme-btn');
-              button.style.textDecoration = 'none';
-              button.style.borderBottom = 'none';
-              button.setAttribute('data-no-markdown-style', 'true');
+                .replace("#eztheme-btn", "")
+                .replace("?eztheme-btn", "")
+                .replace("class=eztheme-btn", "");
+              button.classList.add("eztheme-btn");
+              button.style.textDecoration = "none";
+              button.style.borderBottom = "none";
+              button.setAttribute("data-no-markdown-style", "true");
             }
           }
         });
@@ -1755,7 +2210,7 @@ export default {
       const availableHeight = windowHeight.value * (isMobile ? 0.75 : 0.8);
 
       noticeModalStyle.value = {
-        maxHeight: `${availableHeight}px`
+        maxHeight: `${availableHeight}px`,
       };
     };
 
@@ -1768,16 +2223,16 @@ export default {
     };
 
     onMounted(() => {
-      window.addEventListener('resize', handleResize);
+      window.addEventListener("resize", handleResize);
     });
 
     onBeforeUnmount(() => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     });
 
     const renewPlan = () => {
       if (!userPlanId.value) {
-        showToast(t('dashboard.noPlanToRenew'), 'error', 3000);
+        showToast(t("dashboard.noPlanToRenew"), "error", 3000);
         return;
       }
 
@@ -1787,7 +2242,7 @@ export default {
     const isXiaoPanel = isXiaoV2board();
 
     const navigateToDeposit = () => {
-      router.push('/wallet/deposit');
+      router.push("/wallet/deposit");
     };
 
     const showDeviceLimit = computed(() => {
@@ -1800,15 +2255,25 @@ export default {
     const startAutoRotateNotices = () => {
       if (!autoRotateNotices.value) return;
 
-      createTimer(timers, 'noticeRotation', () => {
-        if (notices.value && notices.value.data && notices.value.data.length > 1) {
-          nextNotice();
-        }
-      }, 8000, true);
+      createTimer(
+        timers,
+        "noticeRotation",
+        () => {
+          if (
+            notices.value &&
+            notices.value.data &&
+            notices.value.data.length > 1
+          ) {
+            nextNotice();
+          }
+        },
+        8000,
+        true
+      );
     };
 
     onActivated(() => {
-      console.log('Dashboard组件被激活');
+      console.log("Dashboard组件被激活");
       if (needRefreshData.value) {
         fetchUserInfo();
         fetchUserStats();
@@ -1820,7 +2285,7 @@ export default {
     });
 
     onDeactivated(() => {
-      console.log('Dashboard组件被停用');
+      console.log("Dashboard组件被停用");
       needRefreshData.value = true;
 
       cleanupResources(timers, listeners);
@@ -1833,11 +2298,16 @@ export default {
     const needRefreshData = ref(false);
 
     const trafficPercentage = computed(() => {
-      const remainingMatch = userStats.remainingTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
+      const remainingMatch = userStats.remainingTraffic.match(
+        /(\d+(\.\d+)?)\s*([KMGT]?B)/i
+      );
 
-      if (!userPlan.value || !userPlan.value.totalTraffic || !remainingMatch) return 0;
+      if (!userPlan.value || !userPlan.value.totalTraffic || !remainingMatch)
+        return 0;
 
-      const totalMatch = userPlan.value.totalTraffic.match(/(\d+(\.\d+)?)\s*([KMGT]?B)/i);
+      const totalMatch = userPlan.value.totalTraffic.match(
+        /(\d+(\.\d+)?)\s*([KMGT]?B)/i
+      );
       if (!totalMatch) return 0;
 
       const remainingValue = parseFloat(remainingMatch[1]);
@@ -1847,11 +2317,11 @@ export default {
       const totalUnit = totalMatch[3].toUpperCase();
 
       const unitToBytes = {
-        'B': 1,
-        'KB': 1024,
-        'MB': 1024 * 1024,
-        'GB': 1024 * 1024 * 1024,
-        'TB': 1024 * 1024 * 1024 * 1024
+        B: 1,
+        KB: 1024,
+        MB: 1024 * 1024,
+        GB: 1024 * 1024 * 1024,
+        TB: 1024 * 1024 * 1024 * 1024,
       };
 
       const remainingBytes = remainingValue * unitToBytes[remainingUnit];
@@ -1859,7 +2329,10 @@ export default {
 
       if (totalBytes === 0) return 0;
 
-      return Math.min(Math.max(Math.round((remainingBytes / totalBytes) * 100), 0), 100);
+      return Math.min(
+        Math.max(Math.round((remainingBytes / totalBytes) * 100), 0),
+        100
+      );
     });
 
     return {
@@ -1956,7 +2429,7 @@ export default {
       allowNewPeriod,
       showImportSubscription,
     };
-  }
+  },
 };
 </script>
 
@@ -2130,7 +2603,8 @@ export default {
       align-items: center;
       gap: 16px;
       padding: 18px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease,
+        background-color 0.3s ease, border-color 0.3s ease;
       overflow: hidden;
       border: 1px solid var(--border-color);
 
@@ -2160,7 +2634,7 @@ export default {
         }
 
         &:after {
-          content: '';
+          content: "";
           position: absolute;
           top: 0;
           left: 0;
@@ -2168,7 +2642,8 @@ export default {
         }
       }
 
-      .stats-icon, .stats-info {
+      .stats-icon,
+      .stats-info {
         position: relative;
         z-index: 1;
       }
@@ -2237,7 +2712,6 @@ export default {
       }
     }
   }
-
 
   .download-card {
     .download-options {
@@ -2315,7 +2789,6 @@ export default {
       }
     }
   }
-
 
   .notice-card {
     margin-bottom: 24px;
@@ -2437,7 +2910,6 @@ export default {
     }
   }
 
-
   .pending-items-card {
     margin-bottom: 24px;
 
@@ -2491,13 +2963,12 @@ export default {
   }
 }
 
-
 .skeleton-loading {
   overflow: hidden;
   position: relative;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     right: 0;
@@ -2505,11 +2976,11 @@ export default {
     left: 0;
     transform: translateX(-100%);
     background-image: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0) 0,
-            rgba(255, 255, 255, 0.2) 20%,
-            rgba(255, 255, 255, 0.5) 60%,
-            rgba(255, 255, 255, 0) 100%
+      90deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0) 100%
     );
     animation: shimmer 2s infinite;
     z-index: 1;
@@ -2522,8 +2993,9 @@ export default {
   }
 }
 
-
-.btn-primary, .btn-outline, .btn-action {
+.btn-primary,
+.btn-outline,
+.btn-action {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2563,7 +3035,6 @@ export default {
     transform: translateY(-1px);
   }
 
-
   &.btn-highlight-btnbgcolor {
     position: relative;
     overflow: hidden;
@@ -2579,17 +3050,17 @@ export default {
     }
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 0;
       left: -100%;
       width: 50%;
       height: 100%;
       background: linear-gradient(
-              to right,
-              rgba(255, 255, 255, 0) 0%,
-              rgba(255, 255, 255, 0.2) 50%,
-              rgba(255, 255, 255, 0) 100%
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0) 100%
       );
       animation: card-shimmer 3s infinite;
       transform: skewX(-25deg);
@@ -2624,7 +3095,6 @@ export default {
   }
 }
 
-
 .fade-slide-enter-active,
 .fade-slide-leave-active {
   transition: all 0.3s ease;
@@ -2639,7 +3109,6 @@ export default {
   opacity: 0;
   transform: translateX(-20px);
 }
-
 
 @media (max-width: 768px) {
   .dashboard-container {
@@ -2754,7 +3223,6 @@ export default {
   }
 }
 
-
 .stats-card.doc-card {
   cursor: pointer;
   transition: all 0.3s ease;
@@ -2784,10 +3252,10 @@ export default {
   width: 50%;
   height: 100%;
   background: linear-gradient(
-          to right,
-          rgba(255, 255, 255, 0) 0%,
-          rgba(255, 255, 255, 0.2) 50%,
-          rgba(255, 255, 255, 0) 100%
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
   );
   animation: card-shimmer 3s infinite;
   transform: skewX(-25deg);
@@ -2802,13 +3270,11 @@ export default {
   }
 }
 
-
 .btn-active {
   background-color: rgba(var(--theme-color-rgb), 0.1);
   color: var(--theme-color);
   border-color: var(--theme-color);
 }
-
 
 .import-card {
   margin-bottom: 24px;
@@ -2867,7 +3333,7 @@ export default {
 
     &::before,
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       width: 100%;
       height: 2px;
@@ -2986,7 +3452,6 @@ export default {
   }
 }
 
-
 .qrcode-modal-overlay {
   position: fixed;
   top: 0;
@@ -3048,7 +3513,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--theme-color-rgb), 0.02),
+    transparent
+  );
 
   img {
     width: 220px;
@@ -3122,7 +3591,6 @@ export default {
   }
 }
 
-
 .platform-selector {
   display: flex;
   gap: 10px;
@@ -3165,7 +3633,6 @@ export default {
   }
 }
 
-
 .client-icon {
   width: 24px;
   height: 24px;
@@ -3195,7 +3662,6 @@ export default {
   }
 }
 
-
 .stats-card.warning-card {
   border-color: #ff9800;
   box-shadow: 0 4px 10px rgba(255, 152, 0, 0.15);
@@ -3224,9 +3690,6 @@ export default {
   }
 }
 
-
-
-
 .skeleton-card {
   width: 100%;
   border-radius: 16px;
@@ -3234,7 +3697,7 @@ export default {
   position: relative;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     right: 0;
@@ -3242,17 +3705,16 @@ export default {
     left: 0;
     transform: translateX(-100%);
     background-image: linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0) 0,
-            rgba(255, 255, 255, 0.2) 20%,
-            rgba(255, 255, 255, 0.5) 60%,
-            rgba(255, 255, 255, 0) 100%
+      90deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0) 100%
     );
     animation: shimmer 2s infinite;
     z-index: 1;
   }
 }
-
 
 .skeleton-header {
   height: 24px;
@@ -3282,7 +3744,6 @@ export default {
   margin-bottom: 0;
 }
 
-
 .dark-theme .skeleton-header,
 .dark-theme .skeleton-row,
 .dark-theme .skeleton-circle,
@@ -3290,7 +3751,6 @@ export default {
 .dark-theme .skeleton-row-xs {
   background-color: rgba(255, 255, 255, 0.08);
 }
-
 
 .skeleton-icon {
   width: 48px;
@@ -3324,7 +3784,6 @@ export default {
   position: relative;
 }
 
-
 .stats-card.skeleton-card {
   display: flex;
   align-items: center;
@@ -3337,7 +3796,7 @@ export default {
 }
 
 .stats-card.skeleton-card::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   right: 0;
@@ -3345,11 +3804,11 @@ export default {
   left: 0;
   transform: translateX(-100%);
   background-image: linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0) 0,
-          rgba(255, 255, 255, 0.2) 20%,
-          rgba(255, 255, 255, 0.5) 60%,
-          rgba(255, 255, 255, 0) 100%
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.5) 60%,
+    rgba(255, 255, 255, 0) 100%
   );
   animation: shimmer 2s infinite;
   z-index: 1;
@@ -3375,7 +3834,6 @@ export default {
   font-size: 14px;
   margin: 0;
 }
-
 
 .platform-selector {
   display: flex;
@@ -3419,7 +3877,6 @@ export default {
   }
 }
 
-
 @media (min-width: 1200px) {
   .stats-card.no-plan-card {
     padding: 25px 30px;
@@ -3439,7 +3896,6 @@ export default {
   }
 }
 
-
 .no-plan-actions {
   display: flex;
   align-items: center;
@@ -3457,7 +3913,6 @@ export default {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
 
 @media screen and (min-width: 769px) {
   .no-plan-content {
@@ -3492,7 +3947,6 @@ export default {
     max-width: none;
   }
 }
-
 
 .notice-modal-overlay {
   position: fixed;
@@ -3568,7 +4022,11 @@ export default {
   padding: 20px;
   overflow-y: auto;
   flex: 1;
-  background: linear-gradient(to bottom, rgba(var(--theme-color-rgb), 0.02), transparent);
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--theme-color-rgb), 0.02),
+    transparent
+  );
 
   .notice-content {
     font-size: 14px;
@@ -3601,7 +4059,8 @@ export default {
       border-radius: 8px;
     }
 
-    :deep(ul), :deep(ol) {
+    :deep(ul),
+    :deep(ol) {
       padding-left: 20px;
       margin-bottom: 16px;
 
@@ -3619,7 +4078,12 @@ export default {
       list-style-type: decimal;
     }
 
-    :deep(h1), :deep(h2), :deep(h3), :deep(h4), :deep(h5), :deep(h6) {
+    :deep(h1),
+    :deep(h2),
+    :deep(h3),
+    :deep(h4),
+    :deep(h5),
+    :deep(h6) {
       margin-top: 24px;
       margin-bottom: 16px;
       font-weight: 600;
@@ -3663,7 +4127,8 @@ export default {
       border-collapse: collapse;
       margin: 16px 0;
 
-      th, td {
+      th,
+      td {
         border: 1px solid var(--border-color);
         padding: 8px 12px;
         text-align: left;
@@ -3755,7 +4220,6 @@ export default {
   transform: scale(0.95);
 }
 
-
 @media (max-width: 768px) {
   .notice-modal-overlay {
     padding: 15px;
@@ -3782,7 +4246,6 @@ export default {
     }
   }
 }
-
 
 .modal-overlay {
   position: fixed;
@@ -3919,7 +4382,6 @@ export default {
   }
 }
 
-
 .modal-fade-enter-active,
 .modal-fade-leave-active {
   transition: opacity 0.3s ease;
@@ -3929,7 +4391,6 @@ export default {
 .modal-fade-leave-to {
   opacity: 0;
 }
-
 
 .loader-small {
   display: inline-block;
@@ -3941,7 +4402,6 @@ export default {
   animation: spin 1s linear infinite;
   margin-right: 8px;
 }
-
 
 .loading-container {
   display: flex;
@@ -3957,13 +4417,11 @@ export default {
     transform: rotate(360deg);
   }
 }
-
-
 </style>
 
 <!-- 全局样式，不受scoped限制 -->
 <style lang="scss">
-@use '@/assets/styles/no-plan-card' as *;
+@use "@/assets/styles/no-plan-card" as *;
 
 .stats-card.warning-card {
   border-color: #ff9800 !important;
@@ -3993,7 +4451,6 @@ export default {
   }
 }
 
-
 .eztheme-btn {
   display: inline-flex !important;
   align-items: center !important;
@@ -4015,7 +4472,10 @@ export default {
   border-color: transparent !important;
   width: auto !important;
 
-  &:hover, &:active, &:focus, &:visited {
+  &:hover,
+  &:active,
+  &:focus,
+  &:visited {
     background-color: rgba(var(--theme-color-rgb), 0.2) !important;
     transform: translateY(-1px) !important;
     box-shadow: 0 2px 8px rgba(var(--theme-color-rgb), 0.1) !important;
@@ -4036,7 +4496,6 @@ export default {
   }
 }
 
-
 a.eztheme-btn {
   background-image: none !important;
   background-repeat: no-repeat !important;
@@ -4045,12 +4504,12 @@ a.eztheme-btn {
   text-decoration: none !important;
   border-bottom: none !important;
 
-  &::after, &::before {
+  &::after,
+  &::before {
     display: none !important;
     content: none !important;
   }
 }
-
 
 .stats-card.balance-card.clickable {
   cursor: pointer;
@@ -4068,5 +4527,3 @@ a.eztheme-btn {
   color: var(--theme-color);
 }
 </style>
-
-
