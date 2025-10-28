@@ -30,7 +30,8 @@ export const config = {
     // 多个地址时，会按顺序检测可用性，并使用第一个可用的地址
     staticBaseUrl: [
       //   "https://vb2.bunsurf.xyz/api/v1",
-      "http://127.0.0.1/api/v1",
+      //   "http://127.0.0.1/api/v1",
+      "http://127.0.0.1",
     ],
 
     // 自动获取模式配置 (urlMode = 'auto'时使用)
@@ -42,8 +43,8 @@ export const config = {
       appendApiPath: true,
 
       // API路径
-      apiPath: "/api/v1",
-      //   apiPath: "/bunsurf/subscribe",
+      apiPath: "/bunsurf/api",
+      //   apiPath: "/api/v1",
     },
   },
 
