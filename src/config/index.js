@@ -196,11 +196,11 @@ export const config = {
 
     // 价格周期的显示顺序（从大到小）
     periodOrder: [
-      "three_year_price", // 三年
-      "two_year_price", // 两年
+      //   "three_year_price", // 三年
+      //   "two_year_price", // 两年
       "year_price", // 一年
       "half_year_price", // 半年
-      "quarter_price", // 季度
+      //   "quarter_price", // 季度
       "month_price", // 月付
       "onetime_price", // 一次性
     ],
@@ -208,7 +208,7 @@ export const config = {
     // 商店弹窗配置
     popup: {
       // 是否启用弹窗
-      enabled: true,
+      enabled: false,
 
       // 弹窗标题
       title: "用户须知",
@@ -536,7 +536,7 @@ export const config = {
   // 客服系统配置
   CUSTOMER_SERVICE_CONFIG: {
     // 是否启用客服系统
-    enabled: false,
+    enabled: true,
 
     // 客服系统类型: 'crisp' 或 'other'
     // 注意：当客服类型为crisp时，系统会自动向Crisp传递用户数据
@@ -544,7 +544,8 @@ export const config = {
     type: "crisp",
 
     // 客服系统JS代码，请将您的客服系统提供的嵌入代码粘贴在这里
-    customHtml: "",
+    customHtml:
+      '<script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="7da72933-809a-436e-b6bf-cd7af35fadcd";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>',
 
     // 客服系统嵌入模式: 'popup'=弹出式页面, 'embed'=嵌入到每个页面
     // 'popup'模式: 点击客服图标会跳转到单独的客服页面
@@ -558,13 +559,13 @@ export const config = {
     iconPosition: {
       // 桌面版图标距离左下角的距离
       desktop: {
-        left: "20px",
+        right: "20px",
         bottom: "20px",
       },
       // 移动版图标距离右下角的距离
       mobile: {
         right: "20px",
-        bottom: "100px",
+        bottom: "20px",
       },
     },
   },

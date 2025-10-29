@@ -209,18 +209,18 @@
           </div>
         </div>
         <template v-else>
-          <div class="card-header">
+          <!-- <div class="card-header">
             <h2 class="card-title">{{ $t("dashboard.subscriptionInfo") }}</h2>
-          </div>
+          </div> -->
           <div class="card-body">
-            <div class="subscription-info">
+            <!-- <div class="subscription-info">
               <div class="info-item">
                 <span class="info-label">{{ $t("dashboard.planName") }}</span>
                 <span class="info-value">{{
                   userPlan.name || $t("dashboard.noSubscription")
                 }}</span>
-              </div>
-              <div class="info-item">
+              </div> -->
+            <!-- <div class="info-item">
                 <span class="info-label">{{ $t("dashboard.expiryDate") }}</span>
                 <span class="info-value">
                   {{
@@ -229,26 +229,26 @@
                       : userPlan.expireDate || $t("dashboard.none")
                   }}
                 </span>
-              </div>
-              <div class="info-item">
+              </div> -->
+            <!-- <div class="info-item">
                 <span class="info-label">{{
                   $t("dashboard.planTraffic")
                 }}</span>
                 <span class="info-value">{{
                   userPlan.totalTraffic || "0 GB"
                 }}</span>
-              </div>
-              <!-- 添加下次重置时间，只有当resetDay存在时才显示 -->
-              <div class="info-item" v-if="userPlan.resetDay">
+              </div> -->
+            <!-- 添加下次重置时间，只有当resetDay存在时才显示 -->
+            <!-- <div class="info-item" v-if="userPlan.resetDay">
                 <span class="info-label">{{
                   $t("dashboard.nextResetTime")
                 }}</span>
                 <span class="info-value"
                   >{{ userPlan.resetDay }} {{ $t("dashboard.days") }}</span
                 >
-              </div>
-              <!-- 添加在线设备信息，仅当面板类型为 Xiao-board 时显示 -->
-              <div class="info-item" v-if="showDeviceLimit">
+              </div> -->
+            <!-- 添加在线设备信息，仅当面板类型为 Xiao-board 时显示 -->
+            <!-- <div class="info-item" v-if="showDeviceLimit">
                 <span class="info-label">{{
                   $t("dashboard.deviceLimit")
                 }}</span>
@@ -259,8 +259,8 @@
                       : `${userPlan.aliveIp} / ${userPlan.deviceLimit}`
                   }}
                 </span>
-              </div>
-            </div>
+              </div> -->
+            <!-- </div> -->
             <div class="subscription-actions">
               <button
                 v-if="showImportSubscription"
