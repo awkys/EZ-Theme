@@ -896,6 +896,130 @@
         </template>
       </div>
 
+      <!-- 套餐信息卡片 -->
+      <div
+        v-if="hasPlan"
+        class="dashboard-card subscription-card"
+        :class="{ 'card-animate': !loading.userInfo }"
+        style="animation-delay: 0.3s"
+      >
+        <div v-if="loading.userInfo" class="skeleton-card">
+          <div class="skeleton-header"></div>
+          <div class="skeleton-body">
+            <div class="skeleton-row"></div>
+            <div class="skeleton-row"></div>
+            <div class="skeleton-row"></div>
+          </div>
+        </div>
+        <template v-else>
+          <div class="card-header">
+            <h2 class="card-title">{{ $t("dashboard.subscriptionInfo") }}</h2>
+          </div>
+          <div class="card-body">
+            <div class="subscription-info">
+              <div class="info-item">
+                <span class="info-label">{{ $t("dashboard.planName") }}</span>
+                <span class="info-value">{{
+                  userPlan.name || $t("dashboard.noSubscription")
+                }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">{{ $t("dashboard.expiryDate") }}</span>
+                <span class="info-value">
+                  {{
+                    userPlan.isExpireDatePermanent
+                      ? $t("dashboard.permanent")
+                      : userPlan.expireDate || $t("dashboard.none")
+                  }}
+                </span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">{{
+                  $t("dashboard.planTraffic")
+                }}</span>
+                <span class="info-value">{{
+                  userPlan.totalTraffic || "0 GB"
+                }}</span>
+              </div>
+              <!-- 添加下次重置时间，只有当resetDay存在时才显示 -->
+              <div class="info-item" v-if="userPlan.resetDay">
+                <span class="info-label">{{
+                  $t("dashboard.nextResetTime")
+                }}</span>
+                <span class="info-value"
+                  >{{ userPlan.resetDay }} {{ $t("dashboard.days") }}</span
+                >
+              </div>
+              <!-- 添加在线设备信息，仅当面板类型为 Xiao-board 时显示 -->
+              <div class="info-item" v-if="showDeviceLimit">
+                <span class="info-label">{{
+                  $t("dashboard.deviceLimit")
+                }}</span>
+                <span class="info-value">
+                  {{
+                    userPlan.deviceLimit === null
+                      ? `${userPlan.aliveIp} / ${$t("dashboard.unlimited")}`
+                      : `${userPlan.aliveIp} / ${userPlan.deviceLimit}`
+                  }}
+                </span>
+              </div>
+            </div>
+            <!-- <div class="subscription-actions">
+              <button
+                v-if="showImportSubscription"
+                class="btn-outline"
+                :class="{
+                  'btn-active': showImportCard,
+                  'btn-highlight-btnbgcolor':
+                    DASHBOARD_CONFIG.importButtonHighlightBtnbgcolor,
+                }"
+                @click="toggleImportCard"
+              >
+                <IconShare :size="16" class="btn-icon" />
+                <span class="">{{ $t("dashboard.importSubscription") }}</span>
+              </button>
+              <button
+                v-if="showRenewPlanButton"
+                class="btn-outline renew-plan-btn"
+                :class="{
+                  'renew-warning': isExpiringSoon && !isExpired,
+                  'renew-danger': isExpired,
+                }"
+                @click="renewPlan"
+              >
+                <IconShoppingCart :size="16" class="btn-icon" />
+                <span class="">{{ $t("dashboard.renewPlan") }}</span>
+              </button> -->
+            <!-- 重置流量按钮 - 根据配置和流量状态显示 -->
+            <!-- <button
+                v-if="showResetTrafficButton"
+                class="btn-outline reset-traffic-btn"
+                :class="{
+                  'reset-warning': isLowTraffic && !isTrafficDepleted,
+                  'reset-danger': isTrafficDepleted,
+                }"
+                @click="openResetTrafficModal"
+              >
+                <IconRefresh :size="16" class="btn-icon" />
+                <span class="">{{ $t("dashboard.resetTraffic") }}</span>
+              </button> -->
+            <!-- <button
+                class="btn-outline"
+                v-if="allowNewPeriod === '1' && showResetTrafficButton"
+                @click="showPopup = true"
+              >
+                <IconCalendarPlus :size="16" class="btn-icon" />
+                <span>{{ $t("dashboard.activateDataCycleInAdvance") }}</span>
+              </button> -->
+            <!-- <button class="btn-outline" @click="goToSupport">
+                <IconMessage :size="16" class="btn-icon" />
+                <span class="">{{ $t("dashboard.ticketSupport") }}</span>
+              </button> -->
+            <!-- </div> -->
+          </div>
+        </template>
+      </div>
+
       <!-- 官方客户端下载区域 -->
       <!-- <div
         class="dashboard-card download-card"
