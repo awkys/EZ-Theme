@@ -31,7 +31,8 @@ export const config = {
     staticBaseUrl: [
       // "https://bun.xn--bwwx30f.top/api/v1",
       // "https://vip.bunsurf.xyz/api/v1",
-      "https://vb2.bunsurf.xyz/api/v1",
+      // "https://vb2.bunsurf.xyz/api/v1",
+      "https://vb.yercat.com/api/v1",
       //   "http://127.0.0.1/api/v1",
     ],
 
