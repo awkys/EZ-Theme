@@ -201,11 +201,11 @@ export const config = {
 
     // 价格周期的显示顺序（从大到小）
     periodOrder: [
-      //   "three_year_price", // 三年
-      //   "two_year_price", // 两年
+      "three_year_price", // 三年
+      "two_year_price", // 两年
       "year_price", // 一年
       "half_year_price", // 半年
-      //   "quarter_price", // 季度
+      "quarter_price", // 季度
       "month_price", // 月付
       "onetime_price", // 一次性
     ],
@@ -416,7 +416,7 @@ export const config = {
     qrcodeBackground: "#ffffff",
 
     // 是否自动检测支付状态 (true=启用自动检测, false=手动检测)
-    autoCheckPayment: false, // 默认启用
+    autoCheckPayment: true, // 默认启用
 
     // 自动检测支付状态的间隔时间 (毫秒)
     autoCheckInterval: 5000, // 默认5秒
@@ -425,7 +425,7 @@ export const config = {
     autoCheckMaxTimes: 60, // 默认60次
 
     // 是否对Safari浏览器使用支付弹窗模式，而不是直接跳转 (true=使用弹窗, false=直接跳转)
-    useSafariPaymentModal: false, // 默认开启
+    useSafariPaymentModal: true, // 默认开启
 
     // 是否自动选择第一个支付方式 (true=自动选择, false=需要用户手动选择)
     // 开启后，用户进入支付页面时将自动选择列表中的第一个支付方式，无需手动点击选择
@@ -449,7 +449,7 @@ export const config = {
   // 邀请页面配置
   INVITE_CONFIG: {
     // 是否在导航栏的邀请按钮上显示返利标记
-    showCommissionBadge: false,
+    showCommissionBadge: true,
 
     // 返佣记录每页显示数量（最小值为10，API限制每次请求最少需要返回10条记录）
     recordsPerPage: 10,
@@ -457,9 +457,9 @@ export const config = {
     // 邀请链接配置
     inviteLinkConfig: {
       // 链接模式：'auto'=自动使用当前站点域名，'custom'=使用自定义域名
-      linkMode: "auto",
+      linkMode: "custom",
       // 自定义域名，当linkMode为'custom'时使用
-      customDomain: "https://example.com",
+      customDomain: "https://bun.xn--bwwx30f.top",
     },
   },
 
