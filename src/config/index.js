@@ -23,7 +23,8 @@ export const config = {
     urlMode: "static",
 
     // 是否展示后端联通性检测
-    showCheckBackend: false,
+    // showCheckBackend: false,
+    showCheckBackend: true,
 
     // 静态URL模式下的基础URL (urlMode = 'static'时使用)
     // 支持字符串形式(单个API地址)或数组形式(多个备选API地址)
@@ -31,7 +32,7 @@ export const config = {
     staticBaseUrl: [
       // "https://bun.xn--bwwx30f.top/api/v1",
       // "https://vip.bunsurf.xyz/api/v1",
-      // "https://vb2.bunsurf.xyz/api/v1",
+      "https://vb2.bunsurf.xyz/api/v1",
       // "https://vb.yercat.com/api/v1",
       //   "http://127.0.0.1/api/v1",
     ],
