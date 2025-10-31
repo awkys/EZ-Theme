@@ -618,15 +618,15 @@ export default {
       return {
         month_price: plan.month_price,
 
-        quarter_price: plan.quarter_price,
+        // quarter_price: plan.quarter_price,
 
         half_year_price: plan.half_year_price,
 
         year_price: plan.year_price,
 
-        two_year_price: plan.two_year_price,
+        // two_year_price: plan.two_year_price,
 
-        three_year_price: plan.three_year_price,
+        // three_year_price: plan.three_year_price,
 
         onetime_price: plan.onetime_price,
       };
