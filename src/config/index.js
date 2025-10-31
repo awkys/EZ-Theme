@@ -416,7 +416,7 @@ export const config = {
     qrcodeBackground: "#ffffff",
 
     // 是否自动检测支付状态 (true=启用自动检测, false=手动检测)
-    autoCheckPayment: true, // 默认启用
+    autoCheckPayment: false, // 默认启用
 
     // 自动检测支付状态的间隔时间 (毫秒)
     autoCheckInterval: 5000, // 默认5秒
