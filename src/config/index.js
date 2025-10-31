@@ -111,7 +111,7 @@ export const config = {
     primaryColor: "#355cc2",
 
     // 是否启用落地页 (true=启用, false=禁用)
-    enableLandingPage: true, // 默认启用
+    enableLandingPage: false, // 默认启用
   },
 
   // 认证页面功能配置
@@ -231,7 +231,7 @@ export const config = {
   },
   ORDER_CONFIG: {
     // 下单前二次确认
-    confirmOrder: true,
+    confirmOrder: false,
     // 下单前二次确认内容
     confirmOrderContent:
       "<p><strong style='color: red'>无法提供相关教程和使用说明。</strong></p><p><strong style='color: red'>不会使用请勿购买，没有退款政策</strong></p>",
@@ -425,7 +425,7 @@ export const config = {
     autoCheckMaxTimes: 60, // 默认60次
 
     // 是否对Safari浏览器使用支付弹窗模式，而不是直接跳转 (true=使用弹窗, false=直接跳转)
-    useSafariPaymentModal: true, // 默认开启
+    useSafariPaymentModal: false, // 默认开启
 
     // 是否自动选择第一个支付方式 (true=自动选择, false=需要用户手动选择)
     // 开启后，用户进入支付页面时将自动选择列表中的第一个支付方式，无需手动点击选择
