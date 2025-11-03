@@ -884,7 +884,7 @@ const DEFAULT_CUSTOMER_SERVICE_CONFIG = {
   iconPosition: {
     // 桌面版图标距离左下角的距离
     desktop: {
-      right: "20px",
+      left: "2000px",
       bottom: "20px",
     },
     // 移动版图标距离右下角的距离

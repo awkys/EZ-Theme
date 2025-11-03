@@ -68,13 +68,21 @@
 
 // 淡入淡出
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 // 上下滑动
@@ -125,24 +133,51 @@
 
 // 背景色球动画
 @keyframes floatingBall1 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(5%, 10%) rotate(90deg); }
-  50% { transform: translate(2%, 5%) rotate(180deg); }
-  75% { transform: translate(-3%, 8%) rotate(270deg); }
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(5%, 10%) rotate(90deg);
+  }
+  50% {
+    transform: translate(2%, 5%) rotate(180deg);
+  }
+  75% {
+    transform: translate(-3%, 8%) rotate(270deg);
+  }
 }
 
 @keyframes floatingBall2 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(-8%, -5%) rotate(-90deg); }
-  50% { transform: translate(-4%, -10%) rotate(-180deg); }
-  75% { transform: translate(-6%, -2%) rotate(-270deg); }
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-8%, -5%) rotate(-90deg);
+  }
+  50% {
+    transform: translate(-4%, -10%) rotate(-180deg);
+  }
+  75% {
+    transform: translate(-6%, -2%) rotate(-270deg);
+  }
 }
 
 @keyframes floatingBall3 {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  33% { transform: translate(6%, -8%) rotate(120deg); }
-  66% { transform: translate(-4%, -4%) rotate(240deg); }
-  100% { transform: translate(0, 0) rotate(360deg); }
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(6%, -8%) rotate(120deg);
+  }
+  66% {
+    transform: translate(-4%, -4%) rotate(240deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(360deg);
+  }
 }
 
 // 动画类
@@ -168,4 +203,4 @@
 
 .zoom-out {
   animation: zoomOut $transition-time-base ease forwards;
-} 
+}

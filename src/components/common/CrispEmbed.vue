@@ -49,8 +49,7 @@ export default {
 
         iconPosition: CUSTOMER_SERVICE_CONFIG.iconPosition || {
           desktop: { right: "20px", bottom: "20px" },
-
-          mobile: { right: "20px", bottom: "100px" },
+          mobile: { right: "20px", bottom: "20px" },
         },
       };
     });
