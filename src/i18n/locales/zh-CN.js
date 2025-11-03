@@ -711,7 +711,7 @@ export default {
       title: "提现佣金",
       platform: "提现平台",
       account: "提现账号",
-      accountPlaceholder: "请输入提现账号",
+      accountPlaceholder: "请输入提现账号(支付宝账号+姓名)",
       amount: "提现金额",
       amountPlaceholder: "请输入提现金额",
       availableCommission: "可提现佣金",
