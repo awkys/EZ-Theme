@@ -60,7 +60,7 @@ export const config = {
   // 中间件服务器URL (不含路径) 开源地址 https://github.com/codeman857/EZ-Encrypt-Middleware
   //   API_MIDDLEWARE_URL: "https://d2ijw202als7c.ezdemo.xyz",
   // API_MIDDLEWARE_URL: "https://vb2.bunsurf.xyz",
-  API_MIDDLEWARE_URL: "https://md.yercat.com",
+  API_MIDDLEWARE_URL: "https://md.bunsurf.store",
 
   // 中间件加密KEY必须是16位的16进制字符串，必须和中间件key保持一致 在线生成地址 https://www.bejson.com/math/hex_gen/
   API_MIDDLEWARE_KEY: "5ba2574efbf1232b",
@@ -111,7 +111,7 @@ export const config = {
     primaryColor: "#355cc2",
 
     // 是否启用落地页 (true=启用, false=禁用)
-    enableLandingPage: false, // 默认启用
+    enableLandingPage: true, // 默认启用
   },
 
   // 认证页面功能配置
