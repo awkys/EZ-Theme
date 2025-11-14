@@ -32,9 +32,6 @@ export const config = {
     staticBaseUrl: [
       // "https://bun.xn--bwwx30f.top/api/v1",
       "https://vip.bunsurf.xyz/api/v1",
-      // "https://vb2.bunsurf.xyz/api/v1",
-      // "https://vb.yercat.com/api/v1",
-      //   "http://127.0.0.1/api/v1",
     ],
 
     // 自动获取模式配置 (urlMode = 'auto'时使用)
@@ -459,7 +456,7 @@ export const config = {
       // 链接模式：'auto'=自动使用当前站点域名，'custom'=使用自定义域名
       linkMode: "custom",
       // 自定义域名，当linkMode为'custom'时使用
-      customDomain: "https://bun.xn--bwwx30f.top",
+      customDomain: "https://bun.数字环保.shop",
     },
   },
 
