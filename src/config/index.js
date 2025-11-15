@@ -128,20 +128,24 @@ export const config = {
     // 认证页面弹窗公告配置
     popup: {
       // 是否启用弹窗
-      enabled: false,
+      enabled: true,
 
       // 弹窗标题
-      title: "用户须知 (可自定义开启)",
+      title: "重要通知",
 
       // 弹窗内容 (支持HTML)
-      content:
-        "<p><strong>欢迎使用我们的服务！</strong></p><p>请注意以下事项：</p><ul><li>请妥善保管您的账号信息</li><li>如有问题请联系客服</li></ul>",
-
+      content: `
+          <p>为确保您随时能访问，请收藏我们的**防走失网址**：</p>
+          <p><a href="https://www.bnsrf.com/" target="_blank">https://www.bnsrf.com/</a></p>
+          <ul>
+            <li>**重要：** 当前网址可能被屏蔽，请务必收藏上方链接。</li>
+          </ul>
+        `,
       // 冷却时间（小时），在此时间内不会再次显示弹窗
-      cooldownHours: 0,
+      cooldownHours: 24,
 
       // 等待时间（秒），用户需要等待多少秒才能关闭弹窗，设为0表示无需等待
-      closeWaitSeconds: 3,
+      closeWaitSeconds: 0,
     },
   },
 
