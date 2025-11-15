@@ -135,10 +135,10 @@ export const config = {
 
       // 弹窗内容 (支持HTML)
       content: `
-          <p>为确保您随时能访问，请收藏我们的**防走失网址**：</p>
+          <p>为确保您随时能访问，请收藏我们的【防走失网址】：</p>
           <p><a href="https://www.bnsrf.com/" target="_blank">https://www.bnsrf.com/</a></p>
           <ul>
-            <li>**重要：** 当前网址可能被屏蔽，请务必收藏上方链接。</li>
+            <li>当前网址可能被屏蔽，请务必收藏上方链接。</li>
           </ul>
         `,
       // 冷却时间（小时），在此时间内不会再次显示弹窗
