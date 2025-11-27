@@ -85,7 +85,7 @@ export default {
         if (isMobile.value) {
           Crisp.setPosition("right");
         } else {
-          Crisp.setPosition("left");
+          Crisp.setPosition("right");
         }
 
         if (store.getters.isLoggedIn) {
@@ -108,7 +108,7 @@ export default {
       if (isMobile.value) {
         Crisp.setPosition("right");
       } else {
-        Crisp.setPosition("left");
+        Crisp.setPosition("right");
       }
 
       setCrispStyles();
@@ -424,7 +424,7 @@ export default {
         if (isMobile.value) {
           Crisp.setPosition("right");
         } else {
-          Crisp.setPosition("left");
+          Crisp.setPosition("right");
         }
 
         setCrispStyles();
