@@ -1219,7 +1219,7 @@ body.dark-theme[data-v-3a586e34] {
 /**
  * 全局样式变量
  */
-[data-v-091b92a0]:root {
+[data-v-463d14d2]:root {
   --background-color: #f5f7fa;
   --card-background: #ffffff;
   --card-background-rgb: 255, 255, 255;
@@ -1241,7 +1241,7 @@ body.dark-theme[data-v-3a586e34] {
   --info-background: #e8f3ff;
   --info-color-rgb: 22, 93, 255;
 }
-body.dark-theme[data-v-091b92a0] {
+body.dark-theme[data-v-463d14d2] {
   --background-color: #171a1d;
   --card-background: rgba(30, 30, 30, 0.8);
   --card-background-rgb: 30, 30, 30;
