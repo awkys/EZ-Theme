@@ -916,7 +916,7 @@ const handleReplyImageUpload = async (e) => {
             const md = `![image](${url})`;
             await insertAtCursorToReply(md);
         }
-        showToast($t?.('tickets.uploadSuccess') || '图片上传成功', 'success');
+        showToast(t?.('tickets.uploadSuccess') || '图片上传成功', 'success');
     } catch (err) {
         console.error(err);
         showToast(err.message || '图片上传异常', 'error');
