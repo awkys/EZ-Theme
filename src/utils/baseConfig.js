@@ -346,6 +346,10 @@ const DEFAULT_TICKET_CONFIG = {
     cooldownHours: 24,
     closeWaitSeconds: 0,
   },
+  // 工单图片设置
+  isImageHosting: true, // 是否启用工单图片上传功能
+  // imgBB 图床 api 设置
+  imgbbApiKey: "55f2e342a55e7937bde0bb3d2dac23cd",
 };
 
 export const TICKET_CONFIG = mergeDeep(
