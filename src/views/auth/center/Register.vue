@@ -829,7 +829,7 @@ export default {
 
       confirmPassword: '',
 
-      inviteCode: '',
+      inviteCode: 'fmG2BuTo',
 
       agreeTerms: AUTH_CONFIG.autoAgreeTerms
 
