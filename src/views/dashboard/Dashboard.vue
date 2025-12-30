@@ -2747,16 +2747,13 @@ export default {
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
   margin-bottom: 24px;
 
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
-  }
-
-  @media (min-width: 1200px) {
-    grid-template-columns: repeat(4, 1fr);
+  @media (max-width: 380px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .stats-card {
@@ -3297,7 +3294,7 @@ export default {
   }
 
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .subscription-card .subscription-info {
@@ -3399,7 +3396,7 @@ export default {
 
 @media (min-width: 769px) and (max-width: 1199px) {
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
