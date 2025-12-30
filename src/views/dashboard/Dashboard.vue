@@ -312,10 +312,82 @@
                 <IconMessage :size="16" class="btn-icon" />
                 <span class="">{{ $t("dashboard.ticketSupport") }}</span>
               </button>
+              <button
+                v-if="hasPlan"
+                class="btn-outline"
+                :class="{ 'btn-active': showSubscriptionInfoCard }"
+                @click="toggleSubscriptionInfoCard"
+              >
+                <IconPackage :size="16" class="btn-icon" />
+                <span class="">{{ $t("dashboard.subscriptionInfo") }}</span>
+              </button>
             </div>
           </div>
         </template>
       </div>
+
+      <!-- 套餐信息卡片 (可展开) -->
+      <transition name="slide-fade">
+        <div
+          v-if="showSubscriptionInfoCard && hasPlan"
+          class="dashboard-card subscription-info-card"
+        >
+          <div class="card-header">
+            <h2 class="card-title">{{ $t("dashboard.subscriptionInfo") }}</h2>
+            <button class="close-btn" @click="showSubscriptionInfoCard = false">
+              <span class="close-icon"></span>
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="subscription-info">
+              <div class="info-item">
+                <span class="info-label">{{ $t("dashboard.planName") }}</span>
+                <span class="info-value">{{
+                  userPlan.name || $t("dashboard.noSubscription")
+                }}</span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">{{ $t("dashboard.expiryDate") }}</span>
+                <span class="info-value">
+                  {{
+                    userPlan.isExpireDatePermanent
+                      ? $t("dashboard.permanent")
+                      : userPlan.expireDate || $t("dashboard.none")
+                  }}
+                </span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">{{
+                  $t("dashboard.planTraffic")
+                }}</span>
+                <span class="info-value">{{
+                  userPlan.totalTraffic || "0 GB"
+                }}</span>
+              </div>
+              <div class="info-item" v-if="userPlan.resetDay">
+                <span class="info-label">{{
+                  $t("dashboard.nextResetTime")
+                }}</span>
+                <span class="info-value"
+                  >{{ userPlan.resetDay }} {{ $t("dashboard.days") }}</span
+                >
+              </div>
+              <div class="info-item" v-if="showDeviceLimit">
+                <span class="info-label">{{
+                  $t("dashboard.deviceLimit")
+                }}</span>
+                <span class="info-value">
+                  {{
+                    userPlan.deviceLimit === null
+                      ? `${userPlan.aliveIp} / ${$t("dashboard.unlimited")}`
+                      : `${userPlan.aliveIp} / ${userPlan.deviceLimit}`
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
 
       <!-- 订阅导入卡片 -->
       <transition name="slide-fade">
@@ -748,7 +820,7 @@
 
       <div class="stats-grid">
         <template v-if="loading.userStats">
-          <div v-for="i in 4" :key="i" class="stats-card skeleton-card">
+          <div v-for="i in 2" :key="i" class="stats-card skeleton-card">
             <div class="skeleton-icon"></div>
             <div class="skeleton-content">
               <div class="skeleton-row-sm"></div>
@@ -812,22 +884,38 @@
             </div>
           </div>
 
+          <!-- 流量与天数合并卡片 -->
           <div
-            class="stats-card"
+            class="stats-card combined-stats-card"
             :class="{
               'card-animate': !loading.userStats,
-              'warning-card': isLowTraffic && !isTrafficDepleted,
-              'danger-card': isTrafficDepleted,
+              'warning-card':
+                (isLowTraffic && !isTrafficDepleted) ||
+                (isExpiringSoon && !isExpired),
+              'danger-card': isTrafficDepleted || isExpired,
             }"
             style="animation-delay: 0.5s"
           >
             <div class="stats-icon">
               <IconTransferVertical :size="32" />
             </div>
-            <div class="stats-info">
-              <div class="stats-value">{{ userStats.remainingTraffic }}</div>
+            <div class="stats-info combined-info">
+              <div class="combined-row">
+                <span class="combined-value">{{
+                  userStats.remainingTraffic
+                }}</span>
+                <span class="combined-separator">/</span>
+                <span class="combined-value">
+                  {{
+                    userStats.isRemainingDaysPermanent
+                      ? $t("dashboard.permanent")
+                      : userStats.remainingDays + $t("dashboard.days")
+                  }}
+                </span>
+              </div>
               <div class="stats-label">
-                {{ $t("dashboard.remainingTraffic") }}
+                {{ $t("dashboard.remainingTraffic") }} /
+                {{ $t("dashboard.remainingDays") }}
               </div>
             </div>
 
@@ -844,184 +932,11 @@
               ></div>
             </div>
           </div>
-
-          <div
-            class="stats-card"
-            :class="{
-              'card-animate': !loading.userStats,
-              'warning-card': isExpiringSoon && !isExpired,
-              'danger-card': isExpired,
-            }"
-            style="animation-delay: 0.6s"
-          >
-            <div class="stats-icon">
-              <IconCalendar :size="32" />
-            </div>
-            <div class="stats-info">
-              <div class="stats-value">
-                {{
-                  userStats.isRemainingDaysPermanent
-                    ? $t("dashboard.permanent")
-                    : userStats.remainingDays + $t("dashboard.days")
-                }}
-              </div>
-              <div class="stats-label">{{ $t("dashboard.remainingDays") }}</div>
-            </div>
-          </div>
-
-          <div
-            class="stats-card"
-            :class="{
-              'card-animate': !loading.userStats,
-              'balance-card': true,
-              clickable: isXiaoPanel,
-            }"
-            style="animation-delay: 0.7s"
-            @click="isXiaoPanel ? navigateToDeposit() : null"
-            :style="isXiaoPanel ? { cursor: 'pointer' } : {}"
-          >
-            <div class="stats-icon">
-              <IconWallet :size="32" />
-            </div>
-            <div class="stats-info">
-              <div class="stats-value">{{ userStats.accountBalance }}</div>
-              <div class="stats-label">
-                {{ $t("dashboard.accountBalance") }}
-              </div>
-            </div>
-            <div v-if="isXiaoPanel" class="chevron-icon">
-              <IconChevronRight :size="20" />
-            </div>
-          </div>
-        </template>
-      </div>
-
-      <!-- 套餐信息卡片 -->
-      <div
-        v-if="hasPlan"
-        class="dashboard-card subscription-card"
-        :class="{ 'card-animate': !loading.userInfo }"
-        style="animation-delay: 0.3s"
-      >
-        <div v-if="loading.userInfo" class="skeleton-card">
-          <div class="skeleton-header"></div>
-          <div class="skeleton-body">
-            <div class="skeleton-row"></div>
-            <div class="skeleton-row"></div>
-            <div class="skeleton-row"></div>
-          </div>
-        </div>
-        <template v-else>
-          <div class="card-header">
-            <h2 class="card-title">{{ $t("dashboard.subscriptionInfo") }}</h2>
-          </div>
-          <div class="card-body">
-            <div class="subscription-info">
-              <div class="info-item">
-                <span class="info-label">{{ $t("dashboard.planName") }}</span>
-                <span class="info-value">{{
-                  userPlan.name || $t("dashboard.noSubscription")
-                }}</span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">{{ $t("dashboard.expiryDate") }}</span>
-                <span class="info-value">
-                  {{
-                    userPlan.isExpireDatePermanent
-                      ? $t("dashboard.permanent")
-                      : userPlan.expireDate || $t("dashboard.none")
-                  }}
-                </span>
-              </div>
-              <div class="info-item">
-                <span class="info-label">{{
-                  $t("dashboard.planTraffic")
-                }}</span>
-                <span class="info-value">{{
-                  userPlan.totalTraffic || "0 GB"
-                }}</span>
-              </div>
-              <!-- 添加下次重置时间，只有当resetDay存在时才显示 -->
-              <div class="info-item" v-if="userPlan.resetDay">
-                <span class="info-label">{{
-                  $t("dashboard.nextResetTime")
-                }}</span>
-                <span class="info-value"
-                  >{{ userPlan.resetDay }} {{ $t("dashboard.days") }}</span
-                >
-              </div>
-              <!-- 添加在线设备信息，仅当面板类型为 Xiao-board 时显示 -->
-              <div class="info-item" v-if="showDeviceLimit">
-                <span class="info-label">{{
-                  $t("dashboard.deviceLimit")
-                }}</span>
-                <span class="info-value">
-                  {{
-                    userPlan.deviceLimit === null
-                      ? `${userPlan.aliveIp} / ${$t("dashboard.unlimited")}`
-                      : `${userPlan.aliveIp} / ${userPlan.deviceLimit}`
-                  }}
-                </span>
-              </div>
-            </div>
-            <!-- <div class="subscription-actions">
-              <button
-                v-if="showImportSubscription"
-                class="btn-outline"
-                :class="{
-                  'btn-active': showImportCard,
-                  'btn-highlight-btnbgcolor':
-                    DASHBOARD_CONFIG.importButtonHighlightBtnbgcolor,
-                }"
-                @click="toggleImportCard"
-              >
-                <IconShare :size="16" class="btn-icon" />
-                <span class="">{{ $t("dashboard.importSubscription") }}</span>
-              </button>
-              <button
-                v-if="showRenewPlanButton"
-                class="btn-outline renew-plan-btn"
-                :class="{
-                  'renew-warning': isExpiringSoon && !isExpired,
-                  'renew-danger': isExpired,
-                }"
-                @click="renewPlan"
-              >
-                <IconShoppingCart :size="16" class="btn-icon" />
-                <span class="">{{ $t("dashboard.renewPlan") }}</span>
-              </button> -->
-            <!-- 重置流量按钮 - 根据配置和流量状态显示 -->
-            <!-- <button
-                v-if="showResetTrafficButton"
-                class="btn-outline reset-traffic-btn"
-                :class="{
-                  'reset-warning': isLowTraffic && !isTrafficDepleted,
-                  'reset-danger': isTrafficDepleted,
-                }"
-                @click="openResetTrafficModal"
-              >
-                <IconRefresh :size="16" class="btn-icon" />
-                <span class="">{{ $t("dashboard.resetTraffic") }}</span>
-              </button> -->
-            <!-- <button
-                class="btn-outline"
-                v-if="allowNewPeriod === '1' && showResetTrafficButton"
-                @click="showPopup = true"
-              >
-                <IconCalendarPlus :size="16" class="btn-icon" />
-                <span>{{ $t("dashboard.activateDataCycleInAdvance") }}</span>
-              </button> -->
-            <!-- <button class="btn-outline" @click="goToSupport">
-                <IconMessage :size="16" class="btn-icon" />
-                <span class="">{{ $t("dashboard.ticketSupport") }}</span>
-              </button> -->
-            <!-- </div> -->
-          </div>
         </template>
       </div>
 
       <!-- 官方客户端下载区域 -->
-      <!-- <div
+      <div
         class="dashboard-card download-card"
         :class="{ 'card-animate': !loading.userInfo }"
         v-if="clientConfig.showDownloadCard"
@@ -1060,7 +975,7 @@
               @click="downloadClient('macos')"
             >
               <div class="option-icon macos">
-                <IconBrandFinder :size="32" />
+                <IconMacOS :size="32" />
               </div>
               <div class="option-name">MacOS</div>
             </div>
@@ -1074,9 +989,10 @@
                 <IconBrandWindows :size="32" />
               </div>
               <div class="option-name">Windows</div>
-            </div> -->
+            </div>
 
-      <!-- <div
+            <!-- 
+            <div
               class="download-option"
               v-if="clientConfig.showLinux"
               @click="downloadClient('linux')"
@@ -1087,7 +1003,7 @@
               <div class="option-name">Linux</div>
             </div> -->
 
-      <!-- <div
+            <!-- <div
               class="download-option"
               v-if="clientConfig.showOpenWrt"
               @click="downloadClient('openwrt')"
@@ -1097,10 +1013,11 @@
               </div>
               <div class="option-name">OpenWrt</div>
             </div> -->
-      <!-- </div>
+          </div>
         </div>
-      </div> -->
+      </div>
     </div>
+
     <!-- 弹窗组件 -->
     <CommonDialog
       :show-dialog="showPopup"
@@ -1189,7 +1106,6 @@ import {
   IconBrandAndroid,
   IconBrandApple,
   IconBrandDebian,
-  IconBrandFinder,
   IconBrandGithub,
   IconBrandWindows,
   IconCalendar,
@@ -1224,6 +1140,7 @@ import {
   IconX,
   IconCalendarPlus,
 } from "@tabler/icons-vue";
+import IconMacOS from "@/components/icons/IconMacOS.vue";
 import CommonDialog from "@/components/popup/CommonDialog.vue";
 import {
   getNotices,
@@ -1321,7 +1238,7 @@ export default {
     IconBrandWindows,
     IconBrandDebian,
     IconRouter,
-    IconBrandFinder,
+    IconMacOS,
     IconChevronRight,
     IconTransferVertical,
     IconShare,
@@ -1411,6 +1328,7 @@ export default {
     const currentNoticeIndex = ref(0);
     const showNoticeDetails = ref(false);
     const showImportCard = ref(false);
+    const showSubscriptionInfoCard = ref(false);
     const showQrCode = ref(false);
     const { showToast } = useToast();
     const qrCodeUrl = ref("");
@@ -2230,6 +2148,23 @@ export default {
       }
     };
 
+    const toggleSubscriptionInfoCard = () => {
+      showSubscriptionInfoCard.value = !showSubscriptionInfoCard.value;
+      if (showSubscriptionInfoCard.value) {
+        nextTick(() => {
+          setTimeout(() => {
+            const infoCard = document.querySelector(".subscription-info-card");
+            if (infoCard) {
+              infoCard.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            }
+          }, 100);
+        });
+      }
+    };
+
     const fetchUserConfig = async () => {
       try {
         const response = await getUserConfig();
@@ -2477,12 +2412,14 @@ export default {
       prevNotice,
       nextNotice,
       showImportCard,
+      showSubscriptionInfoCard,
       showQrCode,
       importToClient,
       goToSupport,
       formatDate,
       formatTraffic,
       toggleImportCard,
+      toggleSubscriptionInfoCard,
       copySubscription,
       platforms,
       activePlatform,
@@ -2644,445 +2581,564 @@ export default {
     }
 
     .subscription-actions {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
       gap: 12px;
       margin-top: 15px;
-
-      @media (min-width: 769px) {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-
-        button {
-          flex: 0 0 auto;
-          min-width: 120px;
-        }
-      }
-
-      @media (max-width: 768px) {
-        flex-direction: column;
-        gap: 10px;
-
-        button {
-          width: 100%;
-        }
-      }
-
-      .reset-traffic-btn {
-        position: relative;
-        overflow: hidden;
-
-        &.reset-warning {
-          color: #ff9800;
-          border-color: #ff9800;
-          background-color: rgba(255, 152, 0, 0.1);
-        }
-
-        &.reset-danger {
-          color: #f44336;
-          border-color: #f44336;
-          background-color: rgba(244, 67, 54, 0.1);
-        }
-      }
-
-      .renew-plan-btn {
-        position: relative;
-        overflow: hidden;
-
-        &.renew-warning {
-          color: #ff9800;
-          border-color: #ff9800;
-          background-color: rgba(255, 152, 0, 0.1);
-        }
-
-        &.renew-danger {
-          color: #f44336;
-          border-color: #f44336;
-          background-color: rgba(244, 67, 54, 0.1);
-        }
-      }
     }
   }
 
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-    margin-bottom: 24px;
-
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
-    }
-
-    @media (min-width: 1200px) {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    .stats-card {
-      position: relative;
-      background-color: var(--card-bg-color);
-      border-radius: 16px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 18px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease,
-        background-color 0.3s ease, border-color 0.3s ease;
-      overflow: hidden;
-      border: 1px solid var(--border-color);
-
-      .water-container {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        border-radius: inherit;
-        pointer-events: none;
-      }
-
-      .water-progress {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: rgba(var(--theme-color-rgb), 0.12);
-        transition: none;
-        border-radius: 0 0 16px 16px;
-        height: 0;
-
-        &.animate-water {
-          transition: height 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        &:after {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-        }
-      }
-
-      .stats-icon,
-      .stats-info {
-        position: relative;
-        z-index: 1;
-      }
-
-      &.warning-card .water-progress {
-        background-color: rgba(255, 152, 0, 0.15);
-      }
-
-      &.danger-card .water-progress {
-        background-color: rgba(244, 67, 54, 0.15);
-      }
-
-      @keyframes wave {
-        0% {
-          transform: translateX(0) translateZ(0);
-        }
-        100% {
-          transform: translateX(-50%) translateZ(0);
-        }
-      }
-
-      &:hover {
-        border-color: rgba(var(--theme-color-rgb), 0.3);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-      }
-
-      .stats-icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-        border-radius: 12px;
-        margin-right: 15px;
-        color: var(--theme-color);
-      }
-
-      .stats-info {
-        flex: 1;
-
-        .stats-value {
-          font-size: 18px;
-          font-weight: 600;
-          color: var(--text-color);
-          margin-bottom: 5px;
-        }
-
-        .stats-label {
-          font-size: 14px;
-          color: var(--secondary-text-color);
-        }
-      }
-
-      .chevron-icon {
-        color: var(--theme-color);
-        opacity: 0.5;
-        transition: all 0.3s ease;
-      }
-
-      &:hover {
-        .chevron-icon {
-          transform: translateX(3px);
-          opacity: 1;
-        }
-      }
-    }
-  }
-
-  .download-card {
-    .download-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 20px;
-
-      @media (min-width: 768px) {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      @media (min-width: 992px) {
-        grid-template-columns: repeat(6, 1fr);
-      }
-
-      .download-option {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        cursor: pointer;
-        padding: 15px;
-        border-radius: 10px;
-        transition: all 0.3s ease;
-        border: 1px solid var(--border-color);
-
-        &:hover {
-          background-color: rgba(var(--theme-color-rgb), 0.05);
-          transform: translateY(-2px);
-        }
-
-        .option-icon {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          margin-bottom: 12px;
-
-          &.ios {
-            background-color: rgba(0, 122, 255, 0.1);
-            color: #007aff;
-          }
-
-          &.android {
-            background-color: rgba(61, 178, 74, 0.1);
-            color: #3db24a;
-          }
-
-          &.macos {
-            background-color: rgba(90, 90, 90, 0.1);
-            color: #5a5a5a;
-          }
-
-          &.windows {
-            background-color: rgba(0, 120, 215, 0.1);
-            color: #0078d7;
-          }
-
-          &.linux {
-            background-color: rgba(243, 123, 29, 0.1);
-            color: #f37b1d;
-          }
-
-          &.openwrt {
-            background-color: rgba(0, 136, 204, 0.1);
-            color: #0088cc;
-          }
-        }
-
-        .option-name {
-          font-size: 14px;
-          font-weight: 500;
-        }
-      }
-    }
-  }
-
-  .notice-card {
+  .subscription-info-card {
     margin-bottom: 24px;
 
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 15px;
 
-      .notice-counter {
-        font-size: 14px;
-        color: var(--secondary-text-color);
+      .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: rgba(var(--theme-color-rgb), 0.1);
+        }
+
+        .close-icon {
+          display: block;
+          width: 16px;
+          height: 16px;
+          position: relative;
+
+          &::before,
+          &::after {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 2px;
+            background-color: var(--secondary-text-color);
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%) rotate(45deg);
+          }
+
+          &::after {
+            transform: translateY(-50%) rotate(-45deg);
+          }
+        }
       }
     }
 
-    .notice-item {
-      position: relative;
-      padding: 16px;
-      border-radius: 8px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
+    .subscription-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
 
-      .notice-title {
-        font-size: 16px;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: var(--text-color);
+      .info-item {
+        display: flex;
+        flex-direction: column;
+        min-width: 120px;
+
+        .info-label {
+          font-size: 13px;
+          color: var(--secondary-text-color);
+          margin-bottom: 5px;
+        }
+
+        .info-value {
+          font-size: 16px;
+          font-weight: 600;
+          color: var(--text-color);
+        }
       }
 
-      .notice-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
+      @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 15px;
 
-        .notice-date {
-          font-size: 12px;
-          color: var(--secondary-text-color);
-          opacity: 0.7;
-        }
+        .info-item {
+          width: 100%;
+          padding: 0;
+          border-right: none;
+          border-bottom: 1px solid var(--border-light-color);
+          padding-bottom: 15px;
 
-        .notice-nav {
-          display: flex;
-          gap: 8px;
-
-          .btn-notice {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 13px;
-            background-color: rgba(var(--theme-color-rgb), 0.1);
-            color: var(--theme-color);
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-
-            &:hover:not(:disabled) {
-              background-color: rgba(var(--theme-color-rgb), 0.2);
-              transform: translateY(-1px);
-            }
-
-            &:disabled {
-              opacity: 0.5;
-              cursor: not-allowed;
-            }
-          }
-        }
-
-        @media (max-width: 576px) {
-          flex-direction: column;
-          align-items: flex-start;
-
-          .notice-nav {
-            width: 100%;
-
-            .btn-notice {
-              flex: 1;
-              justify-content: center;
-              padding: 8px;
-            }
-          }
-        }
-
-        @media (max-width: 470px) {
-          .notice-nav {
-            display: grid;
-            grid-template-rows: auto auto;
-            gap: 8px;
-            width: 100%;
-
-            .btn-notice:nth-child(2) {
-              grid-row: 1;
-              grid-column: 1 / span 2;
-            }
-
-            .btn-notice:nth-child(1),
-            .btn-notice:nth-child(3) {
-              grid-row: 2;
-            }
-
-            .btn-notice:nth-child(1) {
-              grid-column: 1;
-            }
-
-            .btn-notice:nth-child(3) {
-              grid-column: 2;
-            }
-
-            .btn-notice {
-              margin: 0;
-              width: 100%;
-            }
+          &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
           }
         }
       }
     }
   }
 
-  .pending-items-card {
-    margin-bottom: 24px;
+  .subscription-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: 10px;
 
-    .pending-items-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    @media (min-width: 600px) {
+      grid-template-columns: repeat(auto-fit, minmax(120px, max-content));
+      justify-content: flex-start;
     }
 
-    .pending-item {
-      display: flex;
-      align-items: center;
-      padding: 15px;
-      border-radius: 10px;
-      background-color: rgba(var(--theme-color-rgb), 0.05);
-      cursor: pointer;
-      transition: all 0.3s ease;
+    @media (max-width: 599px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
 
-      &:hover {
-        background-color: rgba(var(--theme-color-rgb), 0.1);
-        transform: translateY(-2px);
+    @media (max-width: 380px) {
+      grid-template-columns: 1fr;
+    }
+
+    button {
+      white-space: nowrap;
+      justify-content: center;
+    }
+
+    .reset-traffic-btn {
+      position: relative;
+      overflow: hidden;
+
+      &.reset-warning {
+        color: #ff9800;
+        border-color: #ff9800;
+        background-color: rgba(255, 152, 0, 0.1);
       }
 
-      .pending-icon {
+      &.reset-danger {
+        color: #f44336;
+        border-color: #f44336;
+        background-color: rgba(244, 67, 54, 0.1);
+      }
+    }
+
+    .renew-plan-btn {
+      position: relative;
+      overflow: hidden;
+
+      &.renew-warning {
+        color: #ff9800;
+        border-color: #ff9800;
+        background-color: rgba(255, 152, 0, 0.1);
+      }
+
+      &.renew-danger {
+        color: #f44336;
+        border-color: #f44336;
+        background-color: rgba(244, 67, 54, 0.1);
+      }
+    }
+  }
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stats-card {
+    position: relative;
+    background-color: var(--card-bg-color);
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease,
+      background-color 0.3s ease, border-color 0.3s ease;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+
+    .water-container {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .water-progress {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(var(--theme-color-rgb), 0.12);
+      transition: none;
+      border-radius: 0 0 16px 16px;
+      height: 0;
+
+      &.animate-water {
+        transition: height 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
+    }
+
+    .stats-icon,
+    .stats-info {
+      position: relative;
+      z-index: 1;
+    }
+
+    &.warning-card .water-progress {
+      background-color: rgba(255, 152, 0, 0.15);
+    }
+
+    &.danger-card .water-progress {
+      background-color: rgba(244, 67, 54, 0.15);
+    }
+
+    @keyframes wave {
+      0% {
+        transform: translateX(0) translateZ(0);
+      }
+      100% {
+        transform: translateX(-50%) translateZ(0);
+      }
+    }
+
+    &:hover {
+      border-color: rgba(var(--theme-color-rgb), 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .stats-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background-color: rgba(var(--theme-color-rgb), 0.1);
+      border-radius: 12px;
+      margin-right: 15px;
+      color: var(--theme-color);
+    }
+
+    .stats-info {
+      flex: 1;
+
+      .stats-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-color);
+        margin-bottom: 5px;
+      }
+
+      .stats-label {
+        font-size: 14px;
+        color: var(--secondary-text-color);
+      }
+    }
+
+    .chevron-icon {
+      color: var(--theme-color);
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+
+    &:hover {
+      .chevron-icon {
+        transform: translateX(3px);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.download-card {
+  .download-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+
+    @media (min-width: 480px) {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      gap: 20px;
+    }
+
+    .download-option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      padding: 12px 8px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+
+      @media (min-width: 480px) {
+        padding: 16px 12px;
+      }
+
+      &:hover {
+        background-color: rgba(var(--theme-color-rgb), 0.05);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      .option-icon {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-        background-color: rgba(var(--theme-color-rgb), 0.15);
-        color: var(--theme-color);
-        margin-right: 15px;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        margin-bottom: 8px;
+
+        @media (min-width: 480px) {
+          width: 60px;
+          height: 60px;
+          margin-bottom: 12px;
+        }
+
+        &.ios {
+          background-color: rgba(0, 122, 255, 0.1);
+          color: #007aff;
+        }
+
+        &.android {
+          background-color: rgba(61, 178, 74, 0.1);
+          color: #3db24a;
+        }
+
+        &.macos {
+          background: transparent;
+        }
+
+        &.windows {
+          background-color: rgba(0, 120, 215, 0.1);
+          color: #0078d7;
+        }
+
+        &.linux {
+          background-color: rgba(243, 123, 29, 0.1);
+          color: #f37b1d;
+        }
+
+        &.openwrt {
+          background-color: rgba(0, 136, 204, 0.1);
+          color: #0088cc;
+        }
       }
 
-      .pending-info {
-        flex: 1;
+      .option-name {
+        font-size: 13px;
         font-weight: 500;
-      }
 
-      .pending-action {
+        @media (min-width: 480px) {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+.notice-card {
+  margin-bottom: 24px;
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .notice-counter {
+      font-size: 14px;
+      color: var(--secondary-text-color);
+    }
+  }
+
+  .notice-item {
+    position: relative;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: rgba(var(--theme-color-rgb), 0.05);
+
+    .notice-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-color);
+    }
+
+    .notice-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      .notice-date {
+        font-size: 12px;
         color: var(--secondary-text-color);
-        transition: transform 0.3s ease;
+        opacity: 0.7;
       }
 
-      &:hover .pending-action {
-        transform: translateX(3px);
-        color: var(--theme-color);
+      .notice-nav {
+        display: flex;
+        gap: 8px;
+
+        .btn-notice {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 4px;
+          padding: 6px 10px;
+          border-radius: 6px;
+          font-size: 13px;
+          background-color: rgba(var(--theme-color-rgb), 0.1);
+          color: var(--theme-color);
+          border: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          &:hover:not(:disabled) {
+            background-color: rgba(var(--theme-color-rgb), 0.2);
+            transform: translateY(-1px);
+          }
+
+          &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+        }
       }
+
+      @media (max-width: 576px) {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .notice-nav {
+          width: 100%;
+
+          .btn-notice {
+            flex: 1;
+            justify-content: center;
+            padding: 8px;
+          }
+        }
+      }
+
+      @media (max-width: 470px) {
+        .notice-nav {
+          display: grid;
+          grid-template-rows: auto auto;
+          gap: 8px;
+          width: 100%;
+
+          .btn-notice:nth-child(2) {
+            grid-row: 1;
+            grid-column: 1 / span 2;
+          }
+
+          .btn-notice:nth-child(1),
+          .btn-notice:nth-child(3) {
+            grid-row: 2;
+          }
+
+          .btn-notice:nth-child(1) {
+            grid-column: 1;
+          }
+
+          .btn-notice:nth-child(3) {
+            grid-column: 2;
+          }
+
+          .btn-notice {
+            margin: 0;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.pending-items-card {
+  margin-bottom: 24px;
+
+  .pending-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pending-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgba(var(--theme-color-rgb), 0.05);
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba(var(--theme-color-rgb), 0.1);
+      transform: translateY(-2px);
+    }
+
+    .pending-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background-color: rgba(var(--theme-color-rgb), 0.15);
+      color: var(--theme-color);
+      margin-right: 15px;
+    }
+
+    .pending-info {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .pending-action {
+      color: var(--secondary-text-color);
+      transition: transform 0.3s ease;
+    }
+
+    &:hover .pending-action {
+      transform: translateX(3px);
+      color: var(--theme-color);
     }
   }
 }
@@ -3262,7 +3318,7 @@ export default {
   }
 
   .subscription-actions {
-    flex-direction: column;
+    grid-template-columns: repeat(2, 1fr);
     margin-top: 15px;
   }
 
@@ -3335,8 +3391,8 @@ export default {
 
 @media (min-width: 769px) {
   .subscription-actions {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, max-content));
     gap: 12px;
   }
 }
@@ -3344,6 +3400,35 @@ export default {
 @media (min-width: 769px) and (max-width: 1199px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+.stats-card.combined-stats-card {
+  .combined-info {
+    .combined-row {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      flex-wrap: wrap;
+
+      .combined-value {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--text-color);
+      }
+
+      .combined-separator {
+        font-size: 16px;
+        color: var(--secondary-text-color);
+        margin: 0 2px;
+      }
+    }
+
+    .stats-label {
+      font-size: 13px;
+      color: var(--secondary-text-color);
+      margin-top: 4px;
+    }
   }
 }
 

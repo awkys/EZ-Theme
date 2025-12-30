@@ -142,7 +142,7 @@ export const config = {
           </ul>
         `,
       // 冷却时间（小时），在此时间内不会再次显示弹窗
-      cooldownHours: 24,
+      cooldownHours: 168,
 
       // 等待时间（秒），用户需要等待多少秒才能关闭弹窗，设为0表示无需等待
       closeWaitSeconds: 0,
@@ -291,10 +291,12 @@ export const config = {
 
     // 客户端下载链接  //可以改成文档链接直接在新标签页打开
     clientLinks: {
-      ios: "https://apps.apple.com/app/xxx",
-      android: "https://play.google.com/store/apps/xxx",
-      macos: "https://github.com/xxx/releases/latest",
-      windows: "https://github.com/xxx/releases/latest",
+      ios: "https://zt.bunsurf.store/#/docs/10",
+      android:
+        "https://down.nxkys.com/client/FlClash-v1.1.2-android-universal.apk",
+      macos: "https://down.nxkys.com/client/FlClash-v1.1.2-macos-universal.dmg",
+      windows:
+        "https://down.nxkys.com/client/兔子冲浪-v1.1.2-windows-x64-setup.exe",
       linux: "https://github.com/xxx/releases/latest",
       openwrt: "https://github.com/xxx/releases/latest",
     },
