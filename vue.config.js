@@ -4,6 +4,7 @@ const fs = require("fs");
 const webpack = require("webpack");
 const TerserPlugin = require("terser-webpack-plugin");
 const JavaScriptObfuscator = require("javascript-obfuscator");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 const isProd = process.env.NODE_ENV === "production";
 const enableConfigJS = process.env.VUE_APP_CONFIGJS == "true";
@@ -84,13 +85,83 @@ module.exports = defineConfig({
     }
     
     if (isProd) {
+      // Gzip 压缩
+      config.plugins.push(
+        new CompressionPlugin({
+          filename: "[path][base].gz",
+          algorithm: "gzip",
+          test: /\.(js|css|html|svg|json)$/,
+          threshold: 10240, // 只压缩大于 10KB 的文件
+          minRatio: 0.8,
+          deleteOriginalAssets: false,
+        })
+      );
+      
       config.optimization = {
         ...config.optimization,
         splitChunks: {
           chunks: "all",
+          maxInitialRequests: 25,
+          minSize: 20000,
           cacheGroups: {
-            vendors: { name: "chunk-vendors", test: /[\\/]node_modules[\\/]/, priority: -10, chunks: "initial" },
-            common: { name: "chunk-common", minChunks: 2, priority: -20, chunks: "initial", reuseExistingChunk: true },
+            // Vue 核心库
+            vue: {
+              name: "chunk-vue",
+              test: /[\\/]node_modules[\\/](vue|vue-router|vuex|@vue)[\\/]/,
+              priority: 30,
+              chunks: "all",
+            },
+            // ECharts 单独打包（很大）
+            echarts: {
+              name: "chunk-echarts",
+              test: /[\\/]node_modules[\\/](echarts|zrender)[\\/]/,
+              priority: 25,
+              chunks: "async",
+            },
+            // Chart.js 单独打包
+            chartjs: {
+              name: "chunk-chartjs",
+              test: /[\\/]node_modules[\\/]chart\.js[\\/]/,
+              priority: 24,
+              chunks: "async",
+            },
+            // Tabler Icons 单独打包（很大）
+            tablerIcons: {
+              name: "chunk-tabler-icons",
+              test: /[\\/]node_modules[\\/]@tabler[\\/]icons-vue[\\/]/,
+              priority: 23,
+              chunks: "all",
+            },
+            // 编辑器相关
+            editor: {
+              name: "chunk-editor",
+              test: /[\\/]node_modules[\\/](aieditor|markdown-it|marked|dompurify)[\\/]/,
+              priority: 22,
+              chunks: "async",
+            },
+            // 加密相关
+            crypto: {
+              name: "chunk-crypto",
+              test: /[\\/]node_modules[\\/](crypto-js|jsencrypt|@originjs[\\/]crypto-js-wasm)[\\/]/,
+              priority: 21,
+              chunks: "async",
+            },
+            // 其他 vendors
+            vendors: {
+              name: "chunk-vendors",
+              test: /[\\/]node_modules[\\/]/,
+              priority: -10,
+              chunks: "initial",
+              reuseExistingChunk: true,
+            },
+            // 公共代码
+            common: {
+              name: "chunk-common",
+              minChunks: 2,
+              priority: -20,
+              chunks: "initial",
+              reuseExistingChunk: true,
+            },
           },
         },
         minimize: true,
@@ -116,7 +187,19 @@ module.exports = defineConfig({
         };
         return args;
       });
+      
+      // 移除 prefetch 以减少首屏加载（按需加载）
+      config.plugins.delete("prefetch-index");
     }
+    
+    // 图片优化：设置较小的内联阈值
+    config.module
+      .rule("images")
+      .set("parser", {
+        dataUrlCondition: {
+          maxSize: 4 * 1024, // 4KB 以下内联
+        },
+      });
   },
   
   css: {
