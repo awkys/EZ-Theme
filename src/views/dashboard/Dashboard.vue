@@ -2751,7 +2751,7 @@ export default {
   gap: 16px;
   margin-bottom: 24px;
 
-  @media (max-width: 380px) {
+  @media (max-width: 520px) {
     grid-template-columns: 1fr;
     gap: 12px;
   }
@@ -2842,6 +2842,18 @@ export default {
       border-radius: 12px;
       margin-right: 15px;
       color: var(--theme-color);
+      flex-shrink: 0;
+      
+      @media (max-width: 480px) {
+        width: 48px;
+        height: 48px;
+        margin-right: 12px;
+        
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
     }
 
     .stats-info {
@@ -3294,7 +3306,7 @@ export default {
   }
 
   .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .subscription-card .subscription-info {
