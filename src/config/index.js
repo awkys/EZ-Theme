@@ -296,7 +296,7 @@ export const config = {
         "https://down.nxkys.com/client/FlClash-v1.1.2-android-universal.apk",
       macos: "https://down.nxkys.com/client/FlClash-v1.1.2-macos-universal.dmg",
       windows:
-        "https://down.nxkys.com/client/兔子冲浪-v1.1.2-windows-x64-setup.exe",
+        "https://down.nxkys.com/client/FlClash-v1.1.2-windows-x64-setup.exe",
       linux: "https://github.com/xxx/releases/latest",
       openwrt: "https://github.com/xxx/releases/latest",
     },
