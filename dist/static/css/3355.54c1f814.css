@@ -1,0 +1,36 @@
+@charset "UTF-8";
+/**
+ * 全局样式变量
+ */
+[data-v-7c7efa21]:root {
+  --background-color: #f5f7fa;
+  --card-background: #ffffff;
+  --card-background-rgb: 255, 255, 255;
+  --text-color: #333333;
+  --text-color-rgb: 51, 51, 51;
+  --secondary-text-color: #666666;
+  --border-color: #e8e8e8;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --success-color: #00b42a;
+  --success-background: #e8ffea;
+  --success-color-rgb: 0, 180, 42;
+  --warning-color: #ff7d00;
+  --warning-background: #fff7e8;
+  --warning-color-rgb: 255, 125, 0;
+  --error-color: #f53f3f;
+  --error-background: #ffece8;
+  --error-color-rgb: 245, 63, 63;
+  --info-color: #165dff;
+  --info-background: #e8f3ff;
+  --info-color-rgb: 22, 93, 255;
+}
+body.dark-theme[data-v-7c7efa21] {
+  --background-color: #171a1d;
+  --card-background: rgba(30, 30, 30, 0.8);
+  --card-background-rgb: 30, 30, 30;
+  --text-color: rgba(255, 255, 255, 0.9);
+  --text-color-rgb: 255, 255, 255;
+  --secondary-text-color: rgba(255, 255, 255, 0.6);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}

@@ -33,7 +33,30 @@ export default {
       scripts: false
     });
 
-    const isCustomerServiceEnabled = CUSTOMER_SERVICE_CONFIG && CUSTOMER_SERVICE_CONFIG.enabled;
+    const isCustomerServiceEnabled = CUSTOMER_SERVICE_CONFIG && CUSTOMER_SERVICE_CONFIG.enabled;
+
+    const publicRoutes = new Set([
+      '/',
+      '/landing',
+      '/login',
+      '/register',
+      '/forgot-password',
+      '/api-validation',
+      '/browser-restricted'
+    ]);
+
+    const isPublicRoute = (path) => publicRoutes.has(path);
+
+    const isConstrainedNetwork = () => {
+      if (typeof navigator === 'undefined') return false;
+      const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+      if (!connection) return false;
+
+      if (connection.saveData === true) return true;
+
+      const effectiveType = connection.effectiveType || '';
+      return effectiveType.includes('2g') || effectiveType === '3g';
+    };
 
     const preloadImages = ref([
       '/images/logo.png'
@@ -333,8 +356,9 @@ export default {
       }
     };
 
-    const preloadVueComponents = () => {
-      if (isPreloaded.value.components) return;
+    const preloadVueComponents = () => {
+      if (isPreloaded.value.components) return;
+      if (isPublicRoute(route.path)) return;
       
       
       preloadManager.startPreloadTimer();
@@ -385,8 +409,10 @@ export default {
       isPreloaded.value.images = true;
     };
 
-    watch(() => route.path, (newPath, oldPath) => {
-      if (newPath !== oldPath && newPath in componentsConfig.route) {
+    watch(() => route.path, (newPath, oldPath) => {
+      if (isPublicRoute(newPath)) return;
+
+      if (newPath !== oldPath && newPath in componentsConfig.route) {
         
         if (isCustomerServiceEnabled && newPath !== '/customer-service' && !componentsConfig.route[newPath].some(comp => comp.name === 'CustomerService')) {
           componentsConfig.route[newPath].unshift(customerServiceComponent);
@@ -395,11 +421,14 @@ export default {
       }
     });
 
-    onMounted(() => {
-      setTimeout(() => {
-        preloadResources();
-      }, 2000);
-    });
+    onMounted(() => {
+      if (isConstrainedNetwork()) return;
+      if (isPublicRoute(route.path)) return;
+
+      setTimeout(() => {
+        preloadResources();
+      }, 2000);
+    });
 
     return {
       isPreloaded,

@@ -12,6 +12,7 @@
 import { onMounted, onUnmounted, computed, watch, ref } from "vue";
 
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 
 import { getUserInfo, getCommConfig, getUserSubscribe } from "@/api/user";
 
@@ -30,6 +31,7 @@ export default {
 
   setup() {
     const store = useStore();
+    const route = useRoute();
 
     const userInfo = ref(null);
 
@@ -431,6 +433,29 @@ export default {
       }
     };
 
+    const scheduleCrispInit = () => {
+      const initTask = () => {
+        initCrisp().catch((error) => {
+          console.error("初始化Crisp客服系统失败:", error);
+        });
+      };
+
+      const isPublicRoute = route.meta?.requiresAuth !== true;
+
+      if (isPublicRoute) {
+        if (typeof window !== "undefined" && typeof window.requestIdleCallback === "function") {
+          window.requestIdleCallback(() => {
+            setTimeout(initTask, 1500);
+          }, { timeout: 5000 });
+        } else {
+          setTimeout(initTask, 3000);
+        }
+        return;
+      }
+
+      initTask();
+    };
+
     watch(
       () => store.getters.isLoggedIn,
       async (newVal) => {
@@ -442,10 +467,10 @@ export default {
       }
     );
 
-    onMounted(async () => {
+    onMounted(() => {
       checkIfMobile();
 
-      await initCrisp();
+      scheduleCrispInit();
 
       window.addEventListener("resize", handleResize);
 

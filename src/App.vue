@@ -20,7 +20,7 @@
           class="gift-btn" 
           @click="$router.push('/profile')"
         >
-          <IconGift :size="20" />
+          <LiteIconGift :size="20" />
         </button>
         <UserAvatar :username="username" :avatarUrl="avatarUrl" />
       </div>
@@ -64,10 +64,10 @@
     <CustomerServiceIcon v-if="$route.path !== '/customer-service'" />
     
     <!-- Crisp嵌入组件（第二种客服系统方案） -->
-    <CrispEmbed v-if="customerServiceConfig.embedMode === 'embed'" />
+    <CrispEmbed v-if="customerServiceConfig.embedMode === 'embed' && $route.path !== '/landing'" />
     
     <!-- 资源预加载组件 -->
-    <ResourcePreloader />
+    <ResourcePreloader v-if="$route.meta.requiresAuth" />
     
     <!-- SVG图标定义 -->
     <IconDefinitions />
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import { onMounted, onUnmounted, ref, computed, provide, watch } from 'vue';
+import { onMounted, onUnmounted, ref, computed, provide, watch, defineAsyncComponent } from 'vue';
 import { useStore } from 'vuex';
 import { useTheme } from '@/composables/useTheme';
 import { useRouter, useRoute } from 'vue-router';
@@ -85,19 +85,20 @@ import { checkUserLoginStatus } from '@/api/auth';
 import { handleRedirectPath } from '@/utils/redirectHandler';
 import Toast from '@/components/common/Toast.vue';
 import IconDefinitions from '@/components/icons/IconDefinitions.vue';
-import SlideTabsNav from '@/components/common/SlideTabsNav.vue';
 import ThemeToggle from '@/components/common/ThemeToggle.vue';
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
-import UserAvatar from '@/components/common/UserAvatar.vue';
-import BackToTop from '@/components/common/BackToTop.vue';
-import CustomContextMenu from '@/components/common/CustomContextMenu.vue';
-import CustomerServiceIcon from '@/components/common/CustomerServiceIcon.vue';
-import CrispEmbed from '@/components/common/CrispEmbed.vue';
-import ResourcePreloader from '@/components/common/ResourcePreloader.vue';
-import { IconGift } from '@tabler/icons-vue';
+import LiteIconGift from '@/components/icons/LiteIconGift.vue';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import pageCache from '@/utils/pageCache';
+
+const SlideTabsNav = defineAsyncComponent(() => import('@/components/common/SlideTabsNav.vue'));
+const UserAvatar = defineAsyncComponent(() => import('@/components/common/UserAvatar.vue'));
+const BackToTop = defineAsyncComponent(() => import('@/components/common/BackToTop.vue'));
+const CustomContextMenu = defineAsyncComponent(() => import('@/components/common/CustomContextMenu.vue'));
+const CustomerServiceIcon = defineAsyncComponent(() => import('@/components/common/CustomerServiceIcon.vue'));
+const CrispEmbed = defineAsyncComponent(() => import('@/components/common/CrispEmbed.vue'));
+const ResourcePreloader = defineAsyncComponent(() => import('@/components/common/ResourcePreloader.vue'));
 
 NProgress.configure({ 
   showSpinner: true,   
@@ -120,7 +121,7 @@ export default {
     CustomerServiceIcon,
     CrispEmbed,
     ResourcePreloader,
-    IconGift
+    LiteIconGift
   },
   setup() {
     const router = useRouter();

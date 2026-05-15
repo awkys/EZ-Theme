@@ -6,21 +6,21 @@
       @click="scrollToTop"
       :class="{ 'dark': isDarkTheme }"
     >
-      <IconChevronsUp :size="20" :stroke-width="1.5" class="icon" />
+      <LiteIconChevronsUp :size="20" :stroke-width="1.5" class="icon" />
     </div>
   </transition>
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { useStore } from 'vuex';
-import { IconChevronsUp } from '@tabler/icons-vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { useStore } from 'vuex';
+import LiteIconChevronsUp from '@/components/icons/LiteIconChevronsUp.vue';
 
 export default {
-  name: 'BackToTop',
-  components: {
-    IconChevronsUp
-  },
+  name: 'BackToTop',
+  components: {
+    LiteIconChevronsUp
+  },
   setup() {
     const visible = ref(false);
     const store = useStore();

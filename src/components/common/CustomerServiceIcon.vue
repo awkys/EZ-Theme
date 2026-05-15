@@ -6,7 +6,7 @@
     :style="positionStyle"
     @click="navigateToService"
   >
-    <IconHeadset :size="isMobile ? 24 : 28" />
+    <LiteIconHeadset :size="isMobile ? 24 : 28" />
   </div>
 </template>
 
@@ -19,13 +19,13 @@ import { useStore } from "vuex";
 
 import { CUSTOMER_SERVICE_CONFIG } from "@/utils/baseConfig";
 
-import { IconHeadset } from "@tabler/icons-vue";
+import LiteIconHeadset from "@/components/icons/LiteIconHeadset.vue";
 
 export default {
   name: "CustomerServiceIcon",
 
   components: {
-    IconHeadset,
+    LiteIconHeadset,
   },
 
   setup() {

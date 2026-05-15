@@ -74,15 +74,11 @@ import IconUser from '@/components/icons/IconUser.vue';
 
 import IconMore from '@/components/icons/IconMore.vue';
 
-import {
+import LiteIconServer from '@/components/icons/LiteIconServer.vue';
 
-  IconServer,     
+import LiteIconChartBar from '@/components/icons/LiteIconChartBar.vue';
 
-  IconChartBar,
-
-  IconHeadset   
-
-} from '@tabler/icons-vue';  
+import LiteIconHeadset from '@/components/icons/LiteIconHeadset.vue';
 
 
 
@@ -255,11 +251,11 @@ export default {
 
         case 'IconFileText': return IconFileText;
 
-        case 'IconHeadset': return IconHeadset;
+        case 'IconHeadset': return LiteIconHeadset;
 
-        case 'IconServer': return IconServer;
+        case 'IconServer': return LiteIconServer;
 
-        case 'IconChartBar': return IconChartBar;
+        case 'IconChartBar': return LiteIconChartBar;
 
         case 'IconWallet': return IconWallet;
 

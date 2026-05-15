@@ -56,7 +56,7 @@
 
       <div class="scroll-arrow">
 
-        <IconChevronDown :size="32" :stroke-width="1.5" />
+        <LiteIconChevronDown :size="32" :stroke-width="1.5" />
 
       </div>
 
@@ -86,18 +86,14 @@ import { useStore } from 'vuex';
 
 import { useI18n } from 'vue-i18n';
 
-import { SITE_CONFIG, DEFAULT_CONFIG } from '@/utils/baseConfig';
+import { SITE_CONFIG } from '@/utils/baseConfig';
 
 
 import ThemeToggle from '@/components/common/ThemeToggle.vue';
 
 import LanguageSelector from '@/components/common/LanguageSelector.vue';
 
-import { IconChevronDown } from '@tabler/icons-vue';
-
-import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
-
-
+import LiteIconChevronDown from '@/components/icons/LiteIconChevronDown.vue';
 
 export default {
 
@@ -109,9 +105,7 @@ export default {
 
     LanguageSelector,
 
-    IconChevronDown,
-
-    DomainAuthAlert
+    LiteIconChevronDown
 
   },
 
@@ -132,10 +126,6 @@ export default {
     
 
     const siteConfig = ref(SITE_CONFIG);
-
-    const defaultConfig = ref(DEFAULT_CONFIG);
-
-    
 
     const isTransitioning = ref(false);
 
@@ -271,8 +261,6 @@ export default {
       landingPageRef,
 
       siteConfig,
-
-      defaultConfig,
 
       isDarkTheme,
 

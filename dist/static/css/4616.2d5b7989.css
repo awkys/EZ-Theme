@@ -1,0 +1,150 @@
+@charset "UTF-8";
+/**
+ * 全局样式变量
+ */
+[data-v-031fde73]:root {
+  --background-color: #f5f7fa;
+  --card-background: #ffffff;
+  --card-background-rgb: 255, 255, 255;
+  --text-color: #333333;
+  --text-color-rgb: 51, 51, 51;
+  --secondary-text-color: #666666;
+  --border-color: #e8e8e8;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --success-color: #00b42a;
+  --success-background: #e8ffea;
+  --success-color-rgb: 0, 180, 42;
+  --warning-color: #ff7d00;
+  --warning-background: #fff7e8;
+  --warning-color-rgb: 255, 125, 0;
+  --error-color: #f53f3f;
+  --error-background: #ffece8;
+  --error-color-rgb: 245, 63, 63;
+  --info-color: #165dff;
+  --info-background: #e8f3ff;
+  --info-color-rgb: 22, 93, 255;
+}
+body.dark-theme[data-v-031fde73] {
+  --background-color: #171a1d;
+  --card-background: rgba(30, 30, 30, 0.8);
+  --card-background-rgb: 30, 30, 30;
+  --text-color: rgba(255, 255, 255, 0.9);
+  --text-color-rgb: 255, 255, 255;
+  --secondary-text-color: rgba(255, 255, 255, 0.6);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+.user-avatar-container[data-v-031fde73] {
+  position: relative;
+}
+.avatar-wrapper[data-v-031fde73] {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+  background-color: rgba(var(--theme-color-rgb), 0.1);
+  border: 1px solid rgba(var(--theme-color-rgb), 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatar-wrapper[data-v-031fde73]:hover {
+  box-shadow: 0 0 0 3px rgba(var(--theme-color-rgb), 0.15);
+  transform: translateY(-2px);
+}
+.avatar-wrapper .avatar-image[data-v-031fde73] {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.avatar-wrapper .avatar-placeholder[data-v-031fde73] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+.avatar-wrapper .avatar-placeholder .user-icon[data-v-031fde73] {
+  width: 20px;
+  height: 20px;
+  color: var(--theme-color);
+}
+.dropdown-menu[data-v-031fde73] {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 180px;
+  background: rgba(var(--card-background-rgb), 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px var(--shadow-color);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  z-index: 100;
+  animation: dropdownFadeIn-031fde73 0.2s ease;
+}
+.dropdown-menu .menu-item[data-v-031fde73] {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.dropdown-menu .menu-item .menu-icon[data-v-031fde73] {
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+.dropdown-menu .menu-item span[data-v-031fde73] {
+  font-size: 14px;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+.dropdown-menu .menu-item[data-v-031fde73]:hover {
+  background-color: rgba(var(--primary-color-rgb), 0.1);
+  color: var(--primary-color);
+}
+.dropdown-menu .menu-item:hover .menu-icon[data-v-031fde73], .dropdown-menu .menu-item:hover span[data-v-031fde73] {
+  color: var(--primary-color);
+}
+.dropdown-menu .menu-item:last-child .menu-icon[data-v-031fde73], .dropdown-menu .menu-item:last-child span[data-v-031fde73] {
+  transition: color 0.5s ease;
+}
+.dropdown-menu .menu-item[data-v-031fde73]:last-child:hover {
+  background-color: rgba(245, 108, 108, 0.05);
+  transition: background-color 0.5s ease;
+}
+.dropdown-menu .menu-item:last-child:hover .menu-icon[data-v-031fde73], .dropdown-menu .menu-item:last-child:hover span[data-v-031fde73] {
+  color: #f56c6c;
+  transition: color 0.5s ease;
+}
+.dropdown-menu .divider[data-v-031fde73] {
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 4px 0;
+}
+.fade-enter-active[data-v-031fde73],
+.fade-leave-active[data-v-031fde73] {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.fade-enter-from[data-v-031fde73],
+.fade-leave-to[data-v-031fde73] {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+@keyframes dropdownFadeIn-031fde73 {
+from {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+}
