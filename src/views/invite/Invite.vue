@@ -602,31 +602,29 @@ import { ref, computed, onMounted, onUnmounted, reactive, nextTick } from 'vue';
 import { useToast } from '@/composables/useToast';
 import { INVITE_CONFIG } from '@/utils/baseConfig';
 import { getInviteData, getInviteDetails, getCommissionConfig, generateInviteCode, transferCommission, withdrawCommission } from '@/api/invite';
-import {
-  IconUsers,
-  IconCoin,
-  IconWallet,
-  IconChartBar,
-  IconCopy,
-  IconBrandWechat,
-  IconBrandTwitter,
-  IconBrandTelegram,
-  IconShare,
-  IconUserPlus,
-  IconShoppingCart,
-  IconCash,
-  IconRefresh,
-  IconPlus,
-  IconBrandQq,
-  IconLink,
-  IconX,
-  IconChevronLeft,
-  IconChevronRight,
-  IconChevronDown,
-  IconTicket,
-  IconAlertTriangle,
-  IconReceipt,
-} from '@tabler/icons-vue';
+import IconUsers from '@tabler/icons-vue/dist/esm/icons/IconUsers.mjs';
+import IconCoin from '@tabler/icons-vue/dist/esm/icons/IconCoin.mjs';
+import IconWallet from '@tabler/icons-vue/dist/esm/icons/IconWallet.mjs';
+import IconChartBar from '@tabler/icons-vue/dist/esm/icons/IconChartBar.mjs';
+import IconCopy from '@tabler/icons-vue/dist/esm/icons/IconCopy.mjs';
+import IconBrandWechat from '@tabler/icons-vue/dist/esm/icons/IconBrandWechat.mjs';
+import IconBrandTwitter from '@tabler/icons-vue/dist/esm/icons/IconBrandTwitter.mjs';
+import IconBrandTelegram from '@tabler/icons-vue/dist/esm/icons/IconBrandTelegram.mjs';
+import IconShare from '@tabler/icons-vue/dist/esm/icons/IconShare.mjs';
+import IconUserPlus from '@tabler/icons-vue/dist/esm/icons/IconUserPlus.mjs';
+import IconShoppingCart from '@tabler/icons-vue/dist/esm/icons/IconShoppingCart.mjs';
+import IconCash from '@tabler/icons-vue/dist/esm/icons/IconCash.mjs';
+import IconRefresh from '@tabler/icons-vue/dist/esm/icons/IconRefresh.mjs';
+import IconPlus from '@tabler/icons-vue/dist/esm/icons/IconPlus.mjs';
+import IconBrandQq from '@tabler/icons-vue/dist/esm/icons/IconBrandQq.mjs';
+import IconLink from '@tabler/icons-vue/dist/esm/icons/IconLink.mjs';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
+import IconChevronLeft from '@tabler/icons-vue/dist/esm/icons/IconChevronLeft.mjs';
+import IconChevronRight from '@tabler/icons-vue/dist/esm/icons/IconChevronRight.mjs';
+import IconChevronDown from '@tabler/icons-vue/dist/esm/icons/IconChevronDown.mjs';
+import IconTicket from '@tabler/icons-vue/dist/esm/icons/IconTicket.mjs';
+import IconAlertTriangle from '@tabler/icons-vue/dist/esm/icons/IconAlertTriangle.mjs';
+import IconReceipt from '@tabler/icons-vue/dist/esm/icons/IconReceipt.mjs';
 
 export default {
   name: 'InviteView',

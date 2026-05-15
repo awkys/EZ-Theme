@@ -130,7 +130,8 @@ module.exports = defineConfig({
               name: "chunk-tabler-icons",
               test: /[\\/]node_modules[\\/]@tabler[\\/]icons-vue[\\/]/,
               priority: 23,
-              chunks: "all",
+              // 只在异步页面真正需要图标时再下载，避免增加首屏同步负担
+              chunks: "async",
             },
             // 编辑器相关
             editor: {

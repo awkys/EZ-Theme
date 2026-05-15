@@ -228,7 +228,8 @@ import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue';
 
 import { useI18n } from 'vue-i18n';
 
-import { IconAlertCircle, IconFileOff } from '@tabler/icons-vue';
+import IconAlertCircle from '@tabler/icons-vue/dist/esm/icons/IconAlertCircle.mjs';
+import IconFileOff from '@tabler/icons-vue/dist/esm/icons/IconFileOff.mjs';
 
 import { getTrafficLog } from '@/api/trafficLog';
 

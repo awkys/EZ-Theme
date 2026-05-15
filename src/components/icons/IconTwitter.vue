@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconTwitter } from './IconHelper';
+import IconTwitter from '@tabler/icons-vue/dist/esm/icons/IconBrandTwitter.mjs';
 
 export default {
   name: 'IconTwitter',

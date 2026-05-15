@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconMail } from './IconHelper';
+import IconMail from '@tabler/icons-vue/dist/esm/icons/IconMail.mjs';
 
 export default {
   name: 'IconMail',

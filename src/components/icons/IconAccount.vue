@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconAccount } from './IconHelper';
+import IconAccount from '@tabler/icons-vue/dist/esm/icons/IconUserCircle.mjs';
 
 export default {
   name: 'IconAccount',

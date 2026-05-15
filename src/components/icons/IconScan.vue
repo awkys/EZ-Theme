@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconScan } from './IconHelper';
+import IconScan from '@tabler/icons-vue/dist/esm/icons/IconScan.mjs';
 
 export default {
   name: 'IconScan',

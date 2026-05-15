@@ -411,22 +411,20 @@ import { getOrderDetail, getPaymentMethods, checkOrderStatus, cancelOrder, check
 import { PAYMENT_CONFIG } from '@/utils/baseConfig';
 import QrcodeVue from 'qrcode.vue';
 import ConfettiExplosion from 'vue-confetti-explosion';
-import {
-  IconCheck,
-  IconX,
-  IconCreditCard,
-  IconCircle,
-  IconCircleCheck,
-  IconAlertCircle,
-  IconArrowRight,
-  IconAlertTriangle,
-  IconRefresh,
-  IconExternalLink,
-  IconArrowLeft,
-  IconClock,
-  IconLoader2,
-  IconHelp
-} from '@tabler/icons-vue';
+import IconCheck from '@tabler/icons-vue/dist/esm/icons/IconCheck.mjs';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
+import IconCreditCard from '@tabler/icons-vue/dist/esm/icons/IconCreditCard.mjs';
+import IconCircle from '@tabler/icons-vue/dist/esm/icons/IconCircle.mjs';
+import IconCircleCheck from '@tabler/icons-vue/dist/esm/icons/IconCircleCheck.mjs';
+import IconAlertCircle from '@tabler/icons-vue/dist/esm/icons/IconAlertCircle.mjs';
+import IconArrowRight from '@tabler/icons-vue/dist/esm/icons/IconArrowRight.mjs';
+import IconAlertTriangle from '@tabler/icons-vue/dist/esm/icons/IconAlertTriangle.mjs';
+import IconRefresh from '@tabler/icons-vue/dist/esm/icons/IconRefresh.mjs';
+import IconExternalLink from '@tabler/icons-vue/dist/esm/icons/IconExternalLink.mjs';
+import IconArrowLeft from '@tabler/icons-vue/dist/esm/icons/IconArrowLeft.mjs';
+import IconClock from '@tabler/icons-vue/dist/esm/icons/IconClock.mjs';
+import IconLoader2 from '@tabler/icons-vue/dist/esm/icons/IconLoader2.mjs';
+import IconHelp from '@tabler/icons-vue/dist/esm/icons/IconHelp.mjs';
 
 import { detectBrowser } from '@/utils/baseConfig';
 

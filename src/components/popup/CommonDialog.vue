@@ -41,7 +41,7 @@
 
 <script>
 import { ref, watch } from 'vue';
-import { IconX } from '@tabler/icons-vue';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
 
 export default {
   name: 'CommonDialog',

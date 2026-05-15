@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconCrown } from './IconHelper';
+import IconCrown from '@tabler/icons-vue/dist/esm/icons/IconCrown.mjs';
 
 export default {
   name: 'IconCrown',

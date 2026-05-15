@@ -343,15 +343,13 @@ import { isXboard, ORDER_CONFIG } from "@/utils/baseConfig";
 
 import CommonDialog from "@/components/popup/CommonDialog.vue";
 
-import {
-  IconCheck,
-  IconX,
-  IconBox,
-  IconShoppingCart,
-  IconDiscount2,
-  IconArrowLeft,
-  IconAlertTriangle,
-} from "@tabler/icons-vue";
+import IconCheck from '@tabler/icons-vue/dist/esm/icons/IconCheck.mjs';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
+import IconBox from '@tabler/icons-vue/dist/esm/icons/IconBox.mjs';
+import IconShoppingCart from '@tabler/icons-vue/dist/esm/icons/IconShoppingCart.mjs';
+import IconDiscount2 from '@tabler/icons-vue/dist/esm/icons/IconDiscount.mjs';
+import IconArrowLeft from '@tabler/icons-vue/dist/esm/icons/IconArrowLeft.mjs';
+import IconAlertTriangle from '@tabler/icons-vue/dist/esm/icons/IconAlertTriangle.mjs';
 
 export default {
   name: "OrderConfirm",

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconClose } from './IconHelper';
+import IconClose from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
 
 export default {
   name: 'IconClose',

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconCode } from './IconHelper';
+import IconCode from '@tabler/icons-vue/dist/esm/icons/IconCode.mjs';
 
 export default {
   name: 'IconCode',

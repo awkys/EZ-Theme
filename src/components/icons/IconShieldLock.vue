@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconShieldLock } from './IconHelper';
+import IconShieldLock from '@tabler/icons-vue/dist/esm/icons/IconShieldLock.mjs';
 
 export default {
   name: 'IconShieldLock',

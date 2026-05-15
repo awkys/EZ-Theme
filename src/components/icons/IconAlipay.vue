@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconAlipay } from './IconHelper';
+import IconAlipay from '@tabler/icons-vue/dist/esm/icons/IconBrandAlipay.mjs';
 
 export default {
   name: 'IconAlipay',

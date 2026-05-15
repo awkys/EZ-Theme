@@ -50,7 +50,8 @@ import { useRouter } from 'vue-router';
 
 import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
 
-import { IconArrowLeft, IconHome } from '@tabler/icons-vue';
+import IconArrowLeft from '@tabler/icons-vue/dist/esm/icons/IconArrowLeft.mjs';
+import IconHome from '@tabler/icons-vue/dist/esm/icons/IconHome.mjs';
 
 
 

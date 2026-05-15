@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconCredit } from './IconHelper';
+import IconCredit from '@tabler/icons-vue/dist/esm/icons/IconCreditCard.mjs';
 
 export default {
   name: 'IconCredit',

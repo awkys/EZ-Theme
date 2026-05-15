@@ -188,15 +188,9 @@ import { useI18n } from 'vue-i18n';
 
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 
-import { 
-
-  IconAlertTriangle,
-
-  IconServer,
-
-  IconDotsVertical
-
-} from '@tabler/icons-vue';
+import IconAlertTriangle from '@tabler/icons-vue/dist/esm/icons/IconAlertTriangle.mjs';
+import IconServer from '@tabler/icons-vue/dist/esm/icons/IconServer.mjs';
+import IconDotsVertical from '@tabler/icons-vue/dist/esm/icons/IconDotsVertical.mjs';
 
 import { fetchServerNodes } from '@/api/servers';
 

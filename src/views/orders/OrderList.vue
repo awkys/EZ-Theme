@@ -312,16 +312,14 @@ import { useRouter } from "vue-router";
 
 import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
 
-import {
-  IconAlertTriangle,
-  IconShoppingCart,
-  IconEye,
-  IconX,
-  IconChevronLeft,
-  IconChevronRight,
-  IconArrowLeft,
-  IconArrowRight,
-} from "@tabler/icons-vue";
+import IconAlertTriangle from '@tabler/icons-vue/dist/esm/icons/IconAlertTriangle.mjs';
+import IconShoppingCart from '@tabler/icons-vue/dist/esm/icons/IconShoppingCart.mjs';
+import IconEye from '@tabler/icons-vue/dist/esm/icons/IconEye.mjs';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
+import IconChevronLeft from '@tabler/icons-vue/dist/esm/icons/IconChevronLeft.mjs';
+import IconChevronRight from '@tabler/icons-vue/dist/esm/icons/IconChevronRight.mjs';
+import IconArrowLeft from '@tabler/icons-vue/dist/esm/icons/IconArrowLeft.mjs';
+import IconArrowRight from '@tabler/icons-vue/dist/esm/icons/IconArrowRight.mjs';
 
 import { fetchOrderList, cancelOrder } from "@/api/orderlist";
 

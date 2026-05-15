@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconBox } from './IconHelper';
+import IconBox from '@tabler/icons-vue/dist/esm/icons/IconBox.mjs';
 
 export default {
   name: 'IconBox',

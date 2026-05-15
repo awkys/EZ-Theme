@@ -892,31 +892,17 @@ import {
 
 import { formatDate } from '@/utils/formatters';
 
-import {
-
-  IconAlertTriangle,
-
-  IconLock,
-
-  IconRefresh,
-
-  IconCopy,
-
-  IconX,
-
-  IconGift,
-
-  IconDevices,
-
-  IconDeviceMobile,
-
-  IconDeviceDesktop,
-
-  IconBrowser,
-
-  IconBrandTelegram
-
-} from '@tabler/icons-vue';
+import IconAlertTriangle from '@tabler/icons-vue/dist/esm/icons/IconAlertTriangle.mjs';
+import IconLock from '@tabler/icons-vue/dist/esm/icons/IconLock.mjs';
+import IconRefresh from '@tabler/icons-vue/dist/esm/icons/IconRefresh.mjs';
+import IconCopy from '@tabler/icons-vue/dist/esm/icons/IconCopy.mjs';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
+import IconGift from '@tabler/icons-vue/dist/esm/icons/IconGift.mjs';
+import IconDevices from '@tabler/icons-vue/dist/esm/icons/IconDevices.mjs';
+import IconDeviceMobile from '@tabler/icons-vue/dist/esm/icons/IconDeviceMobile.mjs';
+import IconDeviceDesktop from '@tabler/icons-vue/dist/esm/icons/IconDeviceDesktop.mjs';
+import IconBrowser from '@tabler/icons-vue/dist/esm/icons/IconBrowser.mjs';
+import IconBrandTelegram from '@tabler/icons-vue/dist/esm/icons/IconBrandTelegram.mjs';
 
 import useToast from '@/hooks/useToast';
 

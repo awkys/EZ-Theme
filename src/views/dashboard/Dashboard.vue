@@ -1100,46 +1100,44 @@ import {
   isXiaoV2board,
   SITE_CONFIG,
 } from "@/utils/baseConfig";
-import {
-  IconAlertTriangle,
-  IconBox,
-  IconBrandAndroid,
-  IconBrandApple,
-  IconBrandDebian,
-  IconBrandGithub,
-  IconBrandWindows,
-  IconCalendar,
-  IconCat,
-  IconChevronLeft,
-  IconChevronRight,
-  IconCoins,
-  IconCopy,
-  IconCrosshair,
-  IconDeviceDesktop,
-  IconEye,
-  IconEyeOff,
-  IconFileText,
-  IconHelpCircle,
-  IconMail,
-  IconMessage,
-  IconMoon,
-  IconPackage,
-  IconQrcode,
-  IconRefresh,
-  IconRocket,
-  IconRouter,
-  IconSend,
-  IconShare,
-  IconShoppingBag,
-  IconShoppingCart,
-  IconTransferVertical,
-  IconUserPlus,
-  IconWallet,
-  IconWaveSawTool,
-  IconWaveSine,
-  IconX,
-  IconCalendarPlus,
-} from "@tabler/icons-vue";
+import IconAlertTriangle from '@tabler/icons-vue/dist/esm/icons/IconAlertTriangle.mjs';
+import IconBox from '@tabler/icons-vue/dist/esm/icons/IconBox.mjs';
+import IconBrandAndroid from '@tabler/icons-vue/dist/esm/icons/IconBrandAndroid.mjs';
+import IconBrandApple from '@tabler/icons-vue/dist/esm/icons/IconBrandApple.mjs';
+import IconBrandDebian from '@tabler/icons-vue/dist/esm/icons/IconBrandDebian.mjs';
+import IconBrandGithub from '@tabler/icons-vue/dist/esm/icons/IconBrandGithub.mjs';
+import IconBrandWindows from '@tabler/icons-vue/dist/esm/icons/IconBrandWindows.mjs';
+import IconCalendar from '@tabler/icons-vue/dist/esm/icons/IconCalendar.mjs';
+import IconCat from '@tabler/icons-vue/dist/esm/icons/IconCat.mjs';
+import IconChevronLeft from '@tabler/icons-vue/dist/esm/icons/IconChevronLeft.mjs';
+import IconChevronRight from '@tabler/icons-vue/dist/esm/icons/IconChevronRight.mjs';
+import IconCoins from '@tabler/icons-vue/dist/esm/icons/IconCoins.mjs';
+import IconCopy from '@tabler/icons-vue/dist/esm/icons/IconCopy.mjs';
+import IconCrosshair from '@tabler/icons-vue/dist/esm/icons/IconCrosshair.mjs';
+import IconDeviceDesktop from '@tabler/icons-vue/dist/esm/icons/IconDeviceDesktop.mjs';
+import IconEye from '@tabler/icons-vue/dist/esm/icons/IconEye.mjs';
+import IconEyeOff from '@tabler/icons-vue/dist/esm/icons/IconEyeOff.mjs';
+import IconFileText from '@tabler/icons-vue/dist/esm/icons/IconFileText.mjs';
+import IconHelpCircle from '@tabler/icons-vue/dist/esm/icons/IconHelpCircle.mjs';
+import IconMail from '@tabler/icons-vue/dist/esm/icons/IconMail.mjs';
+import IconMessage from '@tabler/icons-vue/dist/esm/icons/IconMessage.mjs';
+import IconMoon from '@tabler/icons-vue/dist/esm/icons/IconMoon.mjs';
+import IconPackage from '@tabler/icons-vue/dist/esm/icons/IconPackage.mjs';
+import IconQrcode from '@tabler/icons-vue/dist/esm/icons/IconQrcode.mjs';
+import IconRefresh from '@tabler/icons-vue/dist/esm/icons/IconRefresh.mjs';
+import IconRocket from '@tabler/icons-vue/dist/esm/icons/IconRocket.mjs';
+import IconRouter from '@tabler/icons-vue/dist/esm/icons/IconRouter.mjs';
+import IconSend from '@tabler/icons-vue/dist/esm/icons/IconSend.mjs';
+import IconShare from '@tabler/icons-vue/dist/esm/icons/IconShare.mjs';
+import IconShoppingBag from '@tabler/icons-vue/dist/esm/icons/IconShoppingBag.mjs';
+import IconShoppingCart from '@tabler/icons-vue/dist/esm/icons/IconShoppingCart.mjs';
+import IconTransferVertical from '@tabler/icons-vue/dist/esm/icons/IconTransferVertical.mjs';
+import IconUserPlus from '@tabler/icons-vue/dist/esm/icons/IconUserPlus.mjs';
+import IconWallet from '@tabler/icons-vue/dist/esm/icons/IconWallet.mjs';
+import IconWaveSawTool from '@tabler/icons-vue/dist/esm/icons/IconWaveSawTool.mjs';
+import IconWaveSine from '@tabler/icons-vue/dist/esm/icons/IconWaveSine.mjs';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
+import IconCalendarPlus from '@tabler/icons-vue/dist/esm/icons/IconCalendarPlus.mjs';
 import IconMacOS from "@/components/icons/IconMacOS.vue";
 import CommonDialog from "@/components/popup/CommonDialog.vue";
 import {

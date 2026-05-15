@@ -306,45 +306,24 @@
 
 <script setup name="MoreOptions">
 
-import {
-
-  IconFileText,
-
-  IconShoppingCart,
-
-  IconUser,
-
-  IconDevices,
-
-  IconSettings,
-
-  IconTicket,
-
-  IconLogout,
-
-  IconBrandTelegram,
-
-  IconBrandGithub,
-
-  IconBrandDiscord,
-
-  IconBrandTwitter,
-
-  IconMailForward,
-
-  IconChevronRight,
-
-  IconServer,
-
-  IconMessages,
-
-  IconChartBar,
-
-  IconWallet,
-
-  IconUserPlus
-
-} from '@tabler/icons-vue';
+import IconFileText from '@tabler/icons-vue/dist/esm/icons/IconFileText.mjs';
+import IconShoppingCart from '@tabler/icons-vue/dist/esm/icons/IconShoppingCart.mjs';
+import IconUser from '@tabler/icons-vue/dist/esm/icons/IconUser.mjs';
+import IconDevices from '@tabler/icons-vue/dist/esm/icons/IconDevices.mjs';
+import IconSettings from '@tabler/icons-vue/dist/esm/icons/IconSettings.mjs';
+import IconTicket from '@tabler/icons-vue/dist/esm/icons/IconTicket.mjs';
+import IconLogout from '@tabler/icons-vue/dist/esm/icons/IconLogout.mjs';
+import IconBrandTelegram from '@tabler/icons-vue/dist/esm/icons/IconBrandTelegram.mjs';
+import IconBrandGithub from '@tabler/icons-vue/dist/esm/icons/IconBrandGithub.mjs';
+import IconBrandDiscord from '@tabler/icons-vue/dist/esm/icons/IconBrandDiscord.mjs';
+import IconBrandTwitter from '@tabler/icons-vue/dist/esm/icons/IconBrandTwitter.mjs';
+import IconMailForward from '@tabler/icons-vue/dist/esm/icons/IconMailForward.mjs';
+import IconChevronRight from '@tabler/icons-vue/dist/esm/icons/IconChevronRight.mjs';
+import IconServer from '@tabler/icons-vue/dist/esm/icons/IconServer.mjs';
+import IconMessages from '@tabler/icons-vue/dist/esm/icons/IconMessages.mjs';
+import IconChartBar from '@tabler/icons-vue/dist/esm/icons/IconChartBar.mjs';
+import IconWallet from '@tabler/icons-vue/dist/esm/icons/IconWallet.mjs';
+import IconUserPlus from '@tabler/icons-vue/dist/esm/icons/IconUserPlus.mjs';
 
 import { useI18n } from 'vue-i18n';
 

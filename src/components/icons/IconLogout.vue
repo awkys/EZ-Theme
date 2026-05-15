@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconLogout } from './IconHelper';
+import IconLogout from '@tabler/icons-vue/dist/esm/icons/IconLogout.mjs';
 
 export default {
   name: 'IconLogout',

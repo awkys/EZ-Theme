@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconDashboard } from './IconHelper';
+import IconDashboard from '@tabler/icons-vue/dist/esm/icons/IconDeviceDesktop.mjs';
 
 export default {
   name: 'IconDashboard',

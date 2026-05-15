@@ -343,19 +343,17 @@ import { SHOP_CONFIG } from "@/utils/baseConfig";
 
 import ShopPopup from "@/components/shop/ShopPopup.vue";
 
-import {
-  IconRocket,
-  IconBolt,
-  IconDeviceTv,
-  IconDevices,
-  IconCheck,
-  IconX,
-  IconShoppingCart,
-  IconBox,
-  IconInfoCircle,
-  IconCircle,
-  IconCircleCheck,
-} from "@tabler/icons-vue";
+import IconRocket from '@tabler/icons-vue/dist/esm/icons/IconRocket.mjs';
+import IconBolt from '@tabler/icons-vue/dist/esm/icons/IconBolt.mjs';
+import IconDeviceTv from '@tabler/icons-vue/dist/esm/icons/IconDeviceTv.mjs';
+import IconDevices from '@tabler/icons-vue/dist/esm/icons/IconDevices.mjs';
+import IconCheck from '@tabler/icons-vue/dist/esm/icons/IconCheck.mjs';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
+import IconShoppingCart from '@tabler/icons-vue/dist/esm/icons/IconShoppingCart.mjs';
+import IconBox from '@tabler/icons-vue/dist/esm/icons/IconBox.mjs';
+import IconInfoCircle from '@tabler/icons-vue/dist/esm/icons/IconInfoCircle.mjs';
+import IconCircle from '@tabler/icons-vue/dist/esm/icons/IconCircle.mjs';
+import IconCircleCheck from '@tabler/icons-vue/dist/esm/icons/IconCircleCheck.mjs';
 
 import { useRouter } from "vue-router";
 

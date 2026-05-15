@@ -34,7 +34,7 @@
 
 <script>
 import { ref, watch, onUnmounted } from 'vue';
-import { IconX } from '@tabler/icons-vue';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
 
 export default {
   name: 'AuthPopup',

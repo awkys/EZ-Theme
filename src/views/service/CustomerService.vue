@@ -52,7 +52,8 @@ import { useI18n } from 'vue-i18n';
 import { CUSTOMER_SERVICE_CONFIG } from '@/utils/baseConfig';
 import { getUserInfo, getCommConfig, getUserSubscribe } from '@/api/user';
 import { formatDate } from '@/utils/formatters';
-import { IconArrowLeft, IconRefresh } from '@tabler/icons-vue';
+import IconArrowLeft from '@tabler/icons-vue/dist/esm/icons/IconArrowLeft.mjs';
+import IconRefresh from '@tabler/icons-vue/dist/esm/icons/IconRefresh.mjs';
 import { Crisp } from 'crisp-sdk-web';
 
 if (typeof window !== 'undefined') {

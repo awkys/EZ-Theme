@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconChevronDown } from './IconHelper';
+import IconChevronDown from '@tabler/icons-vue/dist/esm/icons/IconChevronDown.mjs';
 
 export default {
   name: 'IconChevronDown',

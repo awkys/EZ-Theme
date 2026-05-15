@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconCheck } from './IconHelper';
+import IconCheck from '@tabler/icons-vue/dist/esm/icons/IconCheck.mjs';
 
 export default {
   name: 'IconCheck',

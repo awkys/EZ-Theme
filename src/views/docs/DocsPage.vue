@@ -168,14 +168,12 @@ import { useRouter } from "vue-router";
 
 import LoadingSpinner from "@/components/common/LoadingSpinner.vue";
 
-import {
-  IconSearch,
-  IconX,
-  IconChevronRight,
-  IconAlertTriangle,
-  IconFileSearch,
-  IconLanguage,
-} from "@tabler/icons-vue";
+import IconSearch from '@tabler/icons-vue/dist/esm/icons/IconSearch.mjs';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
+import IconChevronRight from '@tabler/icons-vue/dist/esm/icons/IconChevronRight.mjs';
+import IconAlertTriangle from '@tabler/icons-vue/dist/esm/icons/IconAlertTriangle.mjs';
+import IconFileSearch from '@tabler/icons-vue/dist/esm/icons/IconFileSearch.mjs';
+import IconLanguage from '@tabler/icons-vue/dist/esm/icons/IconLanguage.mjs';
 
 import { fetchKnowledgeList } from "@/api/docs";
 

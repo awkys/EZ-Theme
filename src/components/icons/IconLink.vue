@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconLink } from './IconHelper';
+import IconLink from '@tabler/icons-vue/dist/esm/icons/IconLink.mjs';
 
 export default {
   name: 'IconLink',

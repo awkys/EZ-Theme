@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconSpinner } from './IconHelper';
+import IconSpinner from '@tabler/icons-vue/dist/esm/icons/IconLoader2.mjs';
 
 export default {
   name: 'IconSpinner',

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconInvite } from './IconHelper';
+import IconInvite from '@tabler/icons-vue/dist/esm/icons/IconUserPlus.mjs';
 
 export default {
   name: 'IconInvite',

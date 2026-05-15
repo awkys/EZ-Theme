@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconShadow } from './IconHelper';
+import IconShadow from '@tabler/icons-vue/dist/esm/icons/IconDeviceMobile.mjs';
 
 export default {
   name: 'IconShadow',

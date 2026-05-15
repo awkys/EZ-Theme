@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconSubscription } from './IconHelper';
+import IconSubscription from '@tabler/icons-vue/dist/esm/icons/IconClipboard.mjs';
 
 export default {
   name: 'IconSubscription',

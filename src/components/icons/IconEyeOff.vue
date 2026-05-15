@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconEyeOff } from './IconHelper';
+import IconEyeOff from '@tabler/icons-vue/dist/esm/icons/IconEyeOff.mjs';
 
 export default {
   name: 'IconEyeOff',

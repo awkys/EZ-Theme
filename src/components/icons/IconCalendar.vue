@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconCalendar } from './IconHelper';
+import IconCalendar from '@tabler/icons-vue/dist/esm/icons/IconCalendar.mjs';
 
 export default {
   name: 'IconCalendar',

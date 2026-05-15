@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconStorage } from './IconHelper';
+import IconStorage from '@tabler/icons-vue/dist/esm/icons/IconDatabase.mjs';
 
 export default {
   name: 'IconStorage',

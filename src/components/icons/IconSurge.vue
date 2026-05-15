@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconSurge } from './IconHelper';
+import IconSurge from '@tabler/icons-vue/dist/esm/icons/IconAtom.mjs';
 
 export default {
   name: 'IconSurge',

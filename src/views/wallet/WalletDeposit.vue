@@ -143,7 +143,8 @@
 import { ref, computed, onMounted, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useToast } from '@/composables/useToast';
-import { IconAlertCircle, IconShoppingCart } from '@tabler/icons-vue';
+import IconAlertCircle from '@tabler/icons-vue/dist/esm/icons/IconAlertCircle.mjs';
+import IconShoppingCart from '@tabler/icons-vue/dist/esm/icons/IconShoppingCart.mjs';
 import { getUserInfo, updateRemindSettings as apiUpdateRemind } from '@/api/user';
 import { createOrderDeposit, getUserConfig } from '@/api/wallet';
 import { isXiaoV2board } from '@/utils/baseConfig';

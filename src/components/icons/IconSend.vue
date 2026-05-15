@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconSend } from './IconHelper';
+import IconSend from '@tabler/icons-vue/dist/esm/icons/IconSend.mjs';
 
 export default {
   name: 'IconSend',

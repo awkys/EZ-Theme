@@ -669,22 +669,20 @@ import MarkdownIt from 'markdown-it';
 
 const md = new MarkdownIt({ linkify: true, breaks: true });
 
-import {
-    IconSearch,
-    IconPlus,
-    IconTicket,
-    IconMessage,
-    IconMessageCircle,
-    IconX,
-    IconUser,
-    IconHeadset,
-    IconSend,
-    IconLock,
-    IconCircleCheck,
-    IconCircle,
-    IconDeviceMobile,
-    IconPhotoPlus
-} from '@tabler/icons-vue';
+import IconSearch from '@tabler/icons-vue/dist/esm/icons/IconSearch.mjs';
+import IconPlus from '@tabler/icons-vue/dist/esm/icons/IconPlus.mjs';
+import IconTicket from '@tabler/icons-vue/dist/esm/icons/IconTicket.mjs';
+import IconMessage from '@tabler/icons-vue/dist/esm/icons/IconMessage.mjs';
+import IconMessageCircle from '@tabler/icons-vue/dist/esm/icons/IconMessageCircle.mjs';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
+import IconUser from '@tabler/icons-vue/dist/esm/icons/IconUser.mjs';
+import IconHeadset from '@tabler/icons-vue/dist/esm/icons/IconHeadset.mjs';
+import IconSend from '@tabler/icons-vue/dist/esm/icons/IconSend.mjs';
+import IconLock from '@tabler/icons-vue/dist/esm/icons/IconLock.mjs';
+import IconCircleCheck from '@tabler/icons-vue/dist/esm/icons/IconCircleCheck.mjs';
+import IconCircle from '@tabler/icons-vue/dist/esm/icons/IconCircle.mjs';
+import IconDeviceMobile from '@tabler/icons-vue/dist/esm/icons/IconDeviceMobile.mjs';
+import IconPhotoPlus from '@tabler/icons-vue/dist/esm/icons/IconPhotoPlus.mjs';
 
 import {
     fetchTicketList,

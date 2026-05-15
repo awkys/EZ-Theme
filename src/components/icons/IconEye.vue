@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconEye } from './IconHelper';
+import IconEye from '@tabler/icons-vue/dist/esm/icons/IconEye.mjs';
 
 export default {
   name: 'IconEye',

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconQRCode } from './IconHelper';
+import IconQRCode from '@tabler/icons-vue/dist/esm/icons/IconQrcode.mjs';
 
 export default {
   name: 'IconQRCode',

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconMoney } from './IconHelper';
+import IconMoney from '@tabler/icons-vue/dist/esm/icons/IconCurrencyDollar.mjs';
 
 export default {
   name: 'IconMoney',

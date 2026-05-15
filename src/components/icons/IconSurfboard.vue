@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconSurfboard } from './IconHelper';
+import IconSurfboard from '@tabler/icons-vue/dist/esm/icons/IconBrandSurfshark.mjs';
 
 export default {
   name: 'IconSurfboard',

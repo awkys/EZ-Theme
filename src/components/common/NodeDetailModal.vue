@@ -266,21 +266,12 @@ import { ref, computed, watchEffect } from 'vue';
 
 import { useI18n } from 'vue-i18n';
 
-import { 
-
-  IconX, 
-
-  IconCopy, 
-
-  IconQrcode, 
-
-  IconFileText, 
-
-  IconLink, 
-
-  IconArrowLeft 
-
-} from '@tabler/icons-vue';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
+import IconCopy from '@tabler/icons-vue/dist/esm/icons/IconCopy.mjs';
+import IconQrcode from '@tabler/icons-vue/dist/esm/icons/IconQrcode.mjs';
+import IconFileText from '@tabler/icons-vue/dist/esm/icons/IconFileText.mjs';
+import IconLink from '@tabler/icons-vue/dist/esm/icons/IconLink.mjs';
+import IconArrowLeft from '@tabler/icons-vue/dist/esm/icons/IconArrowLeft.mjs';
 
 import { useToast } from '@/composables/useToast';
 

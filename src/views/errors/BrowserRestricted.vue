@@ -171,27 +171,15 @@ import { useI18n } from 'vue-i18n';
 
 import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
 
-import { 
-
-  IconBrowserOff, 
-
-  IconBrandChrome, 
-
-  IconBrandEdge,
-
-  IconBrandFirefox,
-
-  IconBrandSafari,
-
-  IconBrandOpera,
-
-  IconDeviceDesktop,
-
-  IconExternalLink,
-
-  IconCopy 
-
-} from '@tabler/icons-vue';
+import IconBrowserOff from '@tabler/icons-vue/dist/esm/icons/IconBrowserOff.mjs';
+import IconBrandChrome from '@tabler/icons-vue/dist/esm/icons/IconBrandChrome.mjs';
+import IconBrandEdge from '@tabler/icons-vue/dist/esm/icons/IconBrandEdge.mjs';
+import IconBrandFirefox from '@tabler/icons-vue/dist/esm/icons/IconBrandFirefox.mjs';
+import IconBrandSafari from '@tabler/icons-vue/dist/esm/icons/IconBrandSafari.mjs';
+import IconBrandOpera from '@tabler/icons-vue/dist/esm/icons/IconBrandOpera.mjs';
+import IconDeviceDesktop from '@tabler/icons-vue/dist/esm/icons/IconDeviceDesktop.mjs';
+import IconExternalLink from '@tabler/icons-vue/dist/esm/icons/IconExternalLink.mjs';
+import IconCopy from '@tabler/icons-vue/dist/esm/icons/IconCopy.mjs';
 
 
 

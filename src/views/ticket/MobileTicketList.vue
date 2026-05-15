@@ -491,19 +491,17 @@ import MarkdownIt from 'markdown-it';
 
 const md = new MarkdownIt({ linkify: true, breaks: true });
 
-import {
-    IconPlus,
-    IconTicket,
-    IconX,
-    IconArrowLeft,
-    IconMessageCircle,
-    IconHeadset,
-    IconUser,
-    IconSend,
-    IconLock,
-    IconDeviceDesktop,
-    IconPhotoPlus
-} from '@tabler/icons-vue';
+import IconPlus from '@tabler/icons-vue/dist/esm/icons/IconPlus.mjs';
+import IconTicket from '@tabler/icons-vue/dist/esm/icons/IconTicket.mjs';
+import IconX from '@tabler/icons-vue/dist/esm/icons/IconX.mjs';
+import IconArrowLeft from '@tabler/icons-vue/dist/esm/icons/IconArrowLeft.mjs';
+import IconMessageCircle from '@tabler/icons-vue/dist/esm/icons/IconMessageCircle.mjs';
+import IconHeadset from '@tabler/icons-vue/dist/esm/icons/IconHeadset.mjs';
+import IconUser from '@tabler/icons-vue/dist/esm/icons/IconUser.mjs';
+import IconSend from '@tabler/icons-vue/dist/esm/icons/IconSend.mjs';
+import IconLock from '@tabler/icons-vue/dist/esm/icons/IconLock.mjs';
+import IconDeviceDesktop from '@tabler/icons-vue/dist/esm/icons/IconDeviceDesktop.mjs';
+import IconPhotoPlus from '@tabler/icons-vue/dist/esm/icons/IconPhotoPlus.mjs';
 
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 

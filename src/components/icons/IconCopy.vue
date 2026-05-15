@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconCopy } from './IconHelper';
+import IconCopy from '@tabler/icons-vue/dist/esm/icons/IconCopy.mjs';
 
 export default {
   name: 'IconCopy',

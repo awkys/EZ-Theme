@@ -104,7 +104,9 @@ import { useRoute, useRouter } from 'vue-router';
 
 import LoadingSpinner from '@/components/common/LoadingSpinner.vue';
 
-import { IconArrowLeft, IconAlertTriangle, IconRefresh } from '@tabler/icons-vue';
+import IconArrowLeft from '@tabler/icons-vue/dist/esm/icons/IconArrowLeft.mjs';
+import IconAlertTriangle from '@tabler/icons-vue/dist/esm/icons/IconAlertTriangle.mjs';
+import IconRefresh from '@tabler/icons-vue/dist/esm/icons/IconRefresh.mjs';
 
 import { fetchKnowledgeDetail } from '@/api/docs';
 

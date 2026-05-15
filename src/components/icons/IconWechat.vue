@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconWechat } from './IconHelper';
+import IconWechat from '@tabler/icons-vue/dist/esm/icons/IconBrandWechat.mjs';
 
 export default {
   name: 'IconWechat',

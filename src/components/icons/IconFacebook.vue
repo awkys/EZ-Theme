@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconFacebook } from './IconHelper';
+import IconFacebook from '@tabler/icons-vue/dist/esm/icons/IconBrandFacebook.mjs';
 
 export default {
   name: 'IconFacebook',

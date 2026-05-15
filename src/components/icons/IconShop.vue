@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconShop } from './IconHelper';
+import IconShop from '@tabler/icons-vue/dist/esm/icons/IconShoppingCart.mjs';
 
 export default {
   name: 'IconShop',

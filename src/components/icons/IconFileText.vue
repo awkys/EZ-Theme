@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconFileText } from './IconHelper';
+import IconFileText from '@tabler/icons-vue/dist/esm/icons/IconFileText.mjs';
 
 export default {
   name: 'IconFileText',

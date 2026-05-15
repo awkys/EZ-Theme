@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { IconArrowRight } from './IconHelper';
+import IconArrowRight from '@tabler/icons-vue/dist/esm/icons/IconArrowRight.mjs';
 
 export default {
   name: 'IconArrowRight',
