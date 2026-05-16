@@ -21,7 +21,7 @@ export const isPlanExpiredAtValid = (expiredAt) => {
     expiredAt === "" ||
     Number(expiredAt) === 0
   ) {
-    return true;
+    return false;
   }
 
   const timestamp = Number(expiredAt);
