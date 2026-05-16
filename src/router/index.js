@@ -647,14 +647,9 @@ const router = createRouter({
 
 const canAccessPlanProtectedContent = async () => {
   try {
-    const [{ getUserInfo }, { hasActivePlan }] = await Promise.all([
-      import('@/api/dashboard'),
-      import('@/utils/planAccess')
-    ]);
+    const { fetchActivePlanStatus } = await import('@/utils/planAccess');
 
-    const response = await getUserInfo();
-
-    return hasActivePlan(response);
+    return fetchActivePlanStatus();
   } catch (error) {
     console.error('检查套餐状态失败:', error);
 

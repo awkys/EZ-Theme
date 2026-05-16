@@ -60,6 +60,8 @@ import { useRoute, useRouter } from 'vue-router';
 
 import { INVITE_CONFIG, SHOP_CONFIG, NAVIGATION_CONFIG } from '@/utils/baseConfig';
 
+import { fetchActivePlanStatus } from '@/utils/planAccess';
+
 import IconDashboard from '@/components/icons/IconDashboard.vue';
 
 import IconShop from '@/components/icons/IconShop.vue';
@@ -273,17 +275,30 @@ export default {
 
 
 
-    const navigateTo = (item, index) => {
+    const navigateTo = async (item, index) => {
 
       if (!isComponentMounted.value) return;
 
-      
+      let targetPath = item.path;
+      let targetIndex = index;
+
+      if (item.i18nKey === 'docs') {
+        const hasAccess = await fetchActivePlanStatus();
+
+        if (!hasAccess) {
+          targetPath = '/shop';
+          const shopIndex = navItems.findIndex(navItem => navItem.name === 'Shop');
+          targetIndex = shopIndex !== -1 ? shopIndex : index;
+        }
+      } else if (item.i18nKey === 'tickets') {
+        targetPath = isSmallScreen.value ? '/mobile/tickets' : '/tickets';
+      }
 
       previousIndex.value = currentIndex.value;
 
-      currentIndex.value = index;
+      currentIndex.value = targetIndex;
 
-      updateSliderPosition(index, true);
+      updateSliderPosition(targetIndex, true);
 
       
 
@@ -291,18 +306,7 @@ export default {
 
         if (isComponentMounted.value) {
 
-          // 特殊处理工单跳转
-          if (item.i18nKey === 'tickets') {
-
-            const targetPath = isSmallScreen.value ? '/mobile/tickets' : '/tickets';
-
-            router.push(targetPath);
-
-          } else {
-
-            router.push(item.path);
-
-          }
+          router.push(targetPath);
 
         }
 
