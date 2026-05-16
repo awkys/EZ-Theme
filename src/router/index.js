@@ -416,6 +416,8 @@ const routes = [
 
           requiresAuth: true,
 
+          requiresActivePlan: true,
+
           get activeNav() { return getActiveNavForRoute('Docs'); } 
         }
 
@@ -434,6 +436,8 @@ const routes = [
           titleKey: 'more.viewHelp',
 
           requiresAuth: true,
+
+          requiresActivePlan: true,
 
           get activeNav() { return getActiveNavForRoute('Docs'); } 
         }
@@ -641,6 +645,23 @@ const router = createRouter({
 
 });
 
+const canAccessPlanProtectedContent = async () => {
+  try {
+    const [{ getUserInfo }, { hasActivePlan }] = await Promise.all([
+      import('@/api/dashboard'),
+      import('@/utils/planAccess')
+    ]);
+
+    const response = await getUserInfo();
+
+    return hasActivePlan(response);
+  } catch (error) {
+    console.error('检查套餐状态失败:', error);
+
+    return false;
+  }
+};
+
 
 
 router.beforeEach(async (to, from, next) => {
@@ -752,6 +773,20 @@ router.beforeEach(async (to, from, next) => {
     next({ path: '/dashboard' });
 
   } else {
+
+    if (to.meta.requiresActivePlan) {
+
+      const hasAccess = await canAccessPlanProtectedContent();
+
+      if (!hasAccess) {
+
+        next({ path: '/shop' });
+
+        return;
+
+      }
+
+    }
 
     document.body.classList.add('page-transitioning');
 

@@ -1149,6 +1149,7 @@ import {
   setNextPeriod,
 } from "@/api/dashboard";
 import { useToast } from "@/composables/useToast";
+import { hasActivePlan as hasActiveSubscriptionPlan } from "@/utils/planAccess";
 import { submitOrder } from "@/api/shop";
 import MarkdownIt from "markdown-it";
 import QRCode from "qrcode";
@@ -1275,7 +1276,9 @@ export default {
       deviceLimit: null,
       aliveIp: 0,
       resetDay: null,
+      expiredAt: null,
     });
+    const userPlanId = ref(null);
     const qrCodeLoading = ref(true);
     const showImportSubscription = ref(DASHBOARD_CONFIG.showImportSubscription);
 
@@ -1323,6 +1326,12 @@ export default {
     const userBalance = ref("0.00");
     const currencySymbol = ref("$");
     const hasPlan = ref(true);
+    const hasActivePlan = computed(() =>
+      hasActiveSubscriptionPlan({
+        plan_id: userPlanId.value,
+        expired_at: userPlan.value.expiredAt,
+      })
+    );
     const currentNoticeIndex = ref(0);
     const showNoticeDetails = ref(false);
     const showImportCard = ref(false);
@@ -1397,7 +1406,12 @@ export default {
     );
 
     const openDocumentation = () => {
-      router.push("/docs");
+      if (loading.userInfo || loading.subscribe || hasActivePlan.value) {
+        router.push("/docs");
+        return;
+      }
+
+      router.push("/shop");
     };
 
     const downloadClient = (platform) => {
@@ -1410,8 +1424,6 @@ export default {
     const goToShop = () => {
       router.push("/shop");
     };
-
-    const userPlanId = ref(null);
 
     const showResetTrafficModal = ref(false);
     const resetConfirmCooldown = ref(0);
@@ -1521,6 +1533,7 @@ export default {
           const info = response.data;
 
           userPlanId.value = info.plan_id;
+          userPlan.value.expiredAt = info.expired_at || null;
 
           hasPlan.value = info.plan_id !== null && info.plan_id !== undefined;
 
@@ -1730,6 +1743,8 @@ export default {
         allowNewPeriod.value = response.data.allow_new_period;
         if (response.data) {
           const subscribe = response.data;
+          userPlan.value.expiredAt = subscribe.expired_at || null;
+
           if (subscribe.plan && subscribe.plan.name) {
             userPlan.value.name = subscribe.plan.name;
           }
