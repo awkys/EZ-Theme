@@ -293,10 +293,10 @@ export const config = {
     clientLinks: {
       ios: "https://zt.bunsurf.store/#/docs/10",
       android:
-        "https://down.nxkys.com/client/FlClash-v1.2.0-android-universal.apk",
-      macos: "https://down.nxkys.com/client/FlClash-v1.2.0-macos-universal.dmg",
+        "https://down.nxkys.com/client/FlClash-v2.0.1-android-universal.apk",
+      macos: "https://down.nxkys.com/client/FlClash-v2.0.1-macos-universal.dmg",
       windows:
-        "https://down.nxkys.com/client/FlClash-v1.2.0-windows-x64-setup.exe",
+        "https://down.nxkys.com/client/FlClash-v2.0.1-windows-x64-setup.exe",
       linux: "https://github.com/xxx/releases/latest",
       openwrt: "https://github.com/xxx/releases/latest",
     },
