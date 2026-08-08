@@ -4,6 +4,14 @@
  * logo 摆放位置为 images/logo.png
  */
 
+const getCurrentSiteDocsUrl = () => {
+  if (typeof window === "undefined") {
+    return "/#/docs/10";
+  }
+
+  return `${window.location.origin}/#/docs/10`;
+};
+
 export const config = {
   // 面板类型配置 - 请选择您使用的面板类型
   PANEL_TYPE: "Xiao-V2board", // 可选值: 'V2board', 'Xiao-V2board' 或 'Xboard'
@@ -291,7 +299,7 @@ export const config = {
 
     // 客户端下载链接  //可以改成文档链接直接在新标签页打开
     clientLinks: {
-      ios: "https://zt.bunsurf.store/#/docs/10",
+      ios: getCurrentSiteDocsUrl(),
       android:
         "https://down.nxkys.com/client/FlClash-v2.0.1-android-universal.apk",
       macos: "https://down.nxkys.com/client/FlClash-v2.0.1-macos-universal.dmg",
