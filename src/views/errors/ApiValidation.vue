@@ -78,17 +78,17 @@ export default {
     });
     
     const checkApiAvailability = async () => {
-      if (typeof window === 'undefined' || !window.EZ_CONFIG) {
+      if (typeof window === 'undefined' || !window.APP_CONFIG) {
         navigateToTarget();
         return;
       }
       
-      if (window.EZ_CONFIG.API_MIDDLEWARE_ENABLED === true) {
+      if (window.APP_CONFIG.API_MIDDLEWARE_ENABLED === true) {
         navigateToTarget();
         return;
       }
       
-      const apiConfig = window.EZ_CONFIG.API_CONFIG;
+      const apiConfig = window.APP_CONFIG.API_CONFIG;
       if (!apiConfig || apiConfig.urlMode !== 'static') {
         navigateToTarget();
         return;
@@ -100,7 +100,7 @@ export default {
         return;
       }
       
-      const storedUrl = sessionStorage.getItem('ez_api_available_url');
+      const storedUrl = sessionStorage.getItem('app_api_available_url');
       if (storedUrl) {
         console.log('使用已验证的API URL');
         availableApiUrl.value = storedUrl;
@@ -113,17 +113,17 @@ export default {
       
       for (const url of staticBaseUrls) {
         try {
-          console.log(`检测API节点 ${checkedCount.value + 1}/${totalApis.value}`);
+          console.log(`检测API服务 ${checkedCount.value + 1}/${totalApis.value}`);
           const isAvailable = await testApiEndpoint(url);
           checkedCount.value++;
           
           if (isAvailable) {
-            console.log('找到可用的API节点');
-            sessionStorage.setItem('ez_api_available_url', url);
+            console.log('找到可用的API服务');
+            sessionStorage.setItem('app_api_available_url', url);
             availableApiUrl.value = url;
             
-            if (window.EZ_CONFIG) {
-              window.EZ_CONFIG._AVAILABLE_API_URL = url;
+            if (window.APP_CONFIG) {
+              window.APP_CONFIG._AVAILABLE_API_URL = url;
             }
             
             checkedCount.value = totalApis.value;
@@ -134,15 +134,15 @@ export default {
             return;
           }
         } catch (error) {
-          console.log(`API节点 ${checkedCount.value + 1}/${totalApis.value} 不可用`);
+          console.log(`API服务 ${checkedCount.value + 1}/${totalApis.value} 不可用`);
           checkedCount.value++;
         }
       }
       
-      console.warn('没有找到可用的API节点，将使用默认的第一个节点');
-      const defaultUrl = window.EZ_CONFIG.API_CONFIG.staticBaseUrl[0];
-      console.log('使用默认API节点');
-      sessionStorage.setItem('ez_api_available_url', defaultUrl);
+      console.warn('没有找到可用的API服务，将使用默认服务');
+      const defaultUrl = window.APP_CONFIG.API_CONFIG.staticBaseUrl[0];
+      console.log('使用默认API服务');
+      sessionStorage.setItem('app_api_available_url', defaultUrl);
       availableApiUrl.value = defaultUrl;
       
       checkedCount.value = totalApis.value;
@@ -177,7 +177,7 @@ export default {
         const data = await response.json();
         return data && (data.data !== undefined || data.message !== undefined);
       } catch (error) {
-        console.log(`测试API节点失败`);
+        console.log(`测试API服务失败`);
         return false;
       }
     };

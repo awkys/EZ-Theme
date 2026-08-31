@@ -37,7 +37,7 @@
         </div>
       </div>
       
-      <!-- 返佣统计卡片组 -->
+      <!-- 奖励统计卡片组 -->
       <div class="stats-grid">
         <template v-if="loading.inviteData">
           <div v-for="i in 4" :key="i" class="stats-card skeleton-card">
@@ -92,7 +92,7 @@
         </template>
       </div>
       
-      <!-- 返佣规则卡片 -->
+      <!-- 奖励规则卡片 -->
       <div class="dashboard-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('invite.rules.title') }}</h2>
@@ -142,7 +142,7 @@
         </div>
       </div>
       
-      <!-- 佣金余额卡片 -->
+      <!-- 奖励余额卡片 -->
       <div class="dashboard-card balance-card">
         <div class="card-header">
           <h2 class="card-title">{{ $t('invite.balance.title') }}</h2>
@@ -230,7 +230,7 @@
         </div>
       </transition>
       
-      <!-- 提现弹窗 -->
+      <!-- 申请弹窗 -->
       <transition name="modal-fade">
         <div v-if="showWithdrawCard" class="modal-overlay" @click="closeWithdrawCard()">
           <div class="modal-content" @click.stop>
@@ -765,8 +765,11 @@ export default {
       }
       const code = inviteCodes.value[selectedCodeIndex.value].code;
       
-      if (INVITE_CONFIG.inviteLinkConfig && INVITE_CONFIG.inviteLinkConfig.linkMode === 'custom') {
-        const customDomain = INVITE_CONFIG.inviteLinkConfig.customDomain;
+      if (INVITE_CONFIG.inviteLinkConfig && INVITE_CONFIG.inviteLinkConfig.linkMode === 'custom' && INVITE_CONFIG.inviteLinkConfig.customDomain) {
+        const customDomain = INVITE_CONFIG.inviteLinkConfig.customDomain.trim();
+        if (!customDomain) {
+          return `${window.location.origin}/#/register?code=${code}`;
+        }
         const domain = customDomain.endsWith('/') ? customDomain.slice(0, -1) : customDomain;
         return `${domain}/#/register?code=${code}`;
       } else {
@@ -1003,7 +1006,7 @@ export default {
           }
         }
       } catch (err) {
-        console.error('获取佣金配置失败:', err);
+        console.error('获取奖励配置失败:', err);
       } finally {
         loading.commConfig = false;
       }
@@ -1185,7 +1188,7 @@ export default {
           showToast(withdrawError.value, 'error');
         }
       } catch (error) {
-        console.error('提现请求错误:', error);
+        console.error('申请请求错误:', error);
         if (error.response && error.response.data && error.response.data.message) {
           withdrawError.value = error.response.data.message;
         } else if (error.message) {

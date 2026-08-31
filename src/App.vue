@@ -464,7 +464,7 @@ html {
 }
 
 
-.eztheme-btn {
+.portal-action-btn {
   text-decoration: none !important;
   border-bottom: none !important;
   background-image: none !important;

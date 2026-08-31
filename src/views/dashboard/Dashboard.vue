@@ -7,20 +7,20 @@
       >
         <div class="card-header">
           <!-- <h2 class="card-title">{{ $t("dashboard.welcome") }}</h2> -->
-          <h2 class="card-title">邀请返利：支持支付宝提现</h2>
+          <h2 class="card-title">账户概览</h2>
         </div>
         <div class="card-body">
           <!-- <p class="">{{ $t("dashboard.welcomeDesc") }}</p> -->
-          <p class="notice">
-            兔子冲浪 — 官方备用地址（请收藏）：
-            <a
-              href="https://www.bnsrf.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="打开兔子冲浪备用地址"
-            >
-              https://www.bnsrf.com/
-            </a>
+          <p class="notice backup-entry">
+            <img
+              class="backup-entry-image"
+              src="/images/backup-entry.png"
+              alt=""
+              aria-hidden="true"
+            />
+            <button class="backup-entry-button" type="button" @click="openBackupEntry">
+              打开
+            </button>
           </p>
           <p
             v-if="userStats.userEmail && DASHBOARD_CONFIG.showUserEmail"
@@ -389,7 +389,7 @@
         </div>
       </transition>
 
-      <!-- 订阅导入卡片 -->
+      <!-- 配置导入卡片 -->
       <transition name="slide-fade">
         <div
           v-if="showImportCard && userPlan.subscribeUrl"
@@ -1199,22 +1199,22 @@ md.renderer.rules.link_open = function (tokens, idx, options, env, self) {
   }
 
   if (
-    href.includes("#eztheme-btn") ||
-    href.includes("class=eztheme-btn") ||
-    href.includes("?eztheme-btn")
+    href.includes("#portal-action-btn") ||
+    href.includes("class=portal-action-btn") ||
+    href.includes("?portal-action-btn")
   ) {
     token.attrs[hrefIndex][1] = href
-      .replace("#eztheme-btn", "")
-      .replace("class=eztheme-btn", "")
-      .replace("?eztheme-btn", "");
+      .replace("#portal-action-btn", "")
+      .replace("class=portal-action-btn", "")
+      .replace("?portal-action-btn", "");
 
     const classIndex = token.attrIndex("class");
     if (classIndex < 0) {
-      token.attrPush(["class", "eztheme-btn"]);
+      token.attrPush(["class", "portal-action-btn"]);
     } else {
       const classes = token.attrs[classIndex][1];
-      if (!classes.includes("eztheme-btn")) {
-        token.attrs[classIndex][1] = classes + " eztheme-btn";
+      if (!classes.includes("portal-action-btn")) {
+        token.attrs[classIndex][1] = classes + " portal-action-btn";
       }
     }
   }
@@ -1313,6 +1313,10 @@ export default {
     const quantumultXMacIcon = quantumultXMacIconImg;
     const singboxMacIcon = singboxMacIconImg;
     const hiddifyMacIcon = hiddifyMacIconImg;
+    const backupEntryUrl = atob("aHR0cHM6Ly93d3cuYm5zcmYuY29tLw==");
+    const openBackupEntry = () => {
+      window.open(backupEntryUrl, "_blank", "noopener,noreferrer");
+    };
 
     const userStats = reactive({
       remainingTraffic: "",
@@ -1823,7 +1827,7 @@ export default {
           }
         }
       } catch (error) {
-        console.error("获取订阅信息失败:", error);
+        console.error("获取配置信息失败:", error);
       } finally {
         loading.subscribe = false;
       }
@@ -2032,7 +2036,7 @@ export default {
       }
 
       const subscribeUrl = userPlan.value.subscribeUrl;
-      const siteName = SITE_CONFIG.siteName || "订阅";
+      const siteName = SITE_CONFIG.siteName || "配置";
 
       let url = "";
       let shouldUseCurrentWindow = true;
@@ -2240,7 +2244,7 @@ export default {
 
         const buttons = tempDiv.querySelectorAll("button, a");
         buttons.forEach((button) => {
-          if (button.className && button.className.includes("eztheme-btn")) {
+          if (button.className && button.className.includes("portal-action-btn")) {
             button.classList.remove("markdown-link");
             button.style.textDecoration = "none";
             button.style.borderBottom = "none";
@@ -2251,15 +2255,15 @@ export default {
             const href = button.getAttribute("href");
             if (
               href &&
-              (href.includes("#eztheme-btn") ||
-                href.includes("?eztheme-btn") ||
-                href.includes("class=eztheme-btn"))
+              (href.includes("#portal-action-btn") ||
+                href.includes("?portal-action-btn") ||
+                href.includes("class=portal-action-btn"))
             ) {
               button.href = href
-                .replace("#eztheme-btn", "")
-                .replace("?eztheme-btn", "")
-                .replace("class=eztheme-btn", "");
-              button.classList.add("eztheme-btn");
+                .replace("#portal-action-btn", "")
+                .replace("?portal-action-btn", "")
+                .replace("class=portal-action-btn", "");
+              button.classList.add("portal-action-btn");
               button.style.textDecoration = "none";
               button.style.borderBottom = "none";
               button.setAttribute("data-no-markdown-style", "true");
@@ -2418,6 +2422,7 @@ export default {
       languageChangedSignal,
       goToShop,
       openDocumentation,
+      openBackupEntry,
       downloadClient,
       hasPendingItems,
       router,
@@ -2520,6 +2525,32 @@ export default {
 
   .welcome-card {
     margin-bottom: 24px;
+
+    .backup-entry {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 12px;
+    }
+
+    .backup-entry-image {
+      display: block;
+      width: min(360px, 100%);
+      height: auto;
+    }
+
+    .backup-entry-button {
+      border: 1px solid rgba(var(--theme-color-rgb), 0.24);
+      border-radius: 8px;
+      background: rgba(var(--theme-color-rgb), 0.08);
+      color: var(--theme-color);
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1;
+      padding: 9px 14px;
+      white-space: nowrap;
+    }
 
     .user-email {
       display: flex;
@@ -4375,7 +4406,7 @@ export default {
       }
     }
 
-    :deep(a.eztheme-btn) {
+    :deep(a.portal-action-btn) {
       display: inline-block;
       padding: 8px 16px;
       background-color: var(--theme-color);
@@ -4682,7 +4713,7 @@ export default {
   }
 }
 
-.eztheme-btn {
+.portal-action-btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -4727,7 +4758,7 @@ export default {
   }
 }
 
-a.eztheme-btn {
+a.portal-action-btn {
   background-image: none !important;
   background-repeat: no-repeat !important;
   background-position: initial !important;

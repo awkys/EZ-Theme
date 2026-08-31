@@ -675,7 +675,7 @@ router.beforeEach(async (to, from, next) => {
 
   if (shouldCheckApiAvailability() && to.name !== 'ApiValidation') {
 
-    const availableUrl = sessionStorage.getItem('ez_api_available_url');
+    const availableUrl = sessionStorage.getItem('app_api_available_url');
 
     if (!availableUrl) {
 

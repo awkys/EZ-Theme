@@ -436,7 +436,7 @@
 
 
 
-        <!-- 订阅管理 -->
+        <!-- 配置管理 -->
 
         <div class="profile-card" v-if="showImportSubscription">
 
@@ -696,7 +696,7 @@
 
 
 
-      <!-- 重置订阅弹窗 -->
+      <!-- 重置配置弹窗 -->
 
       <transition name="modal-fade">
 

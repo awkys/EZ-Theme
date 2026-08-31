@@ -169,15 +169,15 @@ md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
 
   
 
-  if (href.includes('#eztheme-btn') || href.includes('class=eztheme-btn') || href.includes('?eztheme-btn')) {
+  if (href.includes('#portal-action-btn') || href.includes('class=portal-action-btn') || href.includes('?portal-action-btn')) {
 
     token.attrs[hrefIndex][1] = href
 
-      .replace('#eztheme-btn', '')
+      .replace('#portal-action-btn', '')
 
-      .replace('class=eztheme-btn', '')
+      .replace('class=portal-action-btn', '')
 
-      .replace('?eztheme-btn', '');
+      .replace('?portal-action-btn', '');
 
     
 
@@ -185,15 +185,15 @@ md.renderer.rules.link_open = function(tokens, idx, options, env, self) {
 
     if (classIndex < 0) {
 
-      token.attrPush(['class', 'eztheme-btn']);
+      token.attrPush(['class', 'portal-action-btn']);
 
     } else {
 
       const classes = token.attrs[classIndex][1];
 
-      if (!classes.includes('eztheme-btn')) {
+      if (!classes.includes('portal-action-btn')) {
 
-        token.attrs[classIndex][1] = classes + ' eztheme-btn';
+        token.attrs[classIndex][1] = classes + ' portal-action-btn';
 
       }
 
@@ -267,7 +267,7 @@ const getUserSubscribeUrl = () => {
 
   } catch (e) {
 
-    console.error('获取订阅链接失败:', e);
+    console.error('获取配置链接失败:', e);
 
   }
 
@@ -304,7 +304,7 @@ const processTemplateVariables = (content) => {
 
   const subscribeUrl = getUserSubscribeUrl();
 
-  const siteName = SITE_CONFIG.siteName || 'EZ THEME';
+  const siteName = SITE_CONFIG.siteName || '用户中心';
 
   const safeBase64SubscribeUrl = safeBase64Encode(subscribeUrl);
 
@@ -424,7 +424,7 @@ const handleDocClick = (event) => {
 
       const link = target.closest('a');
 
-      if (link && !link.classList.contains('eztheme-btn')) {
+      if (link && !link.classList.contains('portal-action-btn')) {
 
         return;
 
@@ -450,7 +450,7 @@ const handleDocClick = (event) => {
 
     const isSubscribeButton = buttonText.includes('复制') || 
 
-                           buttonText.includes('订阅') || 
+                           buttonText.includes('配置') || 
 
                            buttonText.includes('copy') || 
 
@@ -671,7 +671,7 @@ const handleDocClick = (event) => {
 
       event.target.textContent.includes('copy') ||
 
-      event.target.textContent.includes('订阅'))) {
+      event.target.textContent.includes('配置'))) {
 
     const subscribeUrl = getUserSubscribeUrl();
 
@@ -800,7 +800,7 @@ const renderedContent = computed(() => {
 
               } catch (e) {
 
-                console.error('获取订阅链接失败:', e);
+                console.error('获取配置链接失败:', e);
 
               }
 
@@ -816,7 +816,7 @@ const renderedContent = computed(() => {
 
                   } else {
 
-                    const event = new CustomEvent('eztheme-toast', { 
+                    const event = new CustomEvent('portal-toast', { 
 
                       detail: { message: '已复制到剪贴板', type: 'success' } 
 
@@ -854,7 +854,7 @@ const renderedContent = computed(() => {
 
                   } else {
 
-                    const event = new CustomEvent('eztheme-toast', { 
+                    const event = new CustomEvent('portal-toast', { 
 
                       detail: { message: '已复制到剪贴板', type: 'success' } 
 
@@ -878,7 +878,7 @@ const renderedContent = computed(() => {
 
                   } else {
 
-                    const event = new CustomEvent('eztheme-toast', { 
+                    const event = new CustomEvent('portal-toast', { 
 
                       detail: { message: '已复制到剪贴板', type: 'success' } 
 
@@ -916,7 +916,7 @@ const renderedContent = computed(() => {
 
                   } else {
 
-                    const event = new CustomEvent('eztheme-toast', { 
+                    const event = new CustomEvent('portal-toast', { 
 
                       detail: { message: '已复制到剪贴板', type: 'success' } 
 
@@ -946,7 +946,7 @@ const renderedContent = computed(() => {
 
         
 
-        document.addEventListener('eztheme-toast', function(e) {
+        document.addEventListener('portal-toast', function(e) {
 
           if (e.detail && e.detail.message) {
 
@@ -1048,9 +1048,9 @@ const renderedContent = computed(() => {
 
       buttons.forEach(button => {
 
-        if (!button.classList.contains('eztheme-btn')) {
+        if (!button.classList.contains('portal-action-btn')) {
 
-          button.classList.add('eztheme-btn');
+          button.classList.add('portal-action-btn');
 
         }
 
@@ -1100,11 +1100,11 @@ const renderedContent = computed(() => {
 
         if (link.textContent.trim().toLowerCase().includes('复制') || 
 
-            link.textContent.trim().toLowerCase().includes('订阅') || 
+            link.textContent.trim().toLowerCase().includes('配置') || 
 
             link.textContent.trim().toLowerCase().includes('copy')) {
 
-          link.classList.add('eztheme-btn');
+          link.classList.add('portal-action-btn');
 
         }
 
@@ -2005,7 +2005,7 @@ onUnmounted(() => {
 
   
 
-  :deep(a:not(.eztheme-btn)) {
+  :deep(a:not(.portal-action-btn)) {
 
     color: rgba(var(--theme-color-rgb), 1);
 
@@ -2326,7 +2326,7 @@ onUnmounted(() => {
 
 
 
-.eztheme-btn {
+.portal-action-btn {
 
   display: inline-flex !important;
 
@@ -2436,7 +2436,7 @@ onUnmounted(() => {
 
 
 
-a.eztheme-btn {
+a.portal-action-btn {
 
   background-image: none !important;
 

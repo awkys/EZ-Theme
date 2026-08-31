@@ -11,11 +11,11 @@ const getRouterInstance = async () => {
 
 
 function shouldCheckApiAvailability() {
-  if (typeof window === 'undefined' || !window.EZ_CONFIG) return false;
+  if (typeof window === 'undefined' || !window.APP_CONFIG) return false;
   
-  if (window.EZ_CONFIG.API_MIDDLEWARE_ENABLED === true) return false;
+  if (window.APP_CONFIG.API_MIDDLEWARE_ENABLED === true) return false;
   
-  const apiConfig = window.EZ_CONFIG.API_CONFIG;
+  const apiConfig = window.APP_CONFIG.API_CONFIG;
   if (!apiConfig || apiConfig.urlMode !== 'static') return false;
   
   if (apiConfig.showCheckBackend === false) return false;
@@ -28,19 +28,19 @@ function shouldCheckApiAvailability() {
 
 function getAvailableApiUrl() {
   if (!shouldCheckApiAvailability()) {
-    if (window.EZ_CONFIG?.API_CONFIG?.staticBaseUrl) {
-      const urls = window.EZ_CONFIG.API_CONFIG.staticBaseUrl;
+    if (window.APP_CONFIG?.API_CONFIG?.staticBaseUrl) {
+      const urls = window.APP_CONFIG.API_CONFIG.staticBaseUrl;
       return Array.isArray(urls) ? urls[0] : urls;
     }
     return '';
   }
   
-  const availableUrl = sessionStorage.getItem('ez_api_available_url');
+  const availableUrl = sessionStorage.getItem('app_api_available_url');
   if (availableUrl) {
     return availableUrl;
   }
   
-  return window.EZ_CONFIG.API_CONFIG.staticBaseUrl[0];
+  return window.APP_CONFIG.API_CONFIG.staticBaseUrl[0];
 }
 
 
@@ -51,7 +51,7 @@ async function initApiAvailabilityChecker(redirect = true) {
   }
   
   try {
-    const storedUrl = sessionStorage.getItem('ez_api_available_url');
+    const storedUrl = sessionStorage.getItem('app_api_available_url');
     if (storedUrl) {
       console.log('使用已验证的API URL:', storedUrl);
       return storedUrl;

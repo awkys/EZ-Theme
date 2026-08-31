@@ -53,7 +53,7 @@ const pathMappings = {
 
 export function mapApiPath(originalPath) {
   try {
-    if (!window.EZ_CONFIG || !window.EZ_CONFIG.API_MIDDLEWARE_ENABLED) {
+    if (!window.APP_CONFIG || !window.APP_CONFIG.API_MIDDLEWARE_ENABLED) {
       return originalPath;
     }
     

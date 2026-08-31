@@ -16,13 +16,13 @@
 
         <div class="card-header">
 
-          <h2 class="card-title">{{ $t('nodes.welcome.title') || '节点列表' }}</h2>
+          <h2 class="card-title">{{ $t('nodes.welcome.title') || '资源列表' }}</h2>
 
         </div>
 
         <div class="card-body">
 
-          <p>{{ $t('nodes.welcome.description') || '查看并使用可用的服务器节点' }}</p>
+          <p>{{ $t('nodes.welcome.description') || '查看并使用可用资源' }}</p>
 
         </div>
 
@@ -30,13 +30,13 @@
 
       
 
-      <!-- 节点列表状态 -->
+      <!-- 资源列表状态 -->
 
       <div v-if="loading" class="nodes-loading">
 
         <LoadingSpinner />
 
-        <p>{{ $t('nodes.loading') || '正在加载节点...' }}</p>
+        <p>{{ $t('nodes.loading') || '正在加载资源...' }}</p>
 
       </div>
 
@@ -56,7 +56,7 @@
 
       
 
-      <!-- 节点列表内容 -->
+      <!-- 资源列表内容 -->
 
       <div v-else-if="nodes.length > 0" class="nodes-content">
 
@@ -64,7 +64,7 @@
 
           <div v-for="node in nodes" :key="node.id" class="node-item">
 
-            <!-- 节点状态指示器 -->
+            <!-- 资源状态指示器 -->
 
             <div class="node-status">
 
@@ -74,7 +74,7 @@
 
             
 
-            <!-- 节点信息 -->
+            <!-- 资源信息 -->
 
             <div class="node-info">
 
@@ -88,7 +88,7 @@
 
                 
 
-                <!-- 节点类型标签 -->
+                <!-- 资源类型标签 -->
 
                 <span class="node-tag type-tag">{{ node.type }}</span>
 
@@ -110,13 +110,13 @@
 
               
 
-              <!-- 节点名称 -->
+              <!-- 资源名称 -->
 
               <h3 class="node-name">{{ node.name }}</h3>
 
               
 
-              <!-- 节点主机信息 -->
+              <!-- 资源主机信息 -->
 
               <p class="node-host" v-if="showNodeDetails">{{ node.host }}:{{ node.port }}</p>
 
@@ -124,7 +124,7 @@
 
             
 
-            <!-- 更多按钮 - 仅当配置允许显示节点倍率和允许查看节点详情时显示 -->
+            <!-- 更多按钮 - 仅当配置允许显示倍率和允许查看详情时显示 -->
 
             <div v-if="showNodeRate && allowViewNodeInfo" class="node-actions">
 
@@ -150,7 +150,7 @@
 
         <IconServer :size="48" class="empty-icon" />
 
-        <p>{{ $t('nodes.noNodes') || '暂无可用节点' }}</p>
+        <p>{{ $t('nodes.noNodes') || '暂无可用资源' }}</p>
 
       </div>
 
@@ -158,7 +158,7 @@
 
     
 
-    <!-- 节点详情模态框 -->
+    <!-- 资源详情模态框 -->
 
     <NodeDetailModal 
 

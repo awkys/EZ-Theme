@@ -207,7 +207,7 @@ export default {
     pendingItems: '待處理事項',
     pendingOrders: '待支付訂單',
     pendingTickets: '待回覆工單',
-    pendingInvites: '待管理員處理佣金',
+    pendingInvites: '待管理員處理獎勵',
     officialClients: '官方客戶端',
     deviceLimit: '線上設備',
     unlimited: '不限制',
@@ -250,7 +250,7 @@ export default {
     wallet: '錢包',
     profile: '帳號',
     more: '更多',
-    commission: '返利',
+    commission: '獎勵',
     hotSale: '熱銷'
   },
   more: {
@@ -394,7 +394,7 @@ export default {
     userId: '用戶ID',
     planId: '套餐ID',
     balance: '餘額',
-    commission: '佣金',
+    commission: '獎勵',
     createdAt: '建立時間',
     expiredAt: '到期時間',
     notifications: '通知設定',
@@ -649,16 +649,16 @@ export default {
     }
   },
   invite: {
-    title: '我的返佣',
-    description: '邀請好友註冊使用，獲取佣金收入',
+    title: '我的獎勵',
+    description: '邀請好友註冊使用，獲取獎勵收入',
     stats: {
       registeredUsers: '已註冊用戶數',
-      pendingCommission: '確認中的佣金',
-      availableCommission: '累計獲得佣金',
-      commissionRate: '佣金比例'
+      pendingCommission: '確認中的獎勵',
+      availableCommission: '累計獲得獎勵',
+      commissionRate: '獎勵比例'
     },
     rules: {
-      title: '返佣規則',
+      title: '獎勵規則',
       share: {
         title: '1. 分享',
         desc: '分享邀請連結'
@@ -672,49 +672,49 @@ export default {
         desc: '好友購買套餐'
       },
       commission: {
-        title: '4. 返佣',
-        desc: '獲得{rate}%返佣'
+        title: '4. 獎勵',
+        desc: '獲得{rate}%獎勵'
       }
     },
     balance: {
-      title: '佣金餘額',
-      available: '可用佣金',
-      description: '邀請好友獲得的佣金，可直接劃轉到消費餘額',
+      title: '獎勵餘額',
+      available: '可用獎勵',
+      description: '邀請好友獲得的獎勵，可直接劃轉到消費餘額',
       transferToBalance: '劃轉到餘額',
-      withdraw: '提現'
+      withdraw: '申請'
     },
     transfer: {
-      title: '劃轉佣金',
+      title: '劃轉獎勵',
       warning: '注意',
-      warningDesc: '劃轉後的餘額僅用於消費，無法提現',
+      warningDesc: '劃轉後的餘額僅用於消費，無法申請',
       amount: '劃轉金額',
       amountPlaceholder: '請輸入劃轉金額',
-      availableCommission: '可用佣金',
+      availableCommission: '可用獎勵',
       confirm: '確認劃轉',
       processing: '處理中...',
       success: '劃轉成功',
       failure: '劃轉失敗',
-      insufficientFunds: '可用佣金不足',
+      insufficientFunds: '可用獎勵不足',
       invalidAmount: '請輸入有效金額'
     },
     withdraw: {
-      title: '提現佣金',
-      platform: '提現平台',
-      account: '提現帳號',
-      accountPlaceholder: '請輸入提現帳號',
-      amount: '提現金額',
-      amountPlaceholder: '請輸入提現金額',
-      availableCommission: '可提現佣金',
-      noPlatforms: '無可用提現平台',
-      confirm: '確認提現',
+      title: '申請獎勵',
+      platform: '申請平台',
+      account: '申請帳號',
+      accountPlaceholder: '請輸入申請帳號',
+      amount: '申請金額',
+      amountPlaceholder: '請輸入申請金額',
+      availableCommission: '可申請獎勵',
+      noPlatforms: '無可用申請平台',
+      confirm: '確認申請',
       processing: '處理中...',
-      success: '提現申請已提交',
-      failure: '提現申請失敗',
+      success: '申請已提交',
+      failure: '申請失敗',
       tip: '提示',
       invalidAmount: '請輸入有效金額',
-      insufficientFunds: '可用佣金不足',
-      belowMinAmount: '提現金額不得低於{amount}',
-      minWithdrawAmount: '最低提現金額'
+      insufficientFunds: '可用獎勵不足',
+      belowMinAmount: '申請金額不得低於{amount}',
+      minWithdrawAmount: '最低申請金額'
     },
     inviteLink: {
       title: '邀請連結',
@@ -744,10 +744,10 @@ export default {
       shareDescription: '我正在使用此服務，推薦您也來體驗'
     },
     records: {
-      title: '返佣記錄',
-      empty: '暫無返佣記錄',
+      title: '獎勵記錄',
+      empty: '暫無獎勵記錄',
       date: '時間',
-      commission: '佣金',
+      commission: '獎勵',
       details: '詳情',
       user: '用戶',
       registerTime: '註冊時間',
@@ -769,8 +769,8 @@ export default {
         unknown: '未知'
       },
       types: {
-        confirmed_commission: '已確認佣金',
-        pending_commission: '確認中佣金',
+        confirmed_commission: '已確認獎勵',
+        pending_commission: '確認中獎勵',
         all: '全部'
       }
     }
@@ -851,7 +851,7 @@ export default {
     },
     deposit: {
       title: '充值餘額',
-      notice: '充值後的餘額僅限消費，無法提現',
+      notice: '充值後的餘額僅限消費，無法申請',
       customAmount: '自訂金額',
       customAmountPlaceholder: '請輸入充值金額',
       button: '立即充值',

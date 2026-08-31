@@ -1,6 +1,6 @@
 /**
  * 外部配置文件
- * index.html 中可以搜索 EZ 将其替换为您的网站名称
+ * index.html 中可以搜索站点名并替换为您的网站名称
  * logo 摆放位置为 images/logo.png
  */
 
@@ -28,7 +28,7 @@ export const config = {
   // 2. 自动获取: 从当前域名自动生成API基础URL
   API_CONFIG: {
     // API URL获取方式: 'static'=使用静态URL, 'auto'=自动从当前域名获取
-    urlMode: "static",
+    urlMode: "auto",
 
     // 是否展示后端联通性检测
     // showCheckBackend: false,
@@ -37,10 +37,7 @@ export const config = {
     // 静态URL模式下的基础URL (urlMode = 'static'时使用)
     // 支持字符串形式(单个API地址)或数组形式(多个备选API地址)
     // 多个地址时，会按顺序检测可用性，并使用第一个可用的地址
-    staticBaseUrl: [
-      // "https://bun.xn--bwwx30f.top/api/v1",
-      "https://vip.bunsurf.xyz/api/v1",
-    ],
+    staticBaseUrl: [],
 
     // 自动获取模式配置 (urlMode = 'auto'时使用)
     autoConfig: {
@@ -51,7 +48,6 @@ export const config = {
       appendApiPath: true,
 
       // API路径
-      //   apiPath: "/bunsurf/api",
       apiPath: "/api/v1",
     },
   },
@@ -62,13 +58,11 @@ export const config = {
   // API_MIDDLEWARE_ENABLED: false,
 
   //=======================================================
-  // 中间件服务器URL (不含路径) 开源地址 https://github.com/codeman857/EZ-Encrypt-Middleware
-  //   API_MIDDLEWARE_URL: "https://d2ijw202als7c.ezdemo.xyz",
-  // API_MIDDLEWARE_URL: "https://vb2.bunsurf.xyz",
-  API_MIDDLEWARE_URL: "https://md.cnm2026.store",
+  // 中间件服务器URL (不含路径)，支持 b64: 前缀
+  API_MIDDLEWARE_URL: "b64:aHR0cHM6Ly9tZC5jbm0yMDI2LnN0b3Jl",
 
   // 中间件加密KEY必须是16位的16进制字符串，必须和中间件key保持一致 在线生成地址 https://www.bejson.com/math/hex_gen/
-  API_MIDDLEWARE_KEY: "5ba2574efbf1232b",
+  API_MIDDLEWARE_KEY: "b64:NWJhMjU3NGVmYmYxMjMyYg==",
   //=======================================================
 
   // 中间件路由前缀 (与中间件服务器配置保持一致)
@@ -78,24 +72,24 @@ export const config = {
 
   // ====================  网站基础配置  ====================
   SITE_CONFIG: {
-    siteName: "兔子冲浪",
-    siteDescription: "EZ UI",
+    siteName: "用户中心",
+    siteDescription: "Client Portal",
     // copyright会自动使用当前年份
-    copyright: `© ${new Date().getFullYear()} EZ THEME. All Rights Reserved.`,
+    copyright: `© ${new Date().getFullYear()} All Rights Reserved.`,
 
     // 是否显示标题中的网站Logo (true=显示, false=隐藏)
     showLogo: true,
 
     // Landing页面多语言标语
     landingText: {
-      "zh-CN": "探索全球网络无限可能",
-      "vi-VN": "Khám phá khả năng vô hạn của mạng toàn cầu",
-      "en-US": "Explore Unlimited Possibilities of Global Network",
-      "zh-TW": "探索全球網絡無限可能",
-      "ja-JP": "グローバルネットワークの無限の可能性",
-      "ko-KR": "글로벌 네트워크의 무한한 가능성을 탐색하세요",
-      "ru-RU": "Исследуйте безграничные возможности глобальной сети",
-      "fa-IR": "امکانات نامحدود شبکه جهانی را کاوش کنید",
+      "zh-CN": "欢迎回来",
+      "vi-VN": "Chào mừng trở lại",
+      "en-US": "Welcome back",
+      "zh-TW": "歡迎回來",
+      "ja-JP": "おかえりなさい",
+      "ko-KR": "다시 오신 것을 환영합니다",
+      "ru-RU": "С возвращением",
+      "fa-IR": "خوش برگشتید",
     },
 
     // 自定义landing页面路径（相对于public目录
@@ -143,11 +137,7 @@ export const config = {
 
       // 弹窗内容 (支持HTML)
       content: `
-          <p>为确保您随时能访问，请收藏我们的【防走失网址】：</p>
-          <p><a href="https://www.bnsrf.com/" target="_blank">https://www.bnsrf.com/</a></p>
-          <ul>
-            <li>当前网址可能被屏蔽，请务必收藏上方链接。</li>
-          </ul>
+          <p>请留意页面内的服务通知。</p>
         `,
       // 冷却时间（小时），在此时间内不会再次显示弹窗
       cooldownHours: 168,
@@ -250,7 +240,7 @@ export const config = {
     // 是否在欢迎卡片中显示用户邮箱 (true=显示, false=隐藏)
     showUserEmail: false,
 
-    // 是否为导入订阅按钮添加高光效果和填充底色 (true=添加效果, false=不添加效果)
+    // 是否为导入配置按钮添加高光效果和填充底色 (true=添加效果, false=不添加效果)
     importButtonHighlightBtnbgcolor: false,
 
     // ===============================
@@ -280,7 +270,7 @@ export const config = {
     // 是否显示在线设备数量限制 (true=显示, false=隐藏，仅Xiao-V2board支持)
     showOnlineDevicesLimit: true,
 
-    // 是否显示导入订阅
+    // 是否显示导入配置
     showImportSubscription: true,
   },
 
@@ -309,7 +299,7 @@ export const config = {
       openwrt: "https://github.com/xxx/releases/latest",
     },
 
-    // 订阅导入客户端显示控制 部分面板不支持SingBox导入请您注意检查
+    // 配置导入客户端显示控制 部分面板不支持SingBox导入请您注意检查
 
     // iOS平台
     showShadowrocket: true,
@@ -370,7 +360,7 @@ export const config = {
   },
 
   // 授权的前端域名列表 (新增)
-  AUTHORIZED_DOMAINS: ["test.eztheme.test", "test1.eztheme.test"],
+  AUTHORIZED_DOMAINS: ["test.example", "test1.example"],
 
   // 验证码配置
   CAPTCHA_CONFIG: {
@@ -459,10 +449,10 @@ export const config = {
 
   // 邀请页面配置
   INVITE_CONFIG: {
-    // 是否在导航栏的邀请按钮上显示返利标记
+    // 是否在导航栏的邀请按钮上显示奖励标记
     showCommissionBadge: true,
 
-    // 返佣记录每页显示数量（最小值为10，API限制每次请求最少需要返回10条记录）
+    // 奖励记录每页显示数量（最小值为10，API限制每次请求最少需要返回10条记录）
     recordsPerPage: 10,
 
     // 邀请链接配置
@@ -470,7 +460,7 @@ export const config = {
       // 链接模式：'auto'=自动使用当前站点域名，'custom'=使用自定义域名
       linkMode: "custom",
       // 自定义域名，当linkMode为'custom'时使用
-      customDomain: "https://bun.cetkny.store",
+      customDomain: "b64:aHR0cHM6Ly9idW4ueXVuY2F0Lm9ubGluZQ==",
     },
   },
 
@@ -533,19 +523,19 @@ export const config = {
     // 显示多少天的流量记录
     daysToShow: 30, // 默认显示30天
 
-    // 流量趋势图是否聚合每日流量 (如果你的节点倍率全为1倍则无需开启)
+    // 流量趋势图是否聚合每日流量 (如果倍率全为1倍则无需开启)
     sumDailyTraffic: false, // 默认禁用
   },
 
-  // 节点列表配置
+  // 资源列表配置
   NODES_CONFIG: {
-    // 是否显示节点倍率 (true=显示, false=隐藏，若此处为false则allowViewNodeInfo也会为false)
+    // 是否显示倍率 (true=显示, false=隐藏，若此处为false则allowViewNodeInfo也会为false)
     showNodeRate: true,
 
-    // 是否显示节点详细信息（主机和端口）
+    // 是否显示资源详细信息（主机和端口）
     showNodeDetails: false,
 
-    // 是否允许查看节点详细信息（控制详情按钮和模态框）
+    // 是否允许查看资源详细信息（控制详情按钮和模态框）
     allowViewNodeInfo: true,
   },
 
@@ -641,4 +631,4 @@ export const config = {
   },
 };
 
-window.EZ_CONFIG = config;
+window.APP_CONFIG = config;

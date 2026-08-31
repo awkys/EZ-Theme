@@ -129,7 +129,7 @@ export default {
     }
   },
   landing: {
-    mainText: SITE_CONFIG.landingText['zh-CN'] || '探索全球网络无限可能',
+    mainText: SITE_CONFIG.landingText['zh-CN'] || '欢迎回来',
     scrollText: '向下滑动以登录',
     exploreButton: '开始探索'
   },

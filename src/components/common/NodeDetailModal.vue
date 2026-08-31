@@ -24,11 +24,11 @@
 
         <transition :name="slideDirection" mode="out-in">
 
-          <!-- 节点基本信息页面 -->
+          <!-- 资源基本信息页面 -->
 
           <div v-if="currentPage === 'info'" key="info" class="node-detail-modal-body">
 
-            <!-- 节点基本信息 -->
+            <!-- 资源基本信息 -->
 
             <div class="node-info-section">
 
@@ -66,7 +66,7 @@
 
               
 
-              <!-- 根据节点类型显示不同的信息 -->
+              <!-- 根据资源类型显示不同的信息 -->
 
               <template v-if="node.type === 'ss' || node.type === 'shadowsocks'">
 
@@ -112,7 +112,7 @@
 
             
 
-            <!-- 切换到订阅链接页面的按钮 -->
+            <!-- 切换到配置链接页面的按钮 -->
 
             <div class="page-nav-btn-container">
 
@@ -130,7 +130,7 @@
 
           
 
-          <!-- 订阅链接页面 -->
+          <!-- 配置链接页面 -->
 
           <div v-else-if="currentPage === 'subscribe'" key="subscribe" class="node-detail-modal-body">
 
@@ -232,7 +232,7 @@
 
             
 
-            <!-- 返回节点信息页面的按钮 -->
+            <!-- 返回资源信息页面的按钮 -->
 
             <div class="page-nav-btn-container">
 
@@ -387,7 +387,7 @@ const subscribeLink = computed(() => {
 
   if (!nodeType || !props.node.host || !props.node.port) {
 
-    return t('nodes.invalidNodeData') || '节点数据不完整，无法生成链接';
+    return t('nodes.invalidNodeData') || '资源数据不完整，无法生成链接';
 
   }
 

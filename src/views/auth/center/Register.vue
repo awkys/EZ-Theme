@@ -873,7 +873,7 @@ export default {
 
       try {
 
-        if(window.EZ_CONFIG.API_CONFIG.showCheckBackend) {
+        if(window.APP_CONFIG.API_CONFIG.showCheckBackend) {
           configLoading.value = true;
         }
 

@@ -7,10 +7,10 @@ import { getAvailableApiUrl } from "@/utils/apiAvailabilityChecker";
 const getConfig = (key, defaultValue) => {
   if (
     typeof window !== "undefined" &&
-    window.EZ_CONFIG &&
-    window.EZ_CONFIG[key] !== undefined
+    window.APP_CONFIG &&
+    window.APP_CONFIG[key] !== undefined
   ) {
-    return window.EZ_CONFIG[key];
+    return window.APP_CONFIG[key];
   }
   return defaultValue;
 };
@@ -56,15 +56,15 @@ export const isXboard = () => {
 // 获取API基础URL的函数
 export const getApiBaseUrl = () => {
   // 完全依赖config.js中的配置
-  if (typeof window !== "undefined" && window.EZ_CONFIG) {
+  if (typeof window !== "undefined" && window.APP_CONFIG) {
     // 首先检查是否启用中间件代理
     if (
-      window.EZ_CONFIG.API_MIDDLEWARE_ENABLED === true &&
-      window.EZ_CONFIG.API_MIDDLEWARE_URL
+      window.APP_CONFIG.API_MIDDLEWARE_ENABLED === true &&
+      window.APP_CONFIG.API_MIDDLEWARE_URL
     ) {
       // 使用中间件URL和路径
-      const middlewareUrl = window.EZ_CONFIG.API_MIDDLEWARE_URL.trim();
-      const middlewarePath = window.EZ_CONFIG.API_MIDDLEWARE_PATH;
+      const middlewareUrl = window.APP_CONFIG.API_MIDDLEWARE_URL.trim();
+      const middlewarePath = window.APP_CONFIG.API_MIDDLEWARE_PATH;
 
       // 确保URL末尾没有斜杠，且路径开头有斜杠，防止出现重复或缺少斜杠
       const formattedUrl = middlewareUrl.endsWith("/")
@@ -74,7 +74,7 @@ export const getApiBaseUrl = () => {
         ? middlewarePath
         : `/${middlewarePath}`;
 
-      const middlewareKey = window.EZ_CONFIG.API_MIDDLEWARE_KEY;
+      const middlewareKey = window.APP_CONFIG.API_MIDDLEWARE_KEY;
 
       if (middlewareKey) {
         return formattedUrl;
@@ -83,8 +83,8 @@ export const getApiBaseUrl = () => {
     }
 
     // 然后检查是否存在API_CONFIG
-    if (window.EZ_CONFIG.API_CONFIG) {
-      const apiConfig = window.EZ_CONFIG.API_CONFIG;
+    if (window.APP_CONFIG.API_CONFIG) {
+      const apiConfig = window.APP_CONFIG.API_CONFIG;
 
       // 静态URL模式
       if (apiConfig.urlMode === "static" && apiConfig.staticBaseUrl) {
@@ -229,23 +229,23 @@ export const CUSTOM_HEADERS_CONFIG = mergeDeep(
 
 // 网站名称配置
 const DEFAULT_SITE_CONFIG = {
-  siteName: "EZ THEME",
-  siteDescription: "EZ UI",
-  copyright: `© ${new Date().getFullYear()} EZ THEME. All Rights Reserved.`,
+  siteName: "用户中心",
+  siteDescription: "Client Portal",
+  copyright: `© ${new Date().getFullYear()} All Rights Reserved.`,
 
   // 是否显示标题中的网站Logo (true=显示, false=隐藏)
   showLogo: true,
 
   // Landing页面多语言标语
   landingText: {
-    "zh-CN": "探索全球网络无限可能",
-    "vi-VN": "Khám phá khả năng vô hạn của mạng toàn cầu",
-    "en-US": "Explore Unlimited Possibilities of Global Network",
-    "zh-TW": "探索全球網絡無限可能",
-    "ja-JP": "グローバルネットワークの無限の可能性",
-    "ko-KR": "글로벌 네트워크의 무한한 가능성을 탐색하세요",
-    "ru-RU": "Исследуйте безграничные возможности глобальной сети",
-    "fa-IR": "امکانات نامحدود شبکه جهانی را کاوش کنید",
+    "zh-CN": "欢迎回来",
+    "vi-VN": "Chào mừng trở lại",
+    "en-US": "Welcome back",
+    "zh-TW": "歡迎回來",
+    "ja-JP": "おかえりなさい",
+    "ko-KR": "다시 오신 것을 환영합니다",
+    "ru-RU": "С возвращением",
+    "fa-IR": "خوش برگشتید",
   },
 
   // 自定义landing页面路径（相对于public目录）
@@ -371,7 +371,7 @@ const DEFAULT_TRAFFICLOG_CONFIG = {
   // 显示多少天的流量记录
   daysToShow: 30,
 
-  // 流量趋势图是否聚合每日流量 (如果你的节点倍率全为1倍则无需开启)
+  // 流量趋势图是否聚合每日流量 (如果倍率全为1倍则无需开启)
   sumDailyTraffic: false,
 };
 
@@ -408,7 +408,7 @@ const DEFAULT_CLIENT_CONFIG = {
 
   // ===========================================================
 
-  // 订阅导入客户端显示控制
+  // 配置导入客户端显示控制
   // iOS平台客户端
   showShadowrocket: true, // Shadowrocket
   showSurge: true, // Surge
@@ -538,7 +538,7 @@ const DEFAULT_DASHBOARD_CONFIG = {
   // 是否在欢迎卡片中显示用户邮箱 (true=显示, false=隐藏)
   showUserEmail: true,
 
-  // 是否为导入订阅按钮添加高光效果和填充底色 (true=添加效果, false=不添加效果)
+  // 是否为导入配置按钮添加高光效果和填充底色 (true=添加效果, false=不添加效果)
   importButtonHighlightBtnbgcolor: true,
 
   // 是否启用重置流量功能 (true=启用, false=禁用)
@@ -562,7 +562,7 @@ const DEFAULT_DASHBOARD_CONFIG = {
   // 是否显示在线设备数量限制 (true=显示, false=隐藏，仅Xiao-V2board支持)
   showOnlineDevicesLimit: true,
 
-  // 是否显示导入订阅
+  // 是否显示导入配置
   showImportSubscription: true,
 };
 
@@ -829,10 +829,10 @@ export const WALLET_CONFIG = mergeDeep(
  * 邀请页面配置
  */
 const DEFAULT_INVITE_CONFIG = {
-  // 是否在导航栏的邀请按钮上显示返利标记
+  // 是否在导航栏的邀请按钮上显示奖励标记
   showCommissionBadge: true,
 
-  // 返佣记录每页显示数量（最小值为10，API限制每次请求最少需要返回10条记录）
+  // 奖励记录每页显示数量（最小值为10，API限制每次请求最少需要返回10条记录）
   recordsPerPage: 10,
   // 邀请链接配置
   inviteLinkConfig: {
@@ -849,14 +849,14 @@ export const INVITE_CONFIG = mergeDeep(
 );
 
 /**
- * 节点列表配置
- * 控制节点列表页面的显示内容
+ * 资源列表配置
+ * 控制资源列表页面的显示内容
  */
 const DEFAULT_NODES_CONFIG = {
-  // 是否显示节点倍率 (true=显示, false=隐藏)
+  // 是否显示倍率 (true=显示, false=隐藏)
   showNodeRate: true,
 
-  // 是否显示节点详细信息（主机和端口）
+  // 是否显示资源详细信息（主机和端口）
   showNodeDetails: false,
 };
 

@@ -2,16 +2,17 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
+  <meta name="robots" content="noindex,nofollow,noarchive">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="icon" href="./images/logo.png">
-  <title>EZ</title>
+  <title>Portal</title>
   <!-- 动态设置网站标题 -->
   <script>
     document.write('<script src="config.js?t=' + Math.random() + '"><\/script>');
     document.addEventListener('DOMContentLoaded', function() {
-      if (window.EZ_CONFIG && window.EZ_CONFIG.SITE_CONFIG && window.EZ_CONFIG.SITE_CONFIG.siteName) {
-        document.title = window.EZ_CONFIG.SITE_CONFIG.siteName;
+      if (window.APP_CONFIG && window.APP_CONFIG.SITE_CONFIG && window.APP_CONFIG.SITE_CONFIG.siteName) {
+        document.title = window.APP_CONFIG.SITE_CONFIG.siteName;
       }
     });
 
@@ -836,7 +837,7 @@
   <script>
     // 在DOM加载前预先应用主题，避免白屏闪烁
     (function() {
-      const THEME_STORAGE_KEY = 'ez-theme-preference';
+      const THEME_STORAGE_KEY = 'portal-theme-preference';
       const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
@@ -850,7 +851,7 @@
   <header>
     <div class="logo">
       <img src="./images/logo.png" alt="Logo">
-      <h1 id="siteName">EZ</h1>
+      <h1 id="siteName">Portal</h1>
     </div>
     <nav class="nav-links">
       <a href="#features">特性</a>
@@ -904,8 +905,8 @@
   </div>
 
   <section class="hero">
-    <h2 id="heroTitle">探索全球网络的无限可能</h2>
-    <p id="heroSubtitle">高速稳定、安全私密，随时随地畅享网络世界</p>
+    <h2 id="heroTitle">欢迎回来</h2>
+    <p id="heroSubtitle">清晰管理账户与服务信息</p>
     <div class="hero-buttons">
       <a href="javascript:void(0)" onclick="navigateTo('register')" class="button primary-button">立即开始</a>
       <a href="#download" class="button secondary-button">下载客户端</a>
@@ -916,7 +917,7 @@
   <section class="features" id="features">
     <div class="section-title">
       <h3>专为极致体验设计</h3>
-      <p>我们为您提供最优质的服务和极致的用户体验</p>
+      <p>为您提供稳定、清晰的服务体验</p>
     </div>
     <div class="feature-grid">
       <div class="feature-card">
@@ -927,8 +928,8 @@
             <path d="M15 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
           </svg>
         </div>
-        <h4>高速稳定</h4>
-        <p>高速节点全球覆盖，智能路由技术，保障您的网络连接稳定流畅</p>
+        <h4>稳定体验</h4>
+        <p>清晰的状态展示与便捷的日常管理</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">
@@ -938,8 +939,8 @@
             <path d="M8 11v-4a4 4 0 1 1 8 0v4"></path>
           </svg>
         </div>
-        <h4>安全私密</h4>
-        <p>采用军事级加密技术，保护您的网络隐私和数据安全</p>
+        <h4>安全管理</h4>
+        <p>账户信息集中管理，操作流程清楚可控</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">
@@ -951,8 +952,8 @@
             <path d="M12.5 3a17 17 0 0 1 0 18"></path>
           </svg>
         </div>
-        <h4>全球连接</h4>
-        <p>多区域节点覆盖，助您畅享全球网络资源</p>
+        <h4>多端使用</h4>
+        <p>适配常用设备，帮助您快速完成配置</p>
       </div>
       <div class="feature-card">
         <div class="feature-icon">
@@ -1053,7 +1054,7 @@
       <a href="#">常见问题</a>
       <a href="#">联系我们</a>
     </div>
-    <p class="copyright" id="copyrightText">© 2025 EZ THEME. All Rights Reserved.</p>
+    <p class="copyright" id="copyrightText">© 2025 All Rights Reserved.</p>
   </footer>
 
   <script>
@@ -1129,7 +1130,7 @@
     const themeToggle = document.getElementById('themeToggle');
     const mobileThemeToggle = document.getElementById('mobileThemeToggle');
     const root = document.documentElement;
-    const THEME_STORAGE_KEY = 'ez-theme-preference';
+    const THEME_STORAGE_KEY = 'portal-theme-preference';
     
     // 检查本地存储中的主题偏好
     function getThemePreference() {
@@ -1242,8 +1243,8 @@
     
     // 动态设置网站名称和版权信息
     document.addEventListener('DOMContentLoaded', function() {
-      if (window.EZ_CONFIG && window.EZ_CONFIG.SITE_CONFIG) {
-        const config = window.EZ_CONFIG;
+      if (window.APP_CONFIG && window.APP_CONFIG.SITE_CONFIG) {
+        const config = window.APP_CONFIG;
         
         // 设置网站名称
         if (config.SITE_CONFIG.siteName) {
@@ -1307,7 +1308,7 @@
             // console.error('设置下载链接时出错:', error);
           }
         } else {
-          // console.warn('未找到客户端配置信息 (window.EZ_CONFIG.CLIENT_CONFIG)');
+          // console.warn('未找到客户端配置信息 (window.APP_CONFIG.CLIENT_CONFIG)');
         }
         
         // 设置主题色

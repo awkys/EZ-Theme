@@ -54,8 +54,8 @@ module.exports = defineConfig({
             
             try {
               let content = fs.readFileSync(configPath, "utf-8");
-              content = content.replace(/window\.EZ_CONFIG\s*=\s*config\s*;?/g, "");
-              content = content.replace(/export\s+const\s+config\s*=/, "window.EZ_CONFIG =");
+              content = content.replace(/window\.APP_CONFIG\s*=\s*config\s*;?/g, "");
+              content = content.replace(/export\s+const\s+config\s*=/, "window.APP_CONFIG =");
               
               const obfuscated = JavaScriptObfuscator.obfuscate(content, {
                 compact: true,
