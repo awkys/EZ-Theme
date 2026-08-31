@@ -40,7 +40,13 @@
 
         <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
 
-        {{ siteConfig.siteName }}
+        <img
+          v-if="siteConfig.siteNameImage"
+          :src="siteConfig.siteNameImage"
+          alt="Site"
+          class="site-name-img"
+        />
+        <span v-else>{{ siteConfig.siteName }}</span>
 
       </div>
 
@@ -577,6 +583,20 @@ export default {
     border-radius: 10px;
 
     object-fit: cover;
+
+  }
+
+  .site-name-img {
+
+    display: block;
+
+    height: 54px;
+
+    width: auto;
+
+    max-width: min(70vw, 240px);
+
+    object-fit: contain;
 
   }
 

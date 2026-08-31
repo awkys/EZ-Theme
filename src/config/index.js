@@ -73,6 +73,7 @@ export const config = {
   // ====================  网站基础配置  ====================
   SITE_CONFIG: {
     siteName: "用户中心",
+    siteNameImage: "/images/wordmark.png",
     siteDescription: "Client Portal",
     // copyright会自动使用当前年份
     copyright: `© ${new Date().getFullYear()} All Rights Reserved.`,
@@ -130,15 +131,13 @@ export const config = {
     // 认证页面弹窗公告配置
     popup: {
       // 是否启用弹窗
-      enabled: true,
+      enabled: false,
 
       // 弹窗标题
-      title: "重要通知",
+      title: "",
 
       // 弹窗内容 (支持HTML)
-      content: `
-          <p>请留意页面内的服务通知。</p>
-        `,
+      content: "",
       // 冷却时间（小时），在此时间内不会再次显示弹窗
       cooldownHours: 168,
 

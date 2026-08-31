@@ -16,7 +16,13 @@
 
         <div class="site-name" v-if="showSiteName" :class="siteNameColorClass" @click="goTo('/')">
 
-          {{ SITE_CONFIG.siteName }}
+          <img
+            v-if="SITE_CONFIG.siteNameImage"
+            :src="SITE_CONFIG.siteNameImage"
+            alt="Site"
+            class="site-name-img"
+          />
+          <span v-else>{{ SITE_CONFIG.siteName }}</span>
 
         </div>
 
@@ -1933,6 +1939,20 @@ export default {
     cursor: pointer;
 
     user-select: none;
+
+    .site-name-img {
+
+      display: block;
+
+      height: 38px;
+
+      width: auto;
+
+      max-width: 180px;
+
+      object-fit: contain;
+
+    }
 
 
 

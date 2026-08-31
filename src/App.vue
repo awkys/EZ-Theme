@@ -5,7 +5,13 @@
       <!-- 网站名称 -->
       <div class="site-logo">
         <img v-if="siteConfig.showLogo" src="/images/logo.png" alt="Logo" class="site-logo-img" />
-        {{ siteConfig.siteName }}
+        <img
+          v-if="siteConfig.siteNameImage"
+          :src="siteConfig.siteNameImage"
+          alt="Site"
+          class="site-name-img"
+        />
+        <span v-else>{{ siteConfig.siteName }}</span>
       </div>
       
       <!-- 顶部导航栏 - 保持不变 -->
@@ -310,6 +316,14 @@ export default {
     width: 24px;
     border-radius: 6px;
     object-fit: cover;
+  }
+
+  .site-name-img {
+    display: block;
+    height: 24px;
+    width: auto;
+    max-width: 112px;
+    object-fit: contain;
   }
 }
 

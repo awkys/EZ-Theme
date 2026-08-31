@@ -230,6 +230,7 @@ export const CUSTOM_HEADERS_CONFIG = mergeDeep(
 // 网站名称配置
 const DEFAULT_SITE_CONFIG = {
   siteName: "用户中心",
+  siteNameImage: "/images/wordmark.png",
   siteDescription: "Client Portal",
   copyright: `© ${new Date().getFullYear()} All Rights Reserved.`,
 

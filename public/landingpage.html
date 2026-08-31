@@ -254,6 +254,15 @@
       font-weight: 600;
     }
 
+    .logo .site-name-image {
+      height: 30px;
+      width: auto;
+      max-width: 140px;
+      margin-right: 0;
+      border-radius: 0;
+      object-fit: contain;
+    }
+
     .nav-links {
       display: flex;
       gap: 30px;
@@ -851,7 +860,7 @@
   <header>
     <div class="logo">
       <img src="./images/logo.png" alt="Logo">
-      <h1 id="siteName">Portal</h1>
+      <img id="siteNameImage" class="site-name-image" src="./images/wordmark.png" alt="Site">
     </div>
     <nav class="nav-links">
       <a href="#features">特性</a>
@@ -1246,9 +1255,12 @@
       if (window.APP_CONFIG && window.APP_CONFIG.SITE_CONFIG) {
         const config = window.APP_CONFIG;
         
-        // 设置网站名称
+        // 设置网站名称图片和页面标题
+        const siteNameImage = document.getElementById('siteNameImage');
+        if (siteNameImage && config.SITE_CONFIG.siteNameImage) {
+          siteNameImage.src = config.SITE_CONFIG.siteNameImage;
+        }
         if (config.SITE_CONFIG.siteName) {
-          document.getElementById('siteName').textContent = config.SITE_CONFIG.siteName;
           document.title = config.SITE_CONFIG.siteName;
         }
         

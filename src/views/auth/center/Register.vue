@@ -68,6 +68,12 @@
 
         </div>
 
+        <div class="auth-brand" v-if="SITE_CONFIG.siteNameImage" @click="goTo('/')">
+
+          <img :src="SITE_CONFIG.siteNameImage" alt="Site" />
+
+        </div>
+
         <h1 class="auth-title">{{ $t('auth.registerTitle') }}</h1>
 
         <p class="auth-subtitle">{{ config.app_description || $t('auth.registerSubtitle') }}</p>
@@ -598,7 +604,7 @@ import { register, checkLoginStatus, getWebsiteConfig, sendEmailVerify } from '@
 
 import DomainAuthAlert from '@/components/common/DomainAuthAlert.vue';
 
-import { CAPTCHA_CONFIG, AUTH_CONFIG } from '@/utils/baseConfig';
+import { CAPTCHA_CONFIG, AUTH_CONFIG, SITE_CONFIG } from '@/utils/baseConfig';
 
 import AuthPopup from '@/components/auth/AuthPopup.vue';
 
@@ -2181,6 +2187,8 @@ export default {
 
       handleLogoError,
 
+      SITE_CONFIG,
+
       captchaConfig,
 
       handleCaptchaResponse,
@@ -3619,7 +3627,7 @@ export default {
 
 .auth-logo {
 
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
 
   text-align: center;
 
@@ -3642,6 +3650,32 @@ export default {
     cursor: pointer;
 
     user-select: none;
+
+  }
+
+}
+
+
+
+.auth-brand {
+
+  margin-bottom: 1.1rem;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  img {
+
+    height: 42px;
+
+    width: auto;
+
+    max-width: 220px;
+
+    object-fit: contain;
 
   }
 
